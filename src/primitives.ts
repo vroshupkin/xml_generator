@@ -26,7 +26,7 @@ export class Arc {
 	}
 }
 
-export class Line {
+export class LineXML {
 	constructor(private p1: [coordinate, coordinate], private p2: [coordinate, coordinate]) {}
 
 	toString(): string {
@@ -60,5 +60,71 @@ export class Circle {
     </point>
 </circle>
 `;
+	}
+}
+
+export function linePath(coordinates: [coordinate, coordinate][]): LineXML[] {
+	if (coordinates.length <= 1) {
+		throw `Минимальное количество координат 2. Передано: ${coordinates.length}`;
+	}
+
+	const lines: LineXML[] = [];
+
+	let i = 1;
+	while (i < coordinates.length) {
+		const coord_1 = coordinates[i - 1];
+		const coord_2 = coordinates[i];
+		lines.push(new LineXML(coord_1, coord_2));
+		i++;
+	}
+
+	return lines;
+}
+
+export class LinePath {
+	constructor(private coordinates: [coordinate, coordinate][]) {}
+
+	toString(): string {
+		let out = ``;
+
+		let i = 1;
+		while (i < this.coordinates.length) {
+			const coord_1 = this.coordinates[i - 1];
+			const coord_2 = this.coordinates[i];
+
+			out += new LineXML(coord_1, coord_2) + '\n';
+			i++;
+		}
+
+		return out;
+	}
+}
+
+export function wrapTag(tag: string, body: string): string {
+	return `<${tag}>\n${body}\n</${tag}>`;
+}
+
+abstract class ToString {
+	abstract toString(): string;
+}
+
+export class Rotate {
+	/**
+	 * @param start [градусы] начальный разворот
+	 * @param step  [градусы] шаг дублирования
+	 * @param count количество дублирование
+	 * @example new Rotate([el_1, el_2], 30, 0, 0) // повернет элементы el_1 el_2 на 30 градусов относительно центра
+	 */
+	constructor(
+		private body: ToString[],
+		private start: string | number,
+		private step: string | number,
+		private count: string | number,
+	) {}
+
+	toString(): string {
+		const body = this.body.reduce((prev, curr) => prev + '\n' + curr + '', '');
+
+		return `\n<rotate start="${this.start}" step="${this.step}" count="${this.count}">\n${body}\n</rotate>`;
 	}
 }
