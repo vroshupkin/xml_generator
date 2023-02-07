@@ -172,6 +172,14 @@ const figure_13: IGenerate = {
 			['0', '0'],
 		]),
 
+		new LinePath([
+			['((W - W2) / 2)', '((H - H2) / 2)'],
+			['((W - W2) / 2)', '((H - H2) / 2) + H2'],
+			['((W - W2) / 2) + W2', '((H - H2) / 2) + H2'],
+			['((W - W2) / 2) + W2', '((H - H2) / 2)'],
+			['((W - W2) / 2)', '((H - H2) / 2)'],
+		]),
+
 		new Circle(['L', 'L'], 'R'),
 		new Circle(['L', 'H - L'], 'R'),
 
@@ -181,14 +189,25 @@ const figure_13: IGenerate = {
 	],
 	params: `
 	<params>
-		<p name="W" desc="[мм] Ширина" default="500.0"></p>
-		<p name="H" desc="[мм] Высота" default="300.0"></p>
+		<p name="W" desc="[мм] Ширина внешнего прямоугольника" default="500.0"></p>
+		<p name="H" desc="[мм] Высота внешнего прямоугольника" default="300.0"></p>
+
+		<p name="W2" desc="[мм] Ширина внутреннего прямоугольника" default="250.0"></p>
+		<p name="H2" desc="[мм] Высота внутреннего прямоугольника" default="150.0"></p>
+
+
 		<p name="L" desc="[мм] Отступ радиуса от края" default="50.0"></p>
 		<p name="R" desc="[мм] Радиус" default="20.0"></p>
 
 		<condition text="Радиус должен быть меньше отступа от края"><![CDATA[R < L]]></condition>
         <condition text="Высота должна быть больше двойной суммы радиуса и отступа"><![CDATA[H > 2 * (L + R)]]></condition>
         <condition text="Ширина должна быть больше двойной суммы радиуса и отступа"><![CDATA[W > 2 * (L + R)]]></condition>
+
+		<condition text="Внутрений прямоугольник должен вмешаться по высоте"><![CDATA[H > H2]]></condition>
+		<condition text="Внутрений прямоугольник должен вмешаться по ширине"><![CDATA[W > W2]]></condition>
+
+
+
 	</params>
 	`,
 };
