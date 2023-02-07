@@ -141,7 +141,7 @@ const figure_12: IGenerate = {
 		<p name="R1" desc="[мм] Центральный радиус" default="50.0"></p>
 
 		<p name="R2" desc="[мм] Центральные радиусы" default="20.0"></p>
-		<p name="DELTA" desc="[мм] Отступ от центра для центральных радиусов" default="20.0"></p>
+		<p name="DELTA" desc="[мм] Отступ от центра для центральных радиусов" default="50.0"></p>
 		
 
 		<condition text="Радиус должен быть меньше отступа от края"><![CDATA[R < L]]></condition>
@@ -151,8 +151,11 @@ const figure_12: IGenerate = {
 		<condition text="Центральный радиус должен быть меньше половины высоты"><![CDATA[R1 < H / 2]]></condition>
 		<condition text="Центральный радиус должен быть меньше половины ширины"><![CDATA[R1 < W / 2]]></condition>
 
-		<condition text="Центральные радиусы должны вмешаться в прямоугольник по высоте"><![CDATA[DELTA + R2 + SQRT(2) * R2 < H / 2]]></condition>
-		<condition text="Центральные радиусы должны вмешаться в прямоугольник по ширины"><![CDATA[DELTA + R2 + SQRT(2) * R2 < W / 2]]></condition>
+		<condition text="Центральные радиусы должны вмешаться в прямоугольник по высоте"><![CDATA[R2 + SQRT(2) * R2 < H / 2]]></condition>
+		<condition text="Центральные радиусы должны вмешаться в прямоугольник по ширины"><![CDATA[R2 + SQRT(2) * R2 < W / 2]]></condition>
+
+		<condition text="Центральные радиусы не должны соприкосаться с внутренним "><![CDATA[R1 < DELTA + (-R2) + SQRT(2) * R2]]></condition>
+		
 
 	</params>
 	`,
