@@ -265,16 +265,16 @@ const figure_16: IGenerate = {
 		new LineXML([0, 'R'], [0, 'H']),
 		new LineXML([0, 'H'], ['W', 0]),
 		new LineXML(['W', 0], ['R', 0]),
-		new LineXML(['R', 0], ['R', 0]),
+		new LineXML(['R', 0], [0, 'R']),
 	],
 	params: `
 	<params>
-		<p name="R" desc="[мм] Радиус" default="20.0"></p>
+		<p name="R" desc="[мм] Ширина и высота усечения" default="50.0"></p>
 		<p name="W" desc="[мм] Ширина" default="200.0"></p>
 		<p name="H" desc="[мм] Высота" default="100.0"></p>
 
-		<condition text="Радиус должен быть меньше ширины"><![CDATA[1.1 * R < W]]></condition>
-		<condition text="Радиус должен быть меньше высоты"><![CDATA[1.1 * R < H]]></condition>
+		<condition text="Ширина усечения должена быть меньше ширины фигуры"><![CDATA[1.1 * R < W]]></condition>
+		<condition text="Высота усечения должена быть меньше высоты фигуры"><![CDATA[1.1 * R < H]]></condition>
 	
 	</params>
 
