@@ -212,6 +212,78 @@ const figure_13: IGenerate = {
 	`,
 };
 
-generate(figure_11);
-generate(figure_12);
-generate(figure_13);
+const figure_14: IGenerate = {
+	name: `_14 Раздел дуги`,
+	primitives: [
+		new LineXML([0, 0], ['(-COS(ANGLE) * H)', '(SIN(ANGLE) * H)']),
+
+		// new Arc(['0', '0'], 'H', '(M_PI + (ANGLE * M_PI) / 180))', '(ANGLE * M_PI) / 180', false),
+		new Arc(['L / 2', 'H / 2'], 'H', '(M_PI/2) + M_PI * ANGLE/(2 * 180)', 'M_PI', true),
+		new LineXML(['(L + COS(ANGLE) * H)', '(SIN(ANGLE) * H)'], ['L', 0]),
+		new LineXML(['L', 0], [0, 0]),
+	],
+	params: `
+	<params>
+		<p name="ANGLE" desc="[градусы] Разворот дуги" default="60.0"></p>
+		<p name="L" desc="[мм] Ширина дуги" default="100.0"></p>
+		<p name="H" desc="[мм] Высота дуги" default="50.0"></p>
+
+
+
+
+	</params>
+	`,
+};
+
+const figure_15: IGenerate = {
+	name: `_15 Угловое соединение`,
+	primitives: [
+		new LineXML([0, 'R'], [0, 'H']),
+		new LineXML([0, 'H'], ['W', 0]),
+		new LineXML(['W', 0], ['R', 0]),
+
+		new Arc([0, 0], 'R', '0', 'M_PI / 2', false),
+	],
+	params: `
+	<params>
+		<p name="R" desc="[мм] Радиус" default="20.0"></p>
+		<p name="W" desc="[мм] Ширина" default="200.0"></p>
+		<p name="H" desc="[мм] Высота" default="100.0"></p>
+
+		<condition text="Радиус должен быть меньше ширины"><![CDATA[1.1 * R < W]]></condition>
+		<condition text="Радиус должен быть меньше высоты"><![CDATA[1.1 * R < H]]></condition>
+	
+	</params>
+
+
+	`,
+};
+
+const figure_16: IGenerate = {
+	name: `_16 Усеченые прямоугольник`,
+	primitives: [
+		new LineXML([0, 'R'], [0, 'H']),
+		new LineXML([0, 'H'], ['W', 0]),
+		new LineXML(['W', 0], ['R', 0]),
+		new LineXML(['R', 0], ['R', 0]),
+	],
+	params: `
+	<params>
+		<p name="R" desc="[мм] Радиус" default="20.0"></p>
+		<p name="W" desc="[мм] Ширина" default="200.0"></p>
+		<p name="H" desc="[мм] Высота" default="100.0"></p>
+
+		<condition text="Радиус должен быть меньше ширины"><![CDATA[1.1 * R < W]]></condition>
+		<condition text="Радиус должен быть меньше высоты"><![CDATA[1.1 * R < H]]></condition>
+	
+	</params>
+
+
+	`,
+};
+// generate(figure_11);
+// generate(figure_12);
+// generate(figure_13);
+generate(figure_14);
+generate(figure_15);
+generate(figure_16);
