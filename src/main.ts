@@ -281,9 +281,117 @@ const figure_16: IGenerate = {
 
 	`,
 };
+
+const figure_17: IGenerate = {
+	name: `_17 Вогнутый правильный треугольник`,
+	primitives: [
+		new LinePath([
+			['W', 'L'],
+			['W', 0],
+			[0, 0],
+			[0, 'W'],
+			['L', 'W'],
+		]),
+		new Arc(['W', 'W'], 'W - L', 'M_PI', '3 * M_PI / 2', false),
+	],
+	params: `
+	<params>
+		
+		<p name="W" desc="[мм] Ширина" default="200.0"></p>
+		<p name="L" desc="[мм] Отступ" default="10.0"></p>
+		
+		<condition text="Отступ должен быть меньше ширины"><![CDATA[L < W]]></condition>
+		<condition text="Отступ не должен быть равен 0"><![CDATA[L > 0]]></condition>
+	</params>
+
+
+	`,
+};
+
+const figure_18_1: IGenerate = {
+	name: `_18_1 Прямоугольный треугольник по двум сторонам`,
+	primitives: [
+		new LinePath([
+			[0, 0],
+			[0, 'H'],
+			['L', 0],
+			[0, 0],
+		]),
+	],
+	params: `
+	<params>
+		
+		<p name="H" desc="[мм] Высота" default="50.0"></p>
+		<p name="L" desc="[мм] Ширина" default="100.0"></p>
+		
+
+	</params>
+
+
+	`,
+};
+
+const figure_18_2: IGenerate = {
+	name: `_18_2 Прямоугольный треугольник по высоте и углу прилегающему к ширине`,
+	primitives: [
+		new LinePath([
+			[0, 0],
+			[0, 'H'],
+			['H * COS(A)/SIN(A)', 0],
+			[0, 0],
+		]),
+	],
+	params: `
+	<params>
+		
+		<p name="H" desc="[мм] Высота" default="50.0"></p>
+		<p name="A" desc="[градусы] Угол прилегающий к ширине" default="45"></p>
+		
+		<condition text="Угол не должен быть больше 90"><![CDATA[A < 90]]></condition>
+	</params>
+
+
+	`,
+};
+
+const figure_19_1__cos = `((a * a + b * b - c * c) / (2 * a * b))`;
+const figure_19_1__x = `b * ${figure_19_1__cos}`;
+const figure_19_1__y = `b * SQRT(1 - (${figure_19_1__cos} * ${figure_19_1__cos}))`;
+
+const figure_19_1: IGenerate = {
+	name: `_19_1 Общий треугольник по трем сторонам`,
+	primitives: [
+		new LinePath([
+			[0, 0],
+			[`${figure_19_1__x}`, `${figure_19_1__y}`],
+			['a', 0],
+			[0, 0],
+		]),
+	],
+	params: `
+	<params>
+		<p name="a" desc="[мм] Основание" default="50.0"></p>
+		<p name="b" desc="[мм] Левая сторона" default="50.0"></p>
+		<p name="c" desc="[мм] Правая сторона" default="50.0"></p>
+		
+		<condition text="Основание должно быть меньше суммы двух других сторон"><![CDATA[a < b + c]]></condition>
+		<condition text="Левая сторона должна быть меньше суммы двух других сторон"><![CDATA[b < a + c]]></condition>
+		<condition text="Правая сторона должно быть меньше суммы двух других сторон"><![CDATA[c < b + a]]></condition>
+	</params>
+
+
+	`,
+};
+
 // generate(figure_11);
 // generate(figure_12);
 // generate(figure_13);
-generate(figure_14);
-generate(figure_15);
-generate(figure_16);
+// generate(figure_14);
+// generate(figure_15);
+
+// generate(figure_16);
+// generate(figure_17);
+
+generate(figure_18_1);
+generate(figure_18_2);
+generate(figure_19_1);
