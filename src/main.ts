@@ -383,6 +383,32 @@ const figure_19_1: IGenerate = {
 	`,
 };
 
+const figure_19_2: IGenerate = {
+	name: `_19_2 Общий треугольник по двум соторонам и углу между ними`,
+	primitives: [
+		new LinePath([
+			[0, 0],
+			['b * COS(angle)', 'b * SIN(angle)'],
+			['a', 0],
+			[0, 0],
+		]),
+	],
+	params: `
+	<params>
+		
+		<p name="a" desc="[мм] Основание" default="50.0"></p>
+		<p name="b" desc="[мм] Левая сторона" default="50.0"></p>
+		<p name="angle" desc="[градусы] Угол между сторонами" default="50.0"></p>
+
+		<condition text="Правая сторона должно быть меньше суммы двух других сторон"><![CDATA[angle < 180]]></condition>
+		
+		
+	</params>
+
+
+	`,
+};
+
 // generate(figure_11);
 // generate(figure_12);
 // generate(figure_13);
@@ -395,3 +421,4 @@ const figure_19_1: IGenerate = {
 generate(figure_18_1);
 generate(figure_18_2);
 generate(figure_19_1);
+generate(figure_19_2);
