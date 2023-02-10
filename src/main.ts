@@ -409,6 +409,28 @@ const figure_19_2: IGenerate = {
 	`,
 };
 
+const figure_20_elments = new LinePath([
+	['l * COS(360 / n)', 'l * SIN(360 / n)'],
+	['l * COS(360 / n + 360 / n)', 'l * SIN(360 / n + 360 / n)'],
+]);
+
+const figure_20: IGenerate = {
+	name: `_20 Правильный многоульник`,
+	primitives: [new Rotate([figure_20_elments], 0, '360 / n', 'n')],
+
+	params: `
+	<params>
+		
+		<p name="l" desc="[мм] Длина стороны" default="50.0"></p>
+		<p name="n" desc="[кол-во] Количество сторон прямоугольника" default="6.0"></p>
+		
+
+		
+	</params>
+
+
+	`,
+};
 // generate(figure_11);
 // generate(figure_12);
 // generate(figure_13);
@@ -416,9 +438,13 @@ const figure_19_2: IGenerate = {
 // generate(figure_15);
 
 // generate(figure_16);
-// generate(figure_17);
 
-generate(figure_18_1);
-generate(figure_18_2);
-generate(figure_19_1);
-generate(figure_19_2);
+// 09.02
+// generate(figure_17);
+// generate(figure_18_1);
+// generate(figure_18_2);
+// generate(figure_19_1);
+// generate(figure_19_2);
+
+// 10.02
+generate(figure_20);
