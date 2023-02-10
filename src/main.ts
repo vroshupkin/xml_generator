@@ -467,6 +467,77 @@ const figure_21: IGenerate = {
 
 	`,
 };
+
+const figure_21_1_elments = new LinePath([
+	['l * COS(360 / n)', 'l * SIN(360 / n)'],
+	['l * COS(360 / n + 360 / n)', 'l * SIN(360 / n + 360 / n)'],
+]);
+
+const figure_21_1: IGenerate = {
+	name: `_21_1 Правильный многоульник в окружности`,
+	primitives: [new Rotate([figure_21_1_elments], 0, '360 / n', 'n'), new Circle([0, 0], 'l')],
+
+	params: `
+	<params>
+		
+		<p name="l" desc="[мм] Радиус" default="50.0"></p>
+		<p name="n" desc="[кол-во] Количество сторон прямоугольника" default="4.0"></p>
+		
+
+		
+	</params>
+
+
+	`,
+};
+
+const figure_21_2: IGenerate = {
+	name: `_21_2 Окружность в правильном многоугольнике`,
+	primitives: [
+		new Rotate([figure_21_1_elments], 0, '360 / n', 'n'),
+		new Circle([0, 0], 'l * COS(180 / n)'),
+	],
+
+	params: `
+	<params>
+		<p name="l" desc="[мм] Сторона правильного многоугольника" default="50.0"></p>
+		<p name="n" desc="[кол-во] Количество сторон прямоугольника" default="4.0"></p>
+	</params>
+
+
+	`,
+};
+const figure_22: IGenerate = {
+	name: `_21 Четырех угольник`,
+	primitives: [
+		new LinePath([
+			[0, 0],
+			['x1', 'h1'],
+			['x2', 'h2'],
+			['x3', 'h3'],
+		]),
+	],
+
+	params: `
+	<params>	
+		<p name="x1" desc="[мм] Ширина x1" default="50.0"></p>
+		<p name="h1" desc="[мм] Высота h1" default="50.0"></p>
+
+		<p name="x2" desc="[мм] Ширина x2" default="100.0"></p>
+		<p name="h2" desc="[мм] Высота h2" default="60.0"></p>
+
+		<p name="h3" desc="[мм] Ширина x3" default="50.0"></p>
+		<p name="x3" desc="[мм] Высота h3" default="50.0"></p>
+		
+		
+		<condition text="Ширина детали должна быть больше нуля"><![CDATA[W > 0]]></condition>
+		
+		
+	</params>
+
+
+	`,
+};
 // generate(figure_11);
 // generate(figure_12);
 // generate(figure_13);
@@ -485,3 +556,5 @@ const figure_21: IGenerate = {
 // 10.02
 generate(figure_20);
 generate(figure_21);
+generate(figure_21_1);
+generate(figure_21_2);
