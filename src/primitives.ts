@@ -1,6 +1,13 @@
 import { coordinate } from './generator.interface';
 
 export class Arc {
+	/**
+	 * @param start_point [coord, coord]
+	 * @param radius [мм]
+	 * @param startAngle [радиан]
+	 * @param endAngle [радиан]
+	 * @param clockwise
+	 */
 	constructor(
 		private start_point: [coordinate, coordinate],
 		private radius: string | number,

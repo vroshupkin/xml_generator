@@ -431,6 +431,42 @@ const figure_20: IGenerate = {
 
 	`,
 };
+
+const figure_21: IGenerate = {
+	name: `_21 U скоба`,
+	primitives: [
+		new LinePath([
+			['-R', '0'],
+			['-R', 'H1'],
+			['-(R + W)', 'H1'],
+			['-(R + W)', 0],
+		]),
+		new Arc([0, 0], 'R + W', 'M_PI', '0', false),
+
+		new LinePath([
+			['R + W', 0],
+			['R + W', 'H2'],
+			['R', 'H2'],
+			['R', '0'],
+		]),
+		new Arc([0, 0], 'R', 'M_PI', '0', false),
+	],
+
+	params: `
+	<params>	
+		<p name="R" desc="[мм] Внутренний радиус" default="50.0"></p>
+		<p name="W" desc="[мм] Ширина детали" default="20.0"></p>
+		<p name="H1" desc="[мм] Высота части слева" default="40.0"></p>
+		<p name="H2" desc="[мм] Высота части справа" default="70.0"></p>
+		
+		<condition text="Ширина детали должна быть больше нуля"><![CDATA[W > 0]]></condition>
+		
+		
+	</params>
+
+
+	`,
+};
 // generate(figure_11);
 // generate(figure_12);
 // generate(figure_13);
@@ -448,3 +484,4 @@ const figure_20: IGenerate = {
 
 // 10.02
 generate(figure_20);
+generate(figure_21);
