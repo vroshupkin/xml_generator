@@ -550,23 +550,25 @@ const figure_22: IGenerate = {
 const figure_24: IGenerate = {
 	name: `_24 Лопасть`,
 	primitives: [
-		new Circle([0, 0], 'R'),
+		new Arc([0, 0], 'R', 'M_PI - ASIN(H / (2 * R))', 'M_PI + ASIN(H / (2 * R))', true),
+
 		new LinePath([
-			['-SQRT(R * R + W * W / 4)', '-(W / 2)'],
-			['-(R + L)', '-(W / 2)'],
-			['-(R + L)', '(W / 2)'],
-			['-(R)', '(W / 2)'],
+			['-(SQRT(R * R - H * H / 4))', '-(H / 2)'],
+			['-(R + W)', '-(H / 2)'],
+			['-(R + W)', '(H / 2)'],
+			['-(SQRT(R * R - H * H / 4))', '(H / 2)'],
 		]),
 	],
 
 	params: `
 	<params>	
 		<p name="R" desc="[мм] Радиус" default="100.0"></p>
-		<p name="L" desc="[мм] Длина" default="100.0"></p>
-		<p name="W" desc="[мм] Ширина" default="100.0"></p>
+		
+		<p name="W" desc="[мм] Длина" default="70.0"></p>
+		<p name="H" desc="[мм] Высота" default="25.0"></p>
+		
 		
 	</params>
-
 
 	`,
 };
@@ -691,8 +693,8 @@ const figure_0_2: IGenerate = {
 // generate(figure_21_1);
 // generate(figure_21_2);
 // generate(figure_22);
-// generate(figure_24);
 
 // 13.02
 generate(figure_0_1);
 generate(figure_0_2);
+generate(figure_24);
