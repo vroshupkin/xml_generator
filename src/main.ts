@@ -2,6 +2,14 @@ import { generate, IGenerate } from '../generator';
 import { coordinate, IDetail } from './generator.interface';
 import { LineXML, Arc, Circle, linePath, LinePath, Rotate } from './primitives';
 
+class Condition {
+	constructor(private text: string, private condition: string) {}
+
+	toString(): string {
+		return `<condition text="${this.text}"><![CDATA[${this.condition}]]></condition>`;
+	}
+}
+
 // function generate_1(): void {
 // 	const H = 'H';
 // 	const R = 'R';
@@ -507,30 +515,30 @@ const figure_21_2: IGenerate = {
 
 	`,
 };
+
 const figure_22: IGenerate = {
-	name: `_21 Четырех угольник`,
+	name: `_22 Четырехугольник`,
 	primitives: [
 		new LinePath([
 			[0, 0],
 			['x1', 'h1'],
 			['x2', 'h2'],
 			['x3', 'h3'],
+			[0, 0],
 		]),
 	],
 
 	params: `
 	<params>	
-		<p name="x1" desc="[мм] Ширина x1" default="50.0"></p>
-		<p name="h1" desc="[мм] Высота h1" default="50.0"></p>
+		<p name="x1" desc="[мм] Ширина x1" default="10.0"></p>
+		<p name="h1" desc="[мм] Высота h1" default="80.0"></p>
 
 		<p name="x2" desc="[мм] Ширина x2" default="100.0"></p>
 		<p name="h2" desc="[мм] Высота h2" default="60.0"></p>
 
-		<p name="h3" desc="[мм] Ширина x3" default="50.0"></p>
-		<p name="x3" desc="[мм] Высота h3" default="50.0"></p>
+		<p name="x3" desc="[мм] Ширина x3" default="100.0"></p>
+		<p name="h3" desc="[мм] Высота h3" default="0.0"></p>
 		
-		
-		<condition text="Ширина детали должна быть больше нуля"><![CDATA[W > 0]]></condition>
 		
 		
 	</params>
@@ -538,6 +546,69 @@ const figure_22: IGenerate = {
 
 	`,
 };
+
+const figure_24: IGenerate = {
+	name: `_24 Лопасть`,
+	primitives: [
+		new Circle([0, 0], 'R'),
+		new LinePath([
+			['-SQRT(R * R + W * W / 4)', '-(W / 2)'],
+			['-(R + L)', '-(W / 2)'],
+			['-(R + L)', '(W / 2)'],
+			['-(R)', '(W / 2)'],
+		]),
+	],
+
+	params: `
+	<params>	
+		<p name="R" desc="[мм] Радиус" default="100.0"></p>
+		<p name="L" desc="[мм] Длина" default="100.0"></p>
+		<p name="W" desc="[мм] Ширина" default="100.0"></p>
+		
+	</params>
+
+
+	`,
+};
+
+const figure_0_1: IGenerate = {
+	name: `_0_1 Окружность в прямоугольнике`,
+	primitives: [
+		new LinePath([
+			[`-(W / 2)`, `-(H / 2)`],
+			[`-(W / 2)`, `(H / 2)`],
+			[`(W / 2)`, `(H / 2)`],
+			[`(W / 2)`, `-(H / 2)`],
+			[`-(W / 2)`, `-(H / 2)`],
+		]),
+		new Circle(['X', 'Y'], 'R'),
+	],
+
+	params: `
+	<params>	
+		<p name="R" desc="[мм] Радиус" default="30.0"></p>
+		<p name="X" desc="[мм] Х центра окружности" default="0.0"></p>
+		<p name="Y" desc="[мм] Y центра окружности" default="0.0"></p>
+		
+		<p name="H" desc="[мм] Высота" default="100.0"></p>
+		<p name="W" desc="[мм] Ширина" default="100.0"></p>
+				
+		${new Condition('Окружность не должна пересекаться с прямоугольником', 'X + R < W / 2')}
+		${new Condition('Окружность не должна пересекаться с прямоугольником', 'X - R > -(W / 2)')}
+		${new Condition('Окружность не должна пересекаться с прямоугольником', 'Y + R < (H / 2)')}
+		${new Condition('Окружность не должна пересекаться с прямоугольником', 'Y - R > -(H / 2)')}
+		
+
+	</params>
+	`,
+};
+
+/* 
+	Проупушенные:
+		23: Блок
+
+*/
+
 // generate(figure_11);
 // generate(figure_12);
 // generate(figure_13);
@@ -554,7 +625,12 @@ const figure_22: IGenerate = {
 // generate(figure_19_2);
 
 // 10.02
-generate(figure_20);
-generate(figure_21);
-generate(figure_21_1);
-generate(figure_21_2);
+// generate(figure_20);
+// generate(figure_21);
+// generate(figure_21_1);
+// generate(figure_21_2);
+// generate(figure_22);
+// generate(figure_24);
+
+// 13.02
+generate(figure_0_1);
