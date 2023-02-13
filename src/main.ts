@@ -565,7 +565,7 @@ const figure_24: IGenerate = {
 		<p name="R" desc="[мм] Радиус" default="100.0"></p>
 		
 		<p name="W" desc="[мм] Длина" default="70.0"></p>
-		<p name="H" desc="[мм] Высота" default="25.0"></p>
+		<p name="H" desc="[мм] Высота" default="70.0"></p>
 		
 		
 	</params>
@@ -666,6 +666,24 @@ const figure_0_2: IGenerate = {
 	`,
 };
 
+const figure_23: IGenerate = {
+	name: `_23 Блок`,
+	primitives: [
+		new Arc([0, 0], 'R1', 'M_PI / 2', '3 * M_PI / 2', false),
+		new LineXML([0, '-(R1)'], ['L', '-(R2)']),
+		new Arc(['L', 0], 'R2', 'M_PI / 2', '3 * M_PI / 2', true),
+		new LineXML(['L', 'R2'], [0, 'R1']),
+	],
+
+	params: `
+	<params>	
+		<p name="R1" desc="[мм] Левый радиус" default="70.0"></p>
+		<p name="R2" desc="[мм] Правый радиус" default="50.0"></p>
+		<p name="L" desc="[мм] Длина между центрами окружностей" default="100.0"></p>
+	</params>
+	`,
+};
+
 /* 
 	Проупушенные:
 		23: Блок
@@ -698,3 +716,4 @@ const figure_0_2: IGenerate = {
 generate(figure_0_1);
 generate(figure_0_2);
 generate(figure_24);
+generate(figure_23);
