@@ -603,6 +603,67 @@ const figure_0_1: IGenerate = {
 	`,
 };
 
+const getLengthFromPoints = (
+	p0: [coordinate, coordinate],
+	p1: [coordinate, coordinate],
+): string => {
+	const x0 = p0[0];
+	const x1 = p1[0];
+
+	const y0 = p1[1];
+	const y1 = p1[1];
+
+	const delta_x = `((${x0}) - (${x1}))`;
+	const delta_y = `((${y0}) - (${y1}))`;
+
+	return `SQRT((${delta_x} * ${delta_x}) + (${delta_y} * ${delta_y}))`;
+};
+
+const f_0_2_obj: { [a: string]: [coordinate, coordinate] } = {
+	p0: [`X - (W / 2)`, `Y - (H / 2)`],
+	p1: [`X - (W / 2)`, `Y + (H / 2)`],
+	p2: [`X + (W / 2)`, `Y + (H / 2)`],
+	p3: [`X + (W / 2) `, `Y - (H / 2)`],
+};
+
+const figure_0_2: IGenerate = {
+	name: `_0_2 Прямоугольник в окружности`,
+	primitives: [
+		new Circle(['0', '0'], 'R'),
+		new LinePath([f_0_2_obj.p0, f_0_2_obj.p1, f_0_2_obj.p2, f_0_2_obj.p3, f_0_2_obj.p0]),
+	],
+
+	params: `
+	<params>	
+		<p name="R" desc="[мм] Радиус" default="80.0"></p>
+		<p name="X" desc="[мм] Х прямоугольника" default="0.0"></p>
+		<p name="Y" desc="[мм] Y прямоугольника" default="0.0"></p>
+		
+		<p name="H" desc="[мм] Высота" default="100.0"></p>
+		<p name="W" desc="[мм] Ширина" default="100.0"></p>
+		
+		
+		${new Condition(
+			'Окружность не должна пересекаться с прямоугольником',
+			`((${f_0_2_obj.p0[0]}) * (${f_0_2_obj.p0[0]})) + ((${f_0_2_obj.p0[1]}) * (${f_0_2_obj.p0[1]})) < R * R`,
+		)}
+		${new Condition(
+			'Окружность не должна пересекаться с прямоугольником',
+			`((${f_0_2_obj.p1[0]}) * (${f_0_2_obj.p1[0]})) + ((${f_0_2_obj.p1[1]}) * (${f_0_2_obj.p1[1]})) < R * R`,
+		)}
+		${new Condition(
+			'Окружность не должна пересекаться с прямоугольником',
+			`((${f_0_2_obj.p2[0]}) * (${f_0_2_obj.p2[0]})) + ((${f_0_2_obj.p2[1]}) * (${f_0_2_obj.p2[1]})) < R * R`,
+		)}
+		${new Condition(
+			'Окружность не должна пересекаться с прямоугольником',
+			`((${f_0_2_obj.p3[0]}) * (${f_0_2_obj.p3[0]})) + ((${f_0_2_obj.p3[1]}) * (${f_0_2_obj.p3[1]})) < R * R`,
+		)}
+		
+	</params>
+	`,
+};
+
 /* 
 	Проупушенные:
 		23: Блок
@@ -634,3 +695,4 @@ const figure_0_1: IGenerate = {
 
 // 13.02
 generate(figure_0_1);
+generate(figure_0_2);
