@@ -220,29 +220,6 @@ const figure_13: IGenerate = {
 	`,
 };
 
-const figure_14: IGenerate = {
-	name: `_14 Раздел дуги`,
-	primitives: [
-		new LineXML([0, 0], ['(-COS(ANGLE) * H)', '(SIN(ANGLE) * H)']),
-
-		// new Arc(['0', '0'], 'H', '(M_PI + (ANGLE * M_PI) / 180))', '(ANGLE * M_PI) / 180', false),
-		new Arc(['L / 2', 'H / 2'], 'H', '(M_PI/2) + M_PI * ANGLE/(2 * 180)', 'M_PI', true),
-		new LineXML(['(L + COS(ANGLE) * H)', '(SIN(ANGLE) * H)'], ['L', 0]),
-		new LineXML(['L', 0], [0, 0]),
-	],
-	params: `
-	<params>
-		<p name="ANGLE" desc="[градусы] Разворот дуги" default="60.0"></p>
-		<p name="L" desc="[мм] Ширина дуги" default="100.0"></p>
-		<p name="H" desc="[мм] Высота дуги" default="50.0"></p>
-
-
-
-
-	</params>
-	`,
-};
-
 const figure_15: IGenerate = {
 	name: `_15 Угловое соединение`,
 	primitives: [
@@ -254,9 +231,9 @@ const figure_15: IGenerate = {
 	],
 	params: `
 	<params>
-		<p name="R" desc="[мм] Радиус" default="20.0"></p>
+		<p name="R" desc="[мм] Радиус" default="45.0"></p>
 		<p name="W" desc="[мм] Ширина" default="200.0"></p>
-		<p name="H" desc="[мм] Высота" default="100.0"></p>
+		<p name="H" desc="[мм] Высота" default="130.0"></p>
 
 		<condition text="Радиус должен быть меньше ширины"><![CDATA[1.1 * R < W]]></condition>
 		<condition text="Радиус должен быть меньше высоты"><![CDATA[1.1 * R < H]]></condition>
@@ -684,17 +661,98 @@ const figure_23: IGenerate = {
 	`,
 };
 
-/* 
-	Проупушенные:
-		23: Блок
+const missing_pronest = {
+	25: {
+		name: 'Правый кругообразный конус ',
+		description: 'Непонятная деталь',
+	},
+};
 
-*/
+const figure_26: IGenerate = {
+	name: `_26 Ушко`,
+	primitives: [
+		new LinePath([
+			[0, 0],
+			[0, 'H - Y1'],
+			['X1', 'H'],
+			['L - X2', 'H'],
+			['L', 'H - Y2'],
+			['L', 0],
+		]),
+
+		new Arc(
+			['L/2', '-SQRT((R * R) - (L * L / 4))'],
+			'R',
+			'(M_PI / 2) - ASIN(L / (2 * R))',
+			'(M_PI / 2) + ASIN(L / (2 * R))',
+			false,
+		),
+	],
+
+	params: `
+	<params>	
+		<p name="X1" desc="[мм] Левый срез по Х" default="20.0"></p>
+		<p name="Y1" desc="[мм] Высота левого среза" default="20.0"></p>
+		<p name="X2" desc="[мм] Правый срез по Х" default="20.0"></p>
+		<p name="Y2" desc="[мм] Высота правого среза" default="20.0"></p>
+
+		<p name="H" desc="[мм] Высота" default="100.0"></p>
+		<p name="L" desc="[мм] Длина" default="150.0"></p>
+		<p name="R" desc="[мм] Радиус" default="100.0"></p>
+
+		
+
+		${new Condition('Не верно задан радиус', '(R * R) > (L * L / 4)')}		
+	</params>
+	`,
+};
+
+const figure_14: IGenerate = {
+	name: `_14 Раздел дуги`,
+	primitives: [
+		new Arc(
+			[0, 0],
+			'R1',
+			'(M_PI / 2) - ((a / 2) * (M_PI / 180))',
+			'(M_PI / 2) + ((a / 2) * (M_PI / 180))',
+			false,
+		),
+		new LineXML(
+			['R1 * COS(90 + (a / 2))', 'R1 * SIN(90 + (a / 2))'],
+			['R2 * COS(90 + (a / 2))', 'R2 * SIN(90 + (a / 2))'],
+		),
+		new Arc(
+			[0, 0],
+			'R2',
+			'(M_PI / 2) + ((a / 2) * (M_PI / 180))',
+			'(M_PI / 2) - ((a / 2) * (M_PI / 180))',
+
+			true,
+		),
+		new LineXML(
+			['R2 * COS(90 - (a / 2))', 'R2 * SIN(90 - (a / 2))'],
+			['R1 * COS(90 - (a / 2))', 'R1 * SIN(90 - (a / 2))'],
+		),
+	],
+	params: `
+	<params>
+		
+
+		<p name="R1" desc="[мм] Внутренний радиус" default="80.0"></p>
+		<p name="R2" desc="[мм] Внешний радиус" default="100.0"></p>
+		<p name="a" desc="[градусы] Разворот дуги" default="90.0"></p>
+
+		${new Condition('Внутренний радиус должен быть меньше внешнего', `R1 < R2`)}
+
+	</params>
+	`,
+};
 
 // generate(figure_11);
 // generate(figure_12);
 // generate(figure_13);
 // generate(figure_14);
-// generate(figure_15);
+generate(figure_15); // Угловое соединени
 
 // generate(figure_16);
 
@@ -713,7 +771,9 @@ const figure_23: IGenerate = {
 // generate(figure_22);
 
 // 13.02
-generate(figure_0_1);
-generate(figure_0_2);
-generate(figure_24);
-generate(figure_23);
+// generate(figure_0_1);
+// generate(figure_0_2);
+// generate(figure_24);
+// generate(figure_23);
+generate(figure_26);
+generate(figure_14);
