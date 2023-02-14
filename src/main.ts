@@ -776,13 +776,44 @@ const figure_29: IGenerate = {
 	],
 	params: `
 	<params>
-		<p name="R" desc="[мм] Радиус" default="100.0"></p>
-		<p name="L" desc="[мм] Длина боковой стороны" default="100.0"></p>
-		<p name="a" desc="[градусы] Разворот дуги" default="60.0"></p>
+		<p name="R" desc="[мм] Радиус" default="60.0"></p>
+		<p name="L" desc="[мм] Длина боковой стороны" default="200.0"></p>
+		<p name="a" desc="[градусы] Разворот дуги" default="120.0"></p>
 	</params>
 	`,
 };
 
+const figure_30: IGenerate = {
+	name: `_30 Трапецоид дуги с отверстием`,
+	primitives: [
+		new Arc(
+			[0, 0],
+			'R',
+			'(M_PI / 2) - ((a / 2) * (M_PI / 180))',
+			'(M_PI / 2) + ((a / 2) * (M_PI / 180))',
+			false,
+		),
+		new LinePath([
+			['-(R * SIN(a/2))', '(R * COS(a/2))'],
+			['-(R * SIN(a/2) + L * COS(a/2))', '(R * COS(a/2)) - (L * SIN(a/2))'],
+
+			['(R * SIN(a/2)) + (L * COS(a/2))', '(R * COS(a/2)) - (L * SIN(a/2))'],
+			['R * SIN(a/2)', 'R * COS(a/2)'],
+		]),
+
+		new Circle([0, 0], 'R1'),
+	],
+	params: `
+	<params>
+		<p name="R" desc="[мм] Радиус" default="70.0"></p>
+		<p name="R1" desc="[мм] Внутренний радиус" default="50.0"></p>
+		<p name="L" desc="[мм] Длина боковой стороны" default="200.0"></p>
+		<p name="a" desc="[градусы] Разворот дуги" default="120.0"></p>
+
+		${new Condition('Внутренний радиус должен быть меньше внешнего', `R1 < R`)}
+	</params>
+	`,
+};
 // generate(figure_11);
 // generate(figure_12);
 // generate(figure_13);
@@ -810,6 +841,9 @@ const figure_29: IGenerate = {
 // generate(figure_0_2);
 // generate(figure_24);
 // generate(figure_23);
-generate(figure_26);
-generate(figure_14);
+// generate(figure_26);
+// generate(figure_14);
+
+// 14.02
 generate(figure_29);
+generate(figure_30);
