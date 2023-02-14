@@ -21,9 +21,9 @@ export function generate({ name, primitives, params }: IGenerate): void {
 </template>
 		`;
 
-	writeFile(`../${name}.template`, encodeToWindows1251(output), (err) => {
+	writeFile(`../templates/${name}.template`, encodeToWindows1251(output), (err) => {
 		if (err) throw err;
 
-		console.log(`file: "../${name}.temp" created`);
+		console.log(`file: "../templates/${name}.temp" created`);
 	});
 }
