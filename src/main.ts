@@ -666,6 +666,14 @@ const missing_pronest = {
 		name: 'Правый кругообразный конус ',
 		description: 'Непонятная деталь',
 	},
+	27: {
+		name: 'Отдельный зубец ',
+		description: '???',
+	},
+	28: {
+		name: 'Цепное колесо ',
+		description: 'Отдельный зубей',
+	},
 };
 
 const figure_26: IGenerate = {
@@ -748,11 +756,38 @@ const figure_14: IGenerate = {
 	`,
 };
 
+const figure_29: IGenerate = {
+	name: `_29 Трапецоид дуги`,
+	primitives: [
+		new Arc(
+			[0, 0],
+			'R',
+			'(M_PI / 2) - ((a / 2) * (M_PI / 180))',
+			'(M_PI / 2) + ((a / 2) * (M_PI / 180))',
+			false,
+		),
+		new LinePath([
+			['-(R * SIN(a/2))', '(R * COS(a/2))'],
+			['-(R * SIN(a/2) + L * COS(a/2))', '(R * COS(a/2)) - (L * SIN(a/2))'],
+
+			['(R * SIN(a/2)) + (L * COS(a/2))', '(R * COS(a/2)) - (L * SIN(a/2))'],
+			['R * SIN(a/2)', 'R * COS(a/2)'],
+		]),
+	],
+	params: `
+	<params>
+		<p name="R" desc="[мм] Радиус" default="100.0"></p>
+		<p name="L" desc="[мм] Длина боковой стороны" default="100.0"></p>
+		<p name="a" desc="[градусы] Разворот дуги" default="60.0"></p>
+	</params>
+	`,
+};
+
 // generate(figure_11);
 // generate(figure_12);
 // generate(figure_13);
 // generate(figure_14);
-generate(figure_15); // Угловое соединени
+// generate(figure_15); // Угловое соединени
 
 // generate(figure_16);
 
@@ -777,3 +812,4 @@ generate(figure_15); // Угловое соединени
 // generate(figure_23);
 generate(figure_26);
 generate(figure_14);
+generate(figure_29);
