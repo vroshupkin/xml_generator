@@ -836,6 +836,63 @@ const figure_35: IGenerate = {
 	</params>
 	`,
 };
+
+const f_36: { x: string; y: string; L: string } = {
+	x: `(W2 + W3 - W1)`,
+	y: `(H1 + H2)`,
+	L: `(SQRT((W2 + W3 - W1) * (W2 + W3 - W1) + (H1 + H2) * (H1 + H2)))`,
+};
+
+const figure_36: IGenerate = {
+	name: `_36 Верхнее угловое соединение опоры`,
+	primitives: [
+		new LineXML([0, 0], ['-(W1 - R1)', 0]),
+		new Arc(['-(W1 - R1)', 'R1'], 'R1', '3 * M_PI / 2', 'M_PI', true),
+
+		new LinePath([
+			['-(W1)', 'R1'],
+			['-(W1)', 'H1'],
+			['-(W1 - W2)', 'H1'],
+			['-(W1 - W2)', 'H1 + H2'],
+			[`${f_36.x}`, `${f_36.y}`],
+		]),
+
+		new Arc(
+			[
+				`((${f_36.x} / 2) + (R * ${f_36.y} / ${f_36.L}))`,
+				`((${f_36.y} / 2) - (R * ${f_36.x} / ${f_36.L}))`,
+			],
+			`SQRT(((${f_36.x} / 2) + (R * ${f_36.y} / ${f_36.L})) * ((${f_36.x} / 2) + (R * ${f_36.y} / ${f_36.L})) +  ((${f_36.y} / 2) - (R * ${f_36.x} / ${f_36.L})) * ((${f_36.y} / 2) - (R * ${f_36.x} / ${f_36.L})))`,
+
+			`ATAN2((${f_36.y} / 2) + (R * ${f_36.x} / ${f_36.L}), ((${f_36.x} / 2) - (R * ${f_36.y} / ${f_36.L})))`,
+			`2 * M_PI + ATAN2( -((${f_36.y} / 2) - (R * ${f_36.x} / ${f_36.L})), -((${f_36.x} / 2) + (R * ${f_36.y} / ${f_36.L})) )`,
+
+			false,
+		),
+
+		// new Arc([0, 0], 'SQRT(25 + 16)', 'ATAN2(4, -5)', `ATAN2(2, -4)`, false),
+		// // new Arc([0, 0], 'SQRT(25 + 16)', '0', `M_PI/4`, true),
+		// new LineXML([0, 0], [-5, 4]),
+		// new LineXML([0, 0], [-4, 2]),
+	],
+	params: `
+	<params>
+
+		<p name="W1" desc="[мм] Длина основания" default="200.0"></p>
+		<p name="W2" desc="[мм] Средняя длина " default="100.0"></p>
+		<p name="W3" desc="[мм] Верхняя длина " default="150.0"></p>
+
+		<p name="H1" desc="[мм] Высота первой ступени " default="100.0"></p>
+		<p name="H2" desc="[мм] Высота второй ступени " default="100.0"></p>
+
+		<p name="R1" desc="[мм] Радиус скругления детали" default="25.0"></p>
+		<p name="R" desc="[мм] Радиус правой стороны" default="250.0"></p>
+		
+		
+		${new Condition('Сумма средней и верхней длины должна быть больше длины основания', `W2 + W3 > W1`)}
+	</params>
+	`,
+};
 // generate(figure_11);
 // generate(figure_12);
 // generate(figure_13);
@@ -867,6 +924,9 @@ const figure_35: IGenerate = {
 // generate(figure_14);
 
 // 14.02
-generate(figure_29);
-generate(figure_30);
-generate(figure_35);
+// generate(figure_29);
+// generate(figure_30);
+// generate(figure_35);
+
+// 15.02
+generate(figure_36);
