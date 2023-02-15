@@ -661,21 +661,6 @@ const figure_23: IGenerate = {
 	`,
 };
 
-const missing_pronest = {
-	25: {
-		name: 'Правый кругообразный конус ',
-		description: 'Непонятная деталь',
-	},
-	27: {
-		name: 'Отдельный зубец ',
-		description: '???',
-	},
-	28: {
-		name: 'Цепное колесо ',
-		description: 'Отдельный зубей',
-	},
-};
-
 const figure_26: IGenerate = {
 	name: `_26 Ушко`,
 	primitives: [
@@ -814,6 +799,43 @@ const figure_30: IGenerate = {
 	</params>
 	`,
 };
+
+const figure_35: IGenerate = {
+	name: `_35 Прямоугольник с проемами`,
+	primitives: [
+		new LineXML(['(W/2) - R1', 0], ['-(W/2) - R1', 0]),
+		new Arc(['-(W/2) - R1', 'R1'], 'R1', '3 * M_PI / 2', 'M_PI', true),
+		new Circle(['-(W/2) - R1', 'R1'], 'R2'),
+
+		new LineXML(['-(W/2)', 'R1'], ['-(W/2)', 'H - R1']),
+		new Arc(['-(W/2) - R1', 'H - R1'], 'R1', 'M_PI ', 'M_PI / 2', true),
+		new Circle(['-(W/2) - R1', 'H - R1'], 'R2'),
+
+		new LineXML(['-((W/2) - R1)', 'H'], ['((W/2) - R1)', 'H']),
+		new Arc(['((W/2) - R1)', 'H - R1'], 'R1', 'M_PI / 2 ', '0 * M_PI', true),
+		new Circle(['((W/2) - R1)', 'H - R1'], 'R2'),
+
+		new LineXML(['W/2', 'H - R1'], ['W/2', 'R1']),
+		new Arc(['((W/2) - R1)', 'R1'], 'R1', '0', '3 * M_PI / 2', true),
+		new Circle(['((W/2) - R1)', 'R1'], 'R2'),
+
+		new Circle(['0', 'R1'], 'R2'),
+		new Circle(['0', 'H - R1'], 'R2'),
+		// new Circle(['((W/2) - R1)', 'R1'], 'R2'),
+	],
+	params: `
+	<params>
+
+		<p name="R1" desc="[мм] Радиус скругления детали" default="25.0"></p>
+		<p name="R2" desc="[мм] Радиус отверстия" default="10.0"></p>
+		
+		<p name="W" desc="[мм] Длина " default="500.0"></p>
+		<p name="H" desc="[мм] Высота " default="200.0"></p>
+		
+		
+	</params>
+	`,
+};
 // generate(figure_11);
 // generate(figure_12);
 // generate(figure_13);
@@ -847,3 +869,4 @@ const figure_30: IGenerate = {
 // 14.02
 generate(figure_29);
 generate(figure_30);
+generate(figure_35);
