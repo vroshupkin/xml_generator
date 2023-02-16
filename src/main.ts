@@ -837,38 +837,68 @@ const figure_35: IGenerate = {
 	`,
 };
 
-const f_36: { x: string; y: string; L: string } = {
+const f = {
 	x: `(W2 + W3 - W1)`,
 	y: `(H1 + H2)`,
-	L: `(SQRT((W2 + W3 - W1) * (W2 + W3 - W1) + (H1 + H2) * (H1 + H2)))`,
+
+	x_2: `((W2 + W3 - W1) * (W2 + W3 - W1))`,
+	x_3: `((W2 + W3 - W1) * (W2 + W3 - W1) * (W2 + W3 - W1))`,
+	x_4: `((W2 + W3 - W1) * (W2 + W3 - W1) * (W2 + W3 - W1) * (W2 + W3 - W1))`,
+
+	y_2: `((H1 + H2) * (H1 + H2))`,
+	y_3: `((H1 + H2) * (H1 + H2) * (H1 + H2))`,
+	y_4: `((H1 + H2) * (H1 + H2) * (H1 + H2) * (H1 + H2))`,
 };
+
+const A = `(${f.x_2} + ${f.y_2})`;
+
+const f_sqrt = `( SQRT( -(${f.y_2}) * ${A} * ((-(4 * R * R)) + ${A})) )`;
+// const f_sqrt = `( SQRT( (-${40000}) * ${42500} * ( (-(4 * ${62500}) ) + ${42500})) )`;
+
+const calcBracket = (str: string): void => {
+	let openBracket = 0;
+	let closeBracket = 0;
+
+	for (const ch of str) {
+		if (ch === '(') {
+			openBracket++;
+		}
+		if (ch === ')') {
+			closeBracket++;
+		}
+	}
+
+	console.log(`(:${openBracket} ): ${closeBracket}`);
+};
+
+calcBracket(`( SQRT( -(${f.y_2}) * ${A} * (-(4 * R * R) + ${A})) )`);
+calcBracket(`  (${f_sqrt} + (${f.x} * ${A})) / (2 * ${A})`);
+calcBracket(`(-((${f.x} * ${f_sqrt} + (${f.y_2} * ${A})) / (2 * ${f.y} * ${A})))`);
 
 const figure_36: IGenerate = {
 	name: `_36 Верхнее угловое соединение опоры`,
 	primitives: [
 		new LineXML([0, 0], ['-(W1 - R1)', 0]),
-		new Arc(['-(W1 - R1)', 'R1'], 'R1', '3 * M_PI / 2', 'M_PI', true),
+		// new Arc(['-(W1 - R1)', 'R1'], 'R1', '3 * M_PI / 2', 'M_PI', true),
 
 		new LinePath([
 			['-(W1)', 'R1'],
 			['-(W1)', 'H1'],
 			['-(W1 - W2)', 'H1'],
 			['-(W1 - W2)', 'H1 + H2'],
-			[`${f_36.x}`, `${f_36.y}`],
+			[`${f.x}`, `${f.y}`],
 		]),
 
-		new Arc(
+		new Circle(
 			[
-				`((${f_36.x} / 2) + (R * ${f_36.y} / ${f_36.L}))`,
-				`((${f_36.y} / 2) - (R * ${f_36.x} / ${f_36.L}))`,
+				`  (${f_sqrt} + (${f.x} * ${A})) / (2 * ${A})`,
+				`(((((-(${f.x})) * ${f_sqrt} + (${f.y_2} * ${A}))) / (2 * ${f.y} * ${A})))`,
 			],
-			`SQRT(((${f_36.x} / 2) + (R * ${f_36.y} / ${f_36.L})) * ((${f_36.x} / 2) + (R * ${f_36.y} / ${f_36.L})) +  ((${f_36.y} / 2) - (R * ${f_36.x} / ${f_36.L})) * ((${f_36.y} / 2) - (R * ${f_36.x} / ${f_36.L})))`,
-
-			`ATAN2((${f_36.y} / 2) + (R * ${f_36.x} / ${f_36.L}), ((${f_36.x} / 2) - (R * ${f_36.y} / ${f_36.L})))`,
-			`2 * M_PI + ATAN2( -((${f_36.y} / 2) - (R * ${f_36.x} / ${f_36.L})), -((${f_36.x} / 2) + (R * ${f_36.y} / ${f_36.L})) )`,
-
-			false,
+			`R`,
 		),
+
+		new Circle([0, 0], `R`),
+		new Circle([f.x, f.y], `R`),
 
 		// new Arc([0, 0], 'SQRT(25 + 16)', 'ATAN2(4, -5)', `ATAN2(2, -4)`, false),
 		// // new Arc([0, 0], 'SQRT(25 + 16)', '0', `M_PI/4`, true),
@@ -893,6 +923,7 @@ const figure_36: IGenerate = {
 	</params>
 	`,
 };
+
 // generate(figure_11);
 // generate(figure_12);
 // generate(figure_13);
