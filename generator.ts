@@ -1,10 +1,10 @@
 import { encodeToWindows1251 } from './src/common/encodeToWindows1251';
-import { Arc, Circle, LineXML, LinePath, Rotate } from './src/figures';
+import { Arc, Circle, LineXML, LinePath, Rotate, TFigure } from './src/figures';
 import { writeFile } from 'node:fs';
 
 export interface IGenerate {
 	name: string;
-	primitives: (LineXML | Arc | Circle | LinePath | Rotate)[];
+	primitives: TFigure[];
 	params: string;
 }
 

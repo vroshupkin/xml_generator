@@ -1,5 +1,6 @@
 import { coordinate, IFigureOperation } from './figure.interface';
 
+export type TFigure = LineXML | Arc | Circle | LinePath | Rotate | Arc_3points;
 export class Arc {
 	/**
 	 * @param start_point [coord, coord]
@@ -27,6 +28,41 @@ export class Arc {
         <point>
             <x>${this.start_point[0]}</x>
             <y>${this.start_point[1]}</y>
+        </point>
+    </arc>
+`;
+	}
+}
+
+/**
+ * Дуга по 3 точкам
+ */
+export class Arc_3points {
+	/**
+	 * @param radius [мм]
+
+	 * @param clockwise
+	 */
+	constructor(
+		private p0: [coordinate, coordinate],
+		private p1: [coordinate, coordinate],
+		private p2: [coordinate, coordinate],
+	) {}
+
+	toString(): string {
+		return `
+    <arc >
+        <point>
+            <x>${this.p0[0]}</x>
+            <y>${this.p0[1]}</y>
+        </point>
+		<point>
+            <x>${this.p1[0]}</x>
+            <y>${this.p1[1]}</y>
+        </point>
+		<point>
+            <x>${this.p2[0]}</x>
+            <y>${this.p2[1]}</y>
         </point>
     </arc>
 `;

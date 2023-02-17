@@ -1,6 +1,6 @@
 import { generate, IGenerate } from '../generator';
 import { IDetail } from './generator.interface';
-import { LineXML, Arc, Circle, linePath, LinePath, Rotate } from './figures';
+import { LineXML, Arc, Circle, linePath, LinePath, Rotate, Arc_3points } from './figures';
 import { coordinate } from './figure.interface';
 class Condition {
 	constructor(private text: string, private condition: string) {}
@@ -920,8 +920,10 @@ const figure_36: IGenerate = {
 			`R`,
 		),
 
-		new Circle([0, 0], `R`),
-		new Circle([f.x, f.y], `R`),
+		// new Circle([0, 0], `R`),
+		// new Circle([f.x, f.y], `R`),
+
+		new Arc_3points([0, 0], ['W1/2', '(R - SQRT(R * R - W1 * W1 / 4))'], ['W1', 0]),
 
 		// new Arc([0, 0], 'SQRT(25 + 16)', 'ATAN2(4, -5)', `ATAN2(2, -4)`, false),
 		// // new Arc([0, 0], 'SQRT(25 + 16)', '0', `M_PI/4`, true),
