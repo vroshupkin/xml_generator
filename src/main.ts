@@ -898,17 +898,20 @@ checkBracker(`( SQRT( -(${f.y_2}) * ${A} * (-(4 * R * R) + ${A}) ))`);
 checkBracker(`  (${f_sqrt} + (${f.x} * ${A})) / (2 * ${A})`);
 checkBracker(`(-((${f.x} * ${f_sqrt} + (${f.y_2} * ${A})) / (2 * ${f.y} * ${A})))`);
 
-const x0 = `(100)`;
-const y0 = `(200)`;
+const x0 = `(${f.x})`;
+const y0 = `(${f.y})`;
 
-const x1 = `(200)`;
-const y1 = `(250)`;
+const x1 = `(0)`;
+const y1 = `(0)`;
 
 const X = `(${x1} - ${x0})`;
 const Y = `(${y1} - ${y0})`;
-const z_L = `( SQRT(R * R - SQRT(R * R - ((${X} * ${X} + ${Y} * ${Y}) / 4 ) )) )`;
-const z_alpha = `( ATAN2(${Y}, ${Y}) )`;
-const v1 = [`${x0} + (${z_L} / 2) + COS(${z_alpha})`, `${y0} + SIN(${z_alpha}) * ${z_L}`];
+const z_L = `( R - SQRT((R * R) - ((${X} * ${X} + ${Y} * ${Y})) / 4 ) )`;
+const z_alpha = `( ATAN2(${Y}, ${X}) )`;
+const v1 = [
+	`${x0} + (${z_L} / 2) + COS(180 + ${z_alpha} * (180 / M_PI)) * ${z_L}`,
+	`${y0} + SIN(180 + ${z_alpha} * (180 / M_PI)) * ${z_L} `,
+];
 
 checkBracker(z_L);
 checkBracker(z_alpha);
@@ -918,16 +921,16 @@ checkBracker(v1[1]);
 const figure_36: IGenerate = {
 	name: `_36 Верхнее угловое соединение опоры`,
 	primitives: [
-		// new LineXML([0, 0], ['-(W1 - R1)', 0]),
-		// // new Arc(['-(W1 - R1)', 'R1'], 'R1', '3 * M_PI / 2', 'M_PI', true),
+		new LineXML([0, 0], ['-(W1 - R1)', 0]),
+		new Arc(['-(W1 - R1)', 'R1'], 'R1', '3 * M_PI / 2', 'M_PI', true),
 
-		// new LinePath([
-		// 	['-(W1)', 'R1'],
-		// 	['-(W1)', 'H1'],
-		// 	['-(W1 - W2)', 'H1'],
-		// 	['-(W1 - W2)', 'H1 + H2'],
-		// 	[`${f.x}`, `${f.y}`],
-		// ]),
+		new LinePath([
+			['-(W1)', 'R1'],
+			['-(W1)', 'H1'],
+			['-(W1 - W2)', 'H1'],
+			['-(W1 - W2)', 'H1 + H2'],
+			[`${f.x}`, `${f.y}`],
+		]),
 
 		// new Circle(
 		// 	[
@@ -940,22 +943,15 @@ const figure_36: IGenerate = {
 		// new Circle([0, 0], `R`),
 		// new Circle([f.x, f.y], `R`),
 
-		new Arc_3points([0, 0], ['W1/2', '(R - SQRT(R * R - W1 * W1 / 4))'], ['W1', 0]),
-
 		// new Arc([0, 0], 'SQRT(25 + 16)', 'ATAN2(4, -5)', `ATAN2(2, -4)`, false),
 		// // new Arc([0, 0], 'SQRT(25 + 16)', '0', `M_PI/4`, true),
 		// new LineXML([0, 0], [-5, 4]),
 		// new LineXML([0, 0], [-4, 2]),
 
-		new LinePath([
-			[0, 0],
-			[`${v1[0]}`, `${v1[1]}`],
-		]),
-
-		new LinePath([
-			[x0, y0],
-			[y0, y1],
-		]),
+		// new LinePath([
+		// 	[x0, y0],
+		// 	[x1, y1],
+		// ]),
 
 		new Arc_3points([x0, y0], [v1[0], v1[1]], [x1, y1]),
 	],
