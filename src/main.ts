@@ -2,6 +2,7 @@ import { generate, IGenerate } from '../generator';
 import { IDetail } from './generator.interface';
 import { LineXML, Arc, Circle, linePath, LinePath, Rotate, Arc_3points } from './figures';
 import { coordinate } from './figure.interface';
+import { checkBracker } from './common/parser';
 class Condition {
 	constructor(private text: string, private condition: string) {}
 
@@ -870,29 +871,6 @@ const f_sqrt = `( SQRT( -(${f.y_2}) * ${A} * ((-(4 * R * R)) + ${A})) )`;
 
 // 	console.log(`(:${openBracket} ): ${closeBracket}`);
 // };
-const checkBracker = (str: string): boolean => {
-	const openBracket = [];
-
-	let i = 0;
-	for (const ch of str) {
-		if (ch === '(') {
-			openBracket.push(i);
-		}
-		if (ch === ')') {
-			if (openBracket.length > 0) {
-				openBracket.pop();
-			} else {
-				throw new Error(`Беcпарная ')' скобка ${i}\n ${str}`);
-			}
-		}
-		i++;
-	}
-	if (openBracket.length > 0) {
-		throw new Error(`Лишние скобки на индексах: ${openBracket}. Или не достает скобок`);
-	}
-
-	return true;
-};
 
 checkBracker(`( SQRT( -(${f.y_2}) * ${A} * (-(4 * R * R) + ${A}) ))`);
 checkBracker(`  (${f_sqrt} + (${f.x} * ${A})) / (2 * ${A})`);
@@ -906,17 +884,30 @@ const y1 = `(0)`;
 
 const X = `(${x1} - ${x0})`;
 const Y = `(${y1} - ${y0})`;
-const z_L = `( R - SQRT((R * R) - ((${X} * ${X} + ${Y} * ${Y})) / 4 ) )`;
-const z_alpha = `( ATAN2(${Y}, ${X}) )`;
-const v1 = [
-	`${x0} + (${z_L} / 2) + COS(180 + ${z_alpha} * (180 / M_PI)) * ${z_L}`,
-	`${y0} + SIN(180 + ${z_alpha} * (180 / M_PI)) * ${z_L} `,
-];
 
+const z_L = `( R - SQRT((R * R) - ((${X} * ${X} + ${Y} * ${Y})) / 4 ) )`;
 checkBracker(z_L);
-checkBracker(z_alpha);
-checkBracker(v1[0]);
-checkBracker(v1[1]);
+
+const alpha_rad = `( ATAN2(${Y}, ${X}) )`;
+const alpha_deg = `( 180 * ATAN2(${Y}, ${X}) / (M_PI) )`;
+checkBracker(alpha_rad);
+checkBracker(alpha_deg);
+
+const vec_0 = [`( 0 )`, `( R - SQRT(R * R - (${X} * ${X} + ${Y} * ${Y} / 4)) )`];
+const vec_1 = [`( -( SIN(${alpha_deg}) * ${z_L})`, `COS(${alpha_deg}) * ${z_L})`];
+const vec_2 = [`( (${x1} + ${x0}) / 2) + ${vec_1[0]}`, `( (${y1} + ${y0}) / 2) + ${vec_1[1]}`];
+
+checkBracker(vec_0[0]);
+checkBracker(vec_0[1]);
+checkBracker(vec_1[0]);
+checkBracker(vec_1[1]);
+checkBracker(vec_2[0]);
+checkBracker(vec_2[1]);
+
+// const v1 = [
+// 	`${x0} + (${z_L} / 2) + COS(180 + ${alpha} * (180 / M_PI)) * ${z_L}`,
+// 	`${y0} + SIN(180 + ${alpha} * (180 / M_PI)) * ${z_L} `,
+// ];
 
 const figure_36: IGenerate = {
 	name: `_36 Верхнее угловое соединение опоры`,
@@ -953,7 +944,7 @@ const figure_36: IGenerate = {
 		// 	[x1, y1],
 		// ]),
 
-		new Arc_3points([x0, y0], [v1[0], v1[1]], [x1, y1]),
+		// new Arc_3points([x0, y0], [v1[0], v1[1]], [x1, y1]),
 	],
 	params: `
 	<params>
