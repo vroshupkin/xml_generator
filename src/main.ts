@@ -882,7 +882,7 @@ const checkBracker = (str: string): boolean => {
 			if (openBracket.length > 0) {
 				openBracket.pop();
 			} else {
-				throw new Error(`Безпарная ')' скобка ${i}`);
+				throw new Error(`Беcпарная ')' скобка ${i}\n ${str}`);
 			}
 		}
 		i++;
@@ -898,27 +898,44 @@ checkBracker(`( SQRT( -(${f.y_2}) * ${A} * (-(4 * R * R) + ${A}) ))`);
 checkBracker(`  (${f_sqrt} + (${f.x} * ${A})) / (2 * ${A})`);
 checkBracker(`(-((${f.x} * ${f_sqrt} + (${f.y_2} * ${A})) / (2 * ${f.y} * ${A})))`);
 
+const x0 = `(100)`;
+const y0 = `(200)`;
+
+const x1 = `(200)`;
+const y1 = `(250)`;
+
+const X = `(${x1} - ${x0})`;
+const Y = `(${y1} - ${y0})`;
+const z_L = `( SQRT(R * R - SQRT(R * R - ((${X} * ${X} + ${Y} * ${Y}) / 4 ) )) )`;
+const z_alpha = `( ATAN2(${Y}, ${Y}) )`;
+const v1 = [`${x0} + (${z_L} / 2) + COS(${z_alpha})`, `${y0} + SIN(${z_alpha}) * ${z_L}`];
+
+checkBracker(z_L);
+checkBracker(z_alpha);
+checkBracker(v1[0]);
+checkBracker(v1[1]);
+
 const figure_36: IGenerate = {
 	name: `_36 Верхнее угловое соединение опоры`,
 	primitives: [
-		new LineXML([0, 0], ['-(W1 - R1)', 0]),
-		// new Arc(['-(W1 - R1)', 'R1'], 'R1', '3 * M_PI / 2', 'M_PI', true),
+		// new LineXML([0, 0], ['-(W1 - R1)', 0]),
+		// // new Arc(['-(W1 - R1)', 'R1'], 'R1', '3 * M_PI / 2', 'M_PI', true),
 
-		new LinePath([
-			['-(W1)', 'R1'],
-			['-(W1)', 'H1'],
-			['-(W1 - W2)', 'H1'],
-			['-(W1 - W2)', 'H1 + H2'],
-			[`${f.x}`, `${f.y}`],
-		]),
+		// new LinePath([
+		// 	['-(W1)', 'R1'],
+		// 	['-(W1)', 'H1'],
+		// 	['-(W1 - W2)', 'H1'],
+		// 	['-(W1 - W2)', 'H1 + H2'],
+		// 	[`${f.x}`, `${f.y}`],
+		// ]),
 
-		new Circle(
-			[
-				`  (${f_sqrt} + (${f.x} * ${A})) / (2 * ${A})`,
-				`(((((-(${f.x})) * ${f_sqrt} + (${f.y_2} * ${A}))) / (2 * ${f.y} * ${A})))`,
-			],
-			`R`,
-		),
+		// new Circle(
+		// 	[
+		// 		`  (${f_sqrt} + (${f.x} * ${A})) / (2 * ${A})`,
+		// 		`(((((-(${f.x})) * ${f_sqrt} + (${f.y_2} * ${A}))) / (2 * ${f.y} * ${A})))`,
+		// 	],
+		// 	`R`,
+		// ),
 
 		// new Circle([0, 0], `R`),
 		// new Circle([f.x, f.y], `R`),
@@ -929,6 +946,18 @@ const figure_36: IGenerate = {
 		// // new Arc([0, 0], 'SQRT(25 + 16)', '0', `M_PI/4`, true),
 		// new LineXML([0, 0], [-5, 4]),
 		// new LineXML([0, 0], [-4, 2]),
+
+		new LinePath([
+			[0, 0],
+			[`${v1[0]}`, `${v1[1]}`],
+		]),
+
+		new LinePath([
+			[x0, y0],
+			[y0, y1],
+		]),
+
+		new Arc_3points([x0, y0], [v1[0], v1[1]], [x1, y1]),
 	],
 	params: `
 	<params>
@@ -941,7 +970,7 @@ const figure_36: IGenerate = {
 		<p name="H2" desc="[мм] Высота второй ступени " default="100.0"></p>
 
 		<p name="R1" desc="[мм] Радиус скругления детали" default="25.0"></p>
-		<p name="R" desc="[мм] Радиус правой стороны" default="250.0"></p>
+		<p name="R" desc="[мм] Радиус правой стороны" default="550.0"></p>
 		
 		
 		${new Condition('Сумма средней и верхней длины должна быть больше длины основания', `W2 + W3 > W1`)}
