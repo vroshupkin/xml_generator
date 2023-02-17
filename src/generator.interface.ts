@@ -1,5 +1,3 @@
-export type coordinate = number | string;
-
 export interface IDetail {
 	order: number;
 	pronest_name: string;

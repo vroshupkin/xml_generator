@@ -1,7 +1,7 @@
 import { generate, IGenerate } from '../generator';
-import { coordinate, IDetail } from './generator.interface';
-import { LineXML, Arc, Circle, linePath, LinePath, Rotate } from './primitives';
-
+import { IDetail } from './generator.interface';
+import { LineXML, Arc, Circle, linePath, LinePath, Rotate } from './figures';
+import { coordinate } from './figure.interface';
 class Condition {
 	constructor(private text: string, private condition: string) {}
 
@@ -855,25 +855,48 @@ const A = `(${f.x_2} + ${f.y_2})`;
 const f_sqrt = `( SQRT( -(${f.y_2}) * ${A} * ((-(4 * R * R)) + ${A})) )`;
 // const f_sqrt = `( SQRT( (-${40000}) * ${42500} * ( (-(4 * ${62500}) ) + ${42500})) )`;
 
-const calcBracket = (str: string): void => {
-	let openBracket = 0;
-	let closeBracket = 0;
+// const calcBracket = (str: string): void => {
+// 	let openBracket = 0;
+// 	let closeBracket = 0;
 
+// 	for (const ch of str) {
+// 		if (ch === '(') {
+// 			openBracket++;
+// 		}
+// 		if (ch === ')') {
+// 			closeBracket++;
+// 		}
+// 	}
+
+// 	console.log(`(:${openBracket} ): ${closeBracket}`);
+// };
+const checkBracker = (str: string): boolean => {
+	const openBracket = [];
+
+	let i = 0;
 	for (const ch of str) {
 		if (ch === '(') {
-			openBracket++;
+			openBracket.push(i);
 		}
 		if (ch === ')') {
-			closeBracket++;
+			if (openBracket.length > 0) {
+				openBracket.pop();
+			} else {
+				throw new Error(`Безпарная ')' скобка ${i}`);
+			}
 		}
+		i++;
+	}
+	if (openBracket.length > 0) {
+		throw new Error(`Лишние скобки на индексах: ${openBracket}. Или не достает скобок`);
 	}
 
-	console.log(`(:${openBracket} ): ${closeBracket}`);
+	return true;
 };
 
-calcBracket(`( SQRT( -(${f.y_2}) * ${A} * (-(4 * R * R) + ${A})) )`);
-calcBracket(`  (${f_sqrt} + (${f.x} * ${A})) / (2 * ${A})`);
-calcBracket(`(-((${f.x} * ${f_sqrt} + (${f.y_2} * ${A})) / (2 * ${f.y} * ${A})))`);
+checkBracker(`( SQRT( -(${f.y_2}) * ${A} * (-(4 * R * R) + ${A}) ))`);
+checkBracker(`  (${f_sqrt} + (${f.x} * ${A})) / (2 * ${A})`);
+checkBracker(`(-((${f.x} * ${f_sqrt} + (${f.y_2} * ${A})) / (2 * ${f.y} * ${A})))`);
 
 const figure_36: IGenerate = {
 	name: `_36 Верхнее угловое соединение опоры`,

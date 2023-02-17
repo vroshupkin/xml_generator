@@ -1,5 +1,5 @@
 import { encodeToWindows1251 } from './src/common/encodeToWindows1251';
-import { Arc, Circle, LineXML, LinePath, Rotate } from './src/primitives';
+import { Arc, Circle, LineXML, LinePath, Rotate } from './src/figures';
 import { writeFile } from 'node:fs';
 
 export interface IGenerate {

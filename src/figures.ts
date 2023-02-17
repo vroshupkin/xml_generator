@@ -1,4 +1,4 @@
-import { coordinate } from './generator.interface';
+import { coordinate, IFigureOperation } from './figure.interface';
 
 export class Arc {
 	/**
@@ -88,7 +88,7 @@ export function linePath(coordinates: [coordinate, coordinate][]): LineXML[] {
 	return lines;
 }
 
-export class LinePath {
+export class LinePath implements IFigureOperation {
 	constructor(private coordinates: [coordinate, coordinate][]) {}
 
 	toString(): string {
@@ -104,6 +104,16 @@ export class LinePath {
 		}
 
 		return out;
+	}
+
+	rotate(point: [coordinate, coordinate]): void {
+		throw new Error('Method not implemented.');
+	}
+	scale(size: number): void {
+		throw new Error('Method not implemented.');
+	}
+	moveBy(point: [coordinate, coordinate]): void {
+		throw new Error('Method not implemented.');
 	}
 }
 

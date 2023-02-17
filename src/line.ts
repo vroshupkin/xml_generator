@@ -1,4 +1,4 @@
-import { coordinate } from './generator.interface';
+import { coordinate } from './figure.interface';
 
 type TPoint2D = [coordinate, coordinate];
 type TInterval = [coordinate, coordinate];
