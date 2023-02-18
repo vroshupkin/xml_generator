@@ -1118,7 +1118,54 @@ const figure_40: IGenerate = {
 		
 		${new GenerateVariable('dY', '[мм] Высота среза угла', 40)}
 
+		${new Arc_2points_and_radius(['-(W/2)', 'H'], ['(W/2)', 'H'], 'R1', 'right').generateParam(
+			'Радиус скругления сверху должен быть больше',
+		)}
 		${new Condition('Сдвиг окружностей от центра должен быть больше или равен радиусу', 'L1 >= R')}
+	</params>
+	`,
+};
+
+const figure_41: IGenerate = {
+	name: `Боковой сталкивающий лист`,
+	primitives: [
+		new Arc_2points_and_radius([0, 0], ['-(W)', 0], 'R1', 'right'),
+		new LinePath([
+			['-(W)', 0],
+			['-(W)', `(H1 - R)`],
+		]),
+
+		new Arc(['-(W)', 'H1'], 'R', '3 * M_PI / 2', 'M_PI/2', false),
+		new LinePath([
+			['-(W)', 'H1 + R'],
+			['-(W)', 'H'],
+			[0, 'H'],
+			[0, 'H1 + R'],
+		]),
+
+		new Arc(['0', 'H1'], 'R', 'M_PI/2', '3 * M_PI / 2', false),
+
+		new LinePath([
+			[0, 'H1 - R'],
+			[0, 0],
+		]),
+	],
+	params: `
+	<params>
+
+		<p name="H" desc="[мм] Высота детали" default="500.0"></p>
+		<p name="W" desc="[мм] Ширина детали" default="500.0"></p>
+
+
+		<p name="R" desc="[мм] Радиус боковых вырезов" default="70.0"></p>
+		<p name="H1" desc="[мм] Высота вырезов" default="320.0"></p>
+
+		<p name="R1" desc="[мм] Радиус нижнего скругления" default="500.0"></p>
+
+		${new Condition('Высота вырезов должна быть меньше высоты без радиуса', 'H1 < H + R')}
+		${new Condition('Высота вырезов должна быть больше радиуса', 'H1 > R')}
+		${new Condition('Ширина детали должна быть больше суммы 2ух радиусов выреза', 'W > R + R')}
+		
 	</params>
 	`,
 };
@@ -1149,6 +1196,7 @@ const figures_15_02 = [figure_36];
 
 generate(figure_39);
 generate(figure_40);
+generate(figure_41);
 
 console.log(
 	figures_xx_02.length +
