@@ -12,7 +12,7 @@ import {
 } from './figures';
 import { coordinate } from './figure.interface';
 import { checkBracker } from './common/parser';
-import { Condition } from './condition';
+import { Condition, GenerateVariable } from './condition';
 
 interface IParams {
 	tag: 'p' | 'condition';
@@ -1069,6 +1069,60 @@ const figure_39: IGenerate = {
 	`,
 };
 
+const figure_40: IGenerate = {
+	name: `Прямоугольный лист отсчёта`,
+	primitives: [
+		new LinePath([
+			[0, 0],
+			['-(L1 - R)', 0],
+		]),
+
+		new Arc(['(-(L1))', 0], 'R', '0', 'M_PI', false),
+
+		new LinePath([
+			['-(L1 + R)', 0],
+			['-((W/2) - dX)', 0],
+			['-(W/2)', 'dY'],
+			['-(W/2)', 'H'],
+		]),
+
+		new Arc_2points_and_radius(['-(W/2)', 'H'], ['(W/2)', 'H'], 'R1', 'right'),
+
+		new LinePath([
+			['(W/2)', 'H'],
+			['(W/2)', 'dY'],
+			['((W/2) - dX)', 0],
+			['(L1 + R)', 0],
+		]),
+
+		new Arc(['L1', 0], 'R', '0', 'M_PI', false),
+
+		new LinePath([
+			['L1 - R', 0],
+			[0, 0],
+		]),
+	],
+	params: `
+	<params>
+		<p name="R" desc="[мм] Радиусы вырезов снизу" default="44.0"></p>
+		<p name="R1" desc="[мм] Радиус скругления сверху" default="500.0"></p>
+
+		<p name="H" desc="[мм] Высота детали" default="250.0"></p>
+		<p name="W" desc="[мм] Ширина детали" default="500.0"></p>
+
+		<p name="L1" desc="[мм] Сдвиг окржностей от центра" default="74.0"></p>
+
+		<p name="dX" desc="[мм] Длина среза угла" default="40.0"></p>
+		<p name="dY" desc="[мм] Высота среза угла" default="40.0"></p>
+		
+		
+		${new GenerateVariable('dY', '[мм] Высота среза угла', 40)}
+
+		${new Condition('Сдвиг окружностей от центра должен быть больше или равен радиусу', 'L1 >= R')}
+	</params>
+	`,
+};
+
 const figures_xx_02 = [figure_11, figure_12, figure_13, figure_14, figure_15, figure_16];
 
 // 09.02
@@ -1094,6 +1148,7 @@ const figures_15_02 = [figure_36];
 // generate(figure_38);
 
 generate(figure_39);
+generate(figure_40);
 
 console.log(
 	figures_xx_02.length +
