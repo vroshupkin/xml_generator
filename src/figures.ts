@@ -1,6 +1,15 @@
+import { checkBracker } from './common/parser';
+import { Condition } from './condition';
 import { coordinate, IFigureOperation } from './figure.interface';
 
-export type TFigure = LineXML | Arc | Circle | LinePath | Rotate | Arc_3points;
+export type TFigure =
+	| LineXML
+	| Arc
+	| Circle
+	| LinePath
+	| Rotate
+	| Arc_3points
+	| Arc_2points_and_radius;
 export class Arc {
 	/**
 	 * @param start_point [coord, coord]
@@ -33,6 +42,11 @@ export class Arc {
 `;
 	}
 }
+
+// const v1 = [
+// 	`${x0} + (${z_L} / 2) + COS(180 + ${alpha} * (180 / M_PI)) * ${z_L}`,
+// 	`${y0} + SIN(180 + ${alpha} * (180 / M_PI)) * ${z_L} `,
+// ];
 
 /**
  * Дуга по 3 точкам
@@ -69,36 +83,75 @@ export class Arc_3points {
 	}
 }
 
-export class Arc_2points_with_radius {
+/* 
+	Дуга по двум точкам и радиус
+*/
+export class Arc_2points_and_radius {
 	/**
-	 * * @param radius [мм]
-	 * @param radius [мм]
-
-	 * @param clockwise
+	 * @param p0 [мм] 1-ая точка
+	 * @param p1 [мм] 2-ая точка
+	 * @param radius [мм] Радиус скругления
+	 * @param bend_direction - С какой стороны изгиб по направлению движения
 	 */
 	constructor(
 		private p0: [coordinate, coordinate],
 		private p1: [coordinate, coordinate],
-		private p2: [coordinate, coordinate],
+		private radius: string,
+		private bend_direction: 'left' | 'right' = 'left',
 	) {}
 
 	toString(): string {
-		return `
-    <arc >
-        <point>
-            <x>${this.p0[0]}</x>
-            <y>${this.p0[1]}</y>
-        </point>
-		<point>
-            <x>${this.p1[0]}</x>
-            <y>${this.p1[1]}</y>
-        </point>
-		<point>
-            <x>${this.p2[0]}</x>
-            <y>${this.p2[1]}</y>
-        </point>
-    </arc>
-`;
+		const R = this.radius;
+		const [x0, y0] = [this.p0[0] + '', this.p0[1] + ''];
+		const [x1, y1] = [this.p1[0] + '', this.p1[1] + ''];
+
+		const X = `(${x1} - ${x0})`;
+		const Y = `(${y1} - ${y0})`;
+
+		const z_L = `( ${R} - SQRT((${R} * ${R}) - ((${X} * ${X} + ${Y} * ${Y})) / 4 ) )`;
+		checkBracker(z_L);
+
+		const alpha_rad = `( ATAN2(${Y}, ${X}) )`;
+		const alpha_deg = `( 180 * ATAN2(${Y}, ${X}) / (M_PI) )`;
+		checkBracker(alpha_rad);
+		checkBracker(alpha_deg);
+
+		const sinSign = this.bend_direction === 'left' ? '-' : ' ';
+		const cosSign = this.bend_direction === 'left' ? ' ' : '-';
+
+		const vec_1 = [
+			`( ${sinSign}( SIN(${alpha_deg}) * ${z_L}) )`,
+			`( ${cosSign}( COS(${alpha_deg}) * ${z_L}) )`,
+		];
+		const vec_2 = [
+			`( (${x1} + ${x0}) / 2) + ${vec_1[0]}`,
+			`( (${y1} + ${y0}) / 2) + ${vec_1[1]}`,
+		];
+
+		checkBracker(vec_1[0]);
+		checkBracker(vec_1[1]);
+		checkBracker(vec_2[0]);
+		checkBracker(vec_2[1]);
+
+		return new Arc_3points(this.p0, vec_2 as [coordinate, coordinate], this.p1) + '';
+	}
+
+	/**
+	 * Генерирует <param> для валидации ошибок введенных данных
+	 * @param message Сообщение о ошибке
+	 */
+	generateParam(message: string): string {
+		const [x0, y0] = [this.p0[0] + '', this.p0[1] + ''];
+		const [x1, y1] = [this.p1[0] + '', this.p1[1] + ''];
+
+		const R = this.radius + '';
+		const X = `(${x1} - ${x0})`;
+		const Y = `(${y1} - ${y0})`;
+
+		const condition = `(${R} * ${R}) >= ( ((${X} * ${X} + ${Y} * ${Y})) / 4)`;
+		checkBracker(condition);
+
+		return new Condition(message, condition) + '';
 	}
 }
 
