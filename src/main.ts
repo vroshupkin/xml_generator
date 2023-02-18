@@ -14,62 +14,6 @@ import { coordinate } from './figure.interface';
 import { checkBracker } from './common/parser';
 import { Condition } from './condition';
 
-// function generate_1(): void {
-// 	const H = 'H';
-// 	const R = 'R';
-// 	const W = 'W';
-
-// 	const pimitives_1: (Line | Arc)[] = [
-// 		new Line([0, 0], [0, `(${H} / 2) - ${R}`]),
-
-// 		new Arc([0, 'H / 2'], `${R}`, '3 * M_PI / 2', 'M_PI / 2', false),
-// 		new Line([0, '(H / 2) + R'], ['0', 'H']),
-// 		new Line(['0', 'H'], ['(L / 2) - R', 'H']),
-
-// 		new Arc(['L / 2', 'H'], 'R', 'M_PI', '0', false),
-
-// 		new Line(['(L / 2) + R', 'H'], ['L', 'H']),
-// 		new Line(['L', 'H'], ['L', '(H / 2) + R']),
-
-// 		new Arc(['L', 'H / 2'], 'R', 'M_PI / 2', '3 * M_PI / 2', false),
-
-// 		new Line(['L', '(H / 2) - R'], ['L', '0']),
-// 		new Line(['L', '0'], ['(L / 2) + R', '0']),
-
-// 		new Arc(['L / 2', '0'], 'R', '0', 'M_PI', false),
-
-// 		new Line(['(L / 2) - R', 0], [0, 0]),
-// 	];
-
-// 	const xml_1 = pimitives_1.reduce((prev, curr) => prev + '' + curr + '', '');
-
-// 	const params = `
-// 	<params>
-// 		<p name="L" desc="[мм] Ширина" default="500.0"></p>
-// 		<p name="H" desc="[мм] Высота" default="300.0"></p>
-// 		<p name="R" desc="[мм] Радиус" default="50.0"></p>
-// 		<!-- <condition text="Ширина выреза должна быть меньша или равна половине ширине прямоугольника"><![CDATA[W2 <= W / 2]]></condition> -->
-// 	</params>
-// 	`;
-
-// 	const figure_name = `_9 Прямоугольник угла с желобом`;
-// 	const output = `
-// <?xml version="1.0" encoding="windows-1251"?>
-// <template name="${figure_name}">
-// 	${params}
-// <geom>
-// 		${xml_1}
-// </geom>
-// </template>
-// 		`;
-
-// 	writeFile(`./src/${figure_name}.template`, output, (err) => {
-// 		if (err) throw err;
-
-// 		console.log(`file: "./src/${figure_name}.template" created`);
-// 	});
-// }
-
 interface IParams {
 	tag: 'p' | 'condition';
 	obj: IParam_p | IParam_condition;
@@ -857,23 +801,6 @@ const f = {
 const A = `(${f.x_2} + ${f.y_2})`;
 
 const f_sqrt = `( SQRT( -(${f.y_2}) * ${A} * ((-(4 * R * R)) + ${A})) )`;
-// const f_sqrt = `( SQRT( (-${40000}) * ${42500} * ( (-(4 * ${62500}) ) + ${42500})) )`;
-
-// const calcBracket = (str: string): void => {
-// 	let openBracket = 0;
-// 	let closeBracket = 0;
-
-// 	for (const ch of str) {
-// 		if (ch === '(') {
-// 			openBracket++;
-// 		}
-// 		if (ch === ')') {
-// 			closeBracket++;
-// 		}
-// 	}
-
-// 	console.log(`(:${openBracket} ): ${closeBracket}`);
-// };
 
 checkBracker(`( SQRT( -(${f.y_2}) * ${A} * (-(4 * R * R) + ${A}) ))`);
 checkBracker(`  (${f_sqrt} + (${f.x} * ${A})) / (2 * ${A})`);
@@ -913,7 +840,7 @@ checkBracker(vec_2[1]);
 // ];
 
 const figure_36: IGenerate = {
-	name: `_36 Верхнее угловое соединение опоры`,
+	name: `Верхнее угловое соединение опоры`,
 	primitives: [
 		new LineXML([0, 0], ['-(W1 - R1)', 0]),
 		new Arc(['-(W1 - R1)', 'R1'], 'R1', '3 * M_PI / 2', 'M_PI', true),
@@ -951,7 +878,7 @@ const figure_36: IGenerate = {
 };
 
 const figure_36_left: IGenerate = {
-	name: `_36 Угловое соединение c выгнутой стороной`,
+	name: `Угловое соединение c выгнутой стороной`,
 	primitives: [
 		new LineXML([0, 0], ['-(W1 - R1)', 0]),
 		new Arc(['-(W1 - R1)', 'R1'], 'R1', '3 * M_PI / 2', 'M_PI', true),
@@ -989,7 +916,7 @@ const figure_36_left: IGenerate = {
 };
 
 const figure_37: IGenerate = {
-	name: `_37 Нижнее угловое соединение опоры`,
+	name: `Нижнее угловое соединение опоры`,
 	primitives: [
 		new LineXML([0, 0], ['-(W1 - R1)', 0]),
 		new Arc(['-(W1 - R1)', 'R1'], 'R1', '3 * M_PI / 2', 'M_PI', true),
@@ -1027,7 +954,7 @@ const figure_37: IGenerate = {
 };
 
 const figure_37_left: IGenerate = {
-	name: `_37_left Нижнее угловое соединение опоры c выгнутой стороной`,
+	name: `Нижнее угловое соединение опоры c выгнутой стороной`,
 	primitives: [
 		new LineXML([0, 0], ['-(W1 - R1)', 0]),
 		new Arc(['-(W1 - R1)', 'R1'], 'R1', '3 * M_PI / 2', 'M_PI', true),
@@ -1065,7 +992,7 @@ const figure_37_left: IGenerate = {
 };
 
 const figure_38: IGenerate = {
-	name: `_38 Круглый лист отсчёта`,
+	name: `Круглый лист отсчёта`,
 	primitives: [
 		new Arc([0, 0], 'R', '0', 'M_PI', false),
 
@@ -1094,6 +1021,54 @@ const figure_38: IGenerate = {
 	`,
 };
 
+const figure_39: IGenerate = {
+	name: `Лист поддержки глушителя`,
+	primitives: [
+		new LinePath([
+			[0, 0],
+			['(-( W - dL))', 0],
+		]),
+
+		new Arc_2points_and_radius(['(-( W - dL))', 0], ['(-W)', 'H'], 'R1', 'right'),
+
+		new LinePath([
+			['(-W)', 'H'],
+			['0', 'H'],
+		]),
+
+		new Arc([0, 'H - R'], 'R', 'M_PI / 2', '0', true),
+		new LinePath([
+			['R', 'H - R'],
+			['R', 'R'],
+		]),
+		new Arc([0, 'R'], 'R', '0', '3 * M_PI / 2', true),
+
+		new Circle(['-(X)', 'Y1'], 'R2'),
+		new Circle(['-(X)', 'Y2'], 'R2'),
+	],
+	params: `
+	<params>
+		<p name="R" desc="[мм] Радиус скругления краев справа" default="25.0"></p>
+		<p name="R1" desc="[мм] Радиус скругления слева" default="300.0"></p>
+		<p name="H" desc="[мм] Высота детали" default="250.0"></p>
+		<p name="W" desc="[мм] Ширина детали" default="250.0"></p>
+		<p name="dL" desc="[мм] Отступ слева" default="100.0"></p>
+
+		<p name="R2" desc="[мм] Радиус внутренних отверстий" default="10.0"></p>
+		<p name="X" desc="[мм] Сдвиг отверстий по X" default="25.0"></p>
+		<p name="Y1" desc="[мм] Сдвиг верхнего отверстия по Y" default="215.0"></p>
+		<p name="Y2" desc="[мм] Сдвиг нижнего отверстия по Y" default="40.0"></p>
+		
+		
+
+		${new Arc_2points_and_radius(['(-( W - dL))', 0], ['(-W)', 'H'], 'R1', 'right').generateParam(
+			'Радиус скругления слева должен быть больше',
+		)}
+		
+	</params>
+	`,
+};
+
 const figures_xx_02 = [figure_11, figure_12, figure_13, figure_14, figure_15, figure_16];
 
 // 09.02
@@ -1111,11 +1086,14 @@ const figures_14_02 = [figure_29, figure_30, figure_35];
 // 15.02
 const figures_15_02 = [figure_36];
 
-generate(figure_36);
-generate(figure_36_left);
-generate(figure_37);
-generate(figure_37_left);
-generate(figure_38);
+// 15.02
+// generate(figure_36);
+// generate(figure_36_left);
+// generate(figure_37);
+// generate(figure_37_left);
+// generate(figure_38);
+
+generate(figure_39);
 
 console.log(
 	figures_xx_02.length +

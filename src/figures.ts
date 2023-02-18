@@ -1,4 +1,4 @@
-import { checkBracker } from './common/parser';
+import { checkBracker as checkBracket } from './common/parser';
 import { Condition } from './condition';
 import { coordinate, IFigureOperation } from './figure.interface';
 
@@ -98,7 +98,12 @@ export class Arc_2points_and_radius {
 		private p1: [coordinate, coordinate],
 		private radius: string,
 		private bend_direction: 'left' | 'right' = 'left',
-	) {}
+	) {
+		checkBracket(p0[0] + '');
+		checkBracket(p1[0] + '');
+		checkBracket(p0[1] + '');
+		checkBracket(p1[1] + '');
+	}
 
 	toString(): string {
 		const R = this.radius;
@@ -109,12 +114,12 @@ export class Arc_2points_and_radius {
 		const Y = `(${y1} - ${y0})`;
 
 		const z_L = `( ${R} - SQRT((${R} * ${R}) - ((${X} * ${X} + ${Y} * ${Y})) / 4 ) )`;
-		checkBracker(z_L);
+		checkBracket(z_L);
 
 		const alpha_rad = `( ATAN2(${Y}, ${X}) )`;
 		const alpha_deg = `( 180 * ATAN2(${Y}, ${X}) / (M_PI) )`;
-		checkBracker(alpha_rad);
-		checkBracker(alpha_deg);
+		checkBracket(alpha_rad);
+		checkBracket(alpha_deg);
 
 		const sinSign = this.bend_direction === 'left' ? '-' : ' ';
 		const cosSign = this.bend_direction === 'left' ? ' ' : '-';
@@ -128,10 +133,10 @@ export class Arc_2points_and_radius {
 			`( (${y1} + ${y0}) / 2) + ${vec_1[1]}`,
 		];
 
-		checkBracker(vec_1[0]);
-		checkBracker(vec_1[1]);
-		checkBracker(vec_2[0]);
-		checkBracker(vec_2[1]);
+		checkBracket(vec_1[0]);
+		checkBracket(vec_1[1]);
+		checkBracket(vec_2[0]);
+		checkBracket(vec_2[1]);
 
 		return new Arc_3points(this.p0, vec_2 as [coordinate, coordinate], this.p1) + '';
 	}
@@ -149,9 +154,11 @@ export class Arc_2points_and_radius {
 		const Y = `(${y1} - ${y0})`;
 
 		const condition = `(${R} * ${R}) >= ( ((${X} * ${X} + ${Y} * ${Y})) / 4)`;
-		checkBracker(condition);
+		checkBracket(condition);
 
-		return new Condition(message, condition) + '';
+		const output = new Condition(message, condition) + '';
+
+		return output;
 	}
 }
 
