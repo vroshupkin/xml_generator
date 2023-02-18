@@ -12,10 +12,13 @@ export const checkBracker = (str: string): boolean => {
 			if (openBracket.length > 0) {
 				openBracket.pop();
 			} else {
-				const error_message =
-					str.slice(0, i) + chalk.bgRed(str[i]) + str.slice(i, str.length);
+				console.log(i);
+				console.log('Hello()World'.slice(0, 5));
 
-				throw new Error(`Беcпарная ')' скобка ${i}\n ${error_message})`);
+				const error_message =
+					str.slice(0, i) + chalk.bgRed(str[i]) + str.slice(i + 1, str.length);
+
+				throw new Error(`Беcпарная ')' скобка ${i}\n ${error_message}`);
 			}
 		}
 		i++;
