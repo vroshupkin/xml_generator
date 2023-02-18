@@ -1,15 +1,18 @@
 import { generate, IGenerate } from '../generator';
 import { IDetail } from './generator.interface';
-import { LineXML, Arc, Circle, linePath, LinePath, Rotate, Arc_3points } from './figures';
+import {
+	LineXML,
+	Arc,
+	Circle,
+	linePath,
+	LinePath,
+	Rotate,
+	Arc_3points,
+	Arc_2points_and_radius,
+} from './figures';
 import { coordinate } from './figure.interface';
 import { checkBracker } from './common/parser';
-class Condition {
-	constructor(private text: string, private condition: string) {}
-
-	toString(): string {
-		return `<condition text="${this.text}"><![CDATA[${this.condition}]]></condition>`;
-	}
-}
+import { Condition } from './condition';
 
 // function generate_1(): void {
 // 	const H = 'H';
@@ -894,7 +897,7 @@ checkBracker(alpha_rad);
 checkBracker(alpha_deg);
 
 const vec_0 = [`( 0 )`, `( R - SQRT(R * R - (${X} * ${X} + ${Y} * ${Y} / 4)) )`];
-const vec_1 = [`( -( SIN(${alpha_deg}) * ${z_L})`, `COS(${alpha_deg}) * ${z_L})`];
+const vec_1 = [`( -( SIN(${alpha_deg}) * ${z_L}) )`, `( COS(${alpha_deg}) * ${z_L} )`];
 const vec_2 = [`( (${x1} + ${x0}) / 2) + ${vec_1[0]}`, `( (${y1} + ${y0}) / 2) + ${vec_1[1]}`];
 
 checkBracker(vec_0[0]);
@@ -923,28 +926,7 @@ const figure_36: IGenerate = {
 			[`${f.x}`, `${f.y}`],
 		]),
 
-		// new Circle(
-		// 	[
-		// 		`  (${f_sqrt} + (${f.x} * ${A})) / (2 * ${A})`,
-		// 		`(((((-(${f.x})) * ${f_sqrt} + (${f.y_2} * ${A}))) / (2 * ${f.y} * ${A})))`,
-		// 	],
-		// 	`R`,
-		// ),
-
-		// new Circle([0, 0], `R`),
-		// new Circle([f.x, f.y], `R`),
-
-		// new Arc([0, 0], 'SQRT(25 + 16)', 'ATAN2(4, -5)', `ATAN2(2, -4)`, false),
-		// // new Arc([0, 0], 'SQRT(25 + 16)', '0', `M_PI/4`, true),
-		// new LineXML([0, 0], [-5, 4]),
-		// new LineXML([0, 0], [-4, 2]),
-
-		// new LinePath([
-		// 	[x0, y0],
-		// 	[x1, y1],
-		// ]),
-
-		// new Arc_3points([x0, y0], [v1[0], v1[1]], [x1, y1]),
+		new Arc_2points_and_radius([x0, y0], [x1, y1], 'R', 'right'),
 	],
 	params: `
 	<params>
@@ -956,49 +938,41 @@ const figure_36: IGenerate = {
 		<p name="H1" desc="[мм] Высота первой ступени " default="100.0"></p>
 		<p name="H2" desc="[мм] Высота второй ступени " default="100.0"></p>
 
-		<p name="R1" desc="[мм] Радиус скругления детали" default="25.0"></p>
-		<p name="R" desc="[мм] Радиус правой стороны" default="550.0"></p>
+		<p name="R1" desc="[мм] Радиус скругления детали. Левый нижний угол" default="25.0"></p>
+		<p name="R" desc="[мм] Радиус правой стороны" default="300.0"></p>
 		
+		${new Arc_2points_and_radius([x0, y0], [x1, y1], 'R', 'right').generateParam(
+			'Радиус правой стороны должен быть больше',
+		)}
 		
-		${new Condition('Сумма средней и верхней длины должна быть больше длины основания', `W2 + W3 > W1`)}
+		${new Condition('Сумма двух верхних длин должна быть больше длины основания', `W2 + W3 > W1`)}
 	</params>
 	`,
 };
 
-// generate(figure_11);
-// generate(figure_12);
-// generate(figure_13);
-// generate(figure_14);
-// generate(figure_15); // Угловое соединени
-
-// generate(figure_16);
+const figures_xx_02 = [figure_11, figure_12, figure_13, figure_14, figure_15, figure_16];
 
 // 09.02
-// generate(figure_17);
-// generate(figure_18_1);
-// generate(figure_18_2);
-// generate(figure_19_1);
-// generate(figure_19_2);
+const figures_09_02 = [figure_17, figure_18_1, figure_18_2, figure_19_1, figure_19_2];
 
 // 10.02
-// generate(figure_20);
-// generate(figure_21);
-// generate(figure_21_1);
-// generate(figure_21_2);
-// generate(figure_22);
+const figures_10_02 = [figure_20, figure_21, figure_21_1, figure_21_2, figure_22];
 
 // 13.02
-// generate(figure_0_1);
-// generate(figure_0_2);
-// generate(figure_24);
-// generate(figure_23);
-// generate(figure_26);
-// generate(figure_14);
+const figures_13_02 = [figure_0_1, figure_0_2, figure_24, figure_23, figure_26, figure_14];
 
 // 14.02
-// generate(figure_29);
-// generate(figure_30);
-// generate(figure_35);
+const figures_14_02 = [figure_29, figure_30, figure_35];
 
 // 15.02
-generate(figure_36);
+const figures_15_02 = [figure_36];
+generate(figures_15_02[0]);
+
+console.log(
+	figures_xx_02.length +
+		figures_09_02.length +
+		figures_10_02.length +
+		figures_13_02.length +
+		figures_14_02.length +
+		figures_15_02.length,
+);
