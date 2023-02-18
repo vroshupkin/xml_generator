@@ -944,8 +944,152 @@ const figure_36: IGenerate = {
 		${new Arc_2points_and_radius([x0, y0], [x1, y1], 'R', 'right').generateParam(
 			'Радиус правой стороны должен быть больше',
 		)}
-		
+
 		${new Condition('Сумма двух верхних длин должна быть больше длины основания', `W2 + W3 > W1`)}
+	</params>
+	`,
+};
+
+const figure_36_left: IGenerate = {
+	name: `_36 Угловое соединение c выгнутой стороной`,
+	primitives: [
+		new LineXML([0, 0], ['-(W1 - R1)', 0]),
+		new Arc(['-(W1 - R1)', 'R1'], 'R1', '3 * M_PI / 2', 'M_PI', true),
+
+		new LinePath([
+			['-(W1)', 'R1'],
+			['-(W1)', 'H1'],
+			['-(W1 - W2)', 'H1'],
+			['-(W1 - W2)', 'H1 + H2'],
+			[`${f.x}`, `${f.y}`],
+		]),
+
+		new Arc_2points_and_radius([x0, y0], [x1, y1], 'R', 'left'),
+	],
+	params: `
+	<params>
+
+		<p name="W1" desc="[мм] Длина основания" default="200.0"></p>
+		<p name="W2" desc="[мм] Средняя длина " default="100.0"></p>
+		<p name="W3" desc="[мм] Верхняя длина " default="150.0"></p>
+
+		<p name="H1" desc="[мм] Высота первой ступени " default="100.0"></p>
+		<p name="H2" desc="[мм] Высота второй ступени " default="100.0"></p>
+
+		<p name="R1" desc="[мм] Радиус скругления детали. Левый нижний угол" default="25.0"></p>
+		<p name="R" desc="[мм] Радиус правой стороны" default="300.0"></p>
+		
+		${new Arc_2points_and_radius([x0, y0], [x1, y1], 'R', 'left').generateParam(
+			'Радиус правой стороны должен быть больше',
+		)}
+
+		${new Condition('Сумма двух верхних длин должна быть больше длины основания', `W2 + W3 > W1`)}
+	</params>
+	`,
+};
+
+const figure_37: IGenerate = {
+	name: `_37 Нижнее угловое соединение опоры`,
+	primitives: [
+		new LineXML([0, 0], ['-(W1 - R1)', 0]),
+		new Arc(['-(W1 - R1)', 'R1'], 'R1', '3 * M_PI / 2', 'M_PI', true),
+
+		new LinePath([
+			['-(W1)', 'R1'],
+			['-(W1)', 'H1'],
+			['-(W1 - W2)', 'H1'],
+			['-(W1 - W2)', 'H1 + H2'],
+			[`${f.x}`, `${f.y}`],
+		]),
+
+		new Arc_2points_and_radius([x0, y0], [x1, y1], 'R', 'right'),
+	],
+	params: `
+	<params>
+
+		<p name="W1" desc="[мм] Длина основания" default="300.0"></p>
+		<p name="W2" desc="[мм] Средняя длина " default="100.0"></p>
+		<p name="W3" desc="[мм] Верхняя длина " default="150.0"></p>
+
+		<p name="H1" desc="[мм] Высота первой ступени " default="100.0"></p>
+		<p name="H2" desc="[мм] Высота второй ступени " default="100.0"></p>
+
+		<p name="R1" desc="[мм] Радиус скругления детали. Левый нижний угол" default="25.0"></p>
+		<p name="R" desc="[мм] Радиус правой стороны" default="150.0"></p>
+		
+		${new Arc_2points_and_radius([x0, y0], [x1, y1], 'R', 'right').generateParam(
+			'Радиус правой стороны должен быть больше',
+		)}
+
+		${new Condition(' Длина основания должна быть больше суммы двух верхних длин', `W2 + W3 < W1`)}
+	</params>
+	`,
+};
+
+const figure_37_left: IGenerate = {
+	name: `_37_left Нижнее угловое соединение опоры c выгнутой стороной`,
+	primitives: [
+		new LineXML([0, 0], ['-(W1 - R1)', 0]),
+		new Arc(['-(W1 - R1)', 'R1'], 'R1', '3 * M_PI / 2', 'M_PI', true),
+
+		new LinePath([
+			['-(W1)', 'R1'],
+			['-(W1)', 'H1'],
+			['-(W1 - W2)', 'H1'],
+			['-(W1 - W2)', 'H1 + H2'],
+			[`${f.x}`, `${f.y}`],
+		]),
+
+		new Arc_2points_and_radius([x0, y0], [x1, y1], 'R', 'left'),
+	],
+	params: `
+	<params>
+
+		<p name="W1" desc="[мм] Длина основания" default="300.0"></p>
+		<p name="W2" desc="[мм] Средняя длина " default="100.0"></p>
+		<p name="W3" desc="[мм] Верхняя длина " default="150.0"></p>
+
+		<p name="H1" desc="[мм] Высота первой ступени " default="100.0"></p>
+		<p name="H2" desc="[мм] Высота второй ступени " default="100.0"></p>
+
+		<p name="R1" desc="[мм] Радиус скругления детали. Левый нижний угол" default="25.0"></p>
+		<p name="R" desc="[мм] Радиус правой стороны" default="300.0"></p>
+		
+		${new Arc_2points_and_radius([x0, y0], [x1, y1], 'R', 'left').generateParam(
+			'Радиус правой стороны должен быть больше',
+		)}
+
+		${new Condition(' Длина основания должна быть больше суммы двух верхних длин', `W2 + W3 < W1`)}
+	</params>
+	`,
+};
+
+const figure_38: IGenerate = {
+	name: `_38 Круглый лист отсчёта`,
+	primitives: [
+		new Arc([0, 0], 'R', '0', 'M_PI', false),
+
+		new Arc_2points_and_radius(['(-(R))', '0'], ['(-(R + L))', 'H'], 'R1', 'left'),
+		new Arc_2points_and_radius(['-(R + L)', 'H'], ['(R + L)', 'H'], 'R2', 'right'),
+		new Arc_2points_and_radius(['(R + L)', 'H'], ['(R)', '0'], 'R1', 'left'),
+	],
+	params: `
+	<params>
+
+		<p name="R" desc="[мм] Радиус окружности в центра" default="70.0"></p>
+		<p name="L" desc="[мм] Отступ от окружности по боками" default="100.0"></p>
+		<p name="H" desc="[мм] Высота детали" default="200.0"></p>
+		<p name="R1" desc="[мм] Радиус скруглений боковых сторон" default="200.0"></p>
+		<p name="R2" desc="[мм] Верхний радиус скругления" default="315.0"></p>
+
+		${new Arc_2points_and_radius(['(R + L)', 'H'], ['0', '0'], 'R1', 'left').generateParam(
+			'Боковые радиусы скругление должны быть больше',
+		)}
+ 		${new Arc_2points_and_radius(['-(R + L)', 'H'], ['(R + L)', 'H'], 'R2', 'right').generateParam(
+			'Верхний радиус скругление должен быть больше',
+		)}
+		
+		
 	</params>
 	`,
 };
@@ -966,7 +1110,12 @@ const figures_14_02 = [figure_29, figure_30, figure_35];
 
 // 15.02
 const figures_15_02 = [figure_36];
-generate(figures_15_02[0]);
+
+generate(figure_36);
+generate(figure_36_left);
+generate(figure_37);
+generate(figure_37_left);
+generate(figure_38);
 
 console.log(
 	figures_xx_02.length +
