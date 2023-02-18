@@ -1,3 +1,5 @@
+import chalk from 'chalk';
+
 export const checkBracker = (str: string): boolean => {
 	const openBracket = [];
 
@@ -10,7 +12,10 @@ export const checkBracker = (str: string): boolean => {
 			if (openBracket.length > 0) {
 				openBracket.pop();
 			} else {
-				throw new Error(`Беcпарная ')' скобка ${i}\n ${str}`);
+				const error_message =
+					str.slice(0, i) + chalk.bgRed(str[i]) + str.slice(i, str.length);
+
+				throw new Error(`Беcпарная ')' скобка ${i}\n ${error_message})`);
 			}
 		}
 		i++;
