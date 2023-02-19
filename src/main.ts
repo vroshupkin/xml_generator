@@ -1230,6 +1230,72 @@ const figure_42: IGenerate = {
 	</params>
 	`,
 };
+
+const figure_43: IGenerate = {
+	name: `Кольцеобразная кромка с проемами проемами`,
+	primitives: [
+		new Rotate(
+			[
+				new Arc([0, 0], 'R', 'M_PI/2 + (M_PI / N)', 'M_PI/2 + ASIN(W0 / (2 * R))', true),
+				new LinePath([
+					['-(W0 / 2)', 'R * SIN( (M_PI/2 + ASIN(W0 / (2 * R))) * (180 / M_PI) )'],
+					['-(W0 / 2)', '(R - H0)'],
+				]),
+
+				new LinePath([
+					['-(W0 / 2)', '(R - H0)'],
+					['-((dW) / 2)', 'R - H0'],
+				]),
+
+				new Arc(['-((dW) / 2)', 'R - (H0 + R0)'], 'R0', 'M_PI/2', '3 * M_PI / 2', false),
+
+				new LinePath([
+					['-((dW) / 2)', 'R - (H0 + 2 * R0)'],
+					['((dW) / 2)', 'R - (H0 + 2 * R0)'],
+				]),
+
+				new Arc(['((dW) / 2)', 'R - (H0 + R0)'], 'R0', '3 * M_PI / 2', 'M_PI/2', false),
+
+				new LinePath([
+					['((dW) / 2)', 'R - (H0)'],
+					['W0 / 2', 'R - (H0)'],
+				]),
+
+				new LinePath([
+					['(W0 / 2)', '(R - H0)'],
+					['(W0 / 2)', 'R * SIN( (M_PI/2 + ASIN(W0 / (2 * R))) * (180 / M_PI) )'],
+				]),
+				new Arc([0, 0], 'R', 'M_PI/2 - ASIN(W0 / (2 * R) )', 'M_PI/2 - (M_PI / N)', true),
+			],
+			'0',
+			'(2 * M_PI / N) * (180 / M_PI)',
+			'N',
+		),
+		new Circle([0, 0], 'R1'),
+	],
+	params: `
+	<params>
+
+		<p name="H0" desc="[мм] Глубина вреза" default="50.0"></p>
+		<p name="W0" desc="[мм] Ширина вреза" default="15.0"></p>
+		<p name="R" desc="[мм] Радиус шестерни" default="300.0"></p>
+		
+		<p name="dW" desc="[мм] Расстояние между половинами окружностей" default="50.0"></p>
+		<p name="R0" desc="[мм] Радиус врезанной окружности" default="35.0"></p>
+		
+		<p name="N" desc="[шт] Количество врезов" default="6.0"></p>
+
+		<p name="R1" desc="[мм] Радиус центральной окружности" default="100"></p>
+
+		${new Condition(
+			'Расстояние между половинами окружностей должно быть больше ширины вреза',
+			'dW > W0',
+		)}
+
+		${new Condition('Радиус центральной окружности должен вмешаться', 'R1 < H0 + 2 * R0')}
+	</params>
+	`,
+};
 const figures_xx_02 = [figure_11, figure_12, figure_13, figure_14, figure_15, figure_16];
 
 // 09.02
@@ -1268,6 +1334,7 @@ const figures_17_02 = [
 
 // 19.02
 generate(figure_42);
+generate(figure_43);
 
 console.log(
 	8 +
