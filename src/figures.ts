@@ -12,14 +12,14 @@ export type TFigure =
 	| Arc_2points_and_radius;
 export class Arc {
 	/**
-	 * @param start_point [coord, coord]
+	 * @param center_point [coord, coord]
 	 * @param radius [мм]
 	 * @param startAngle [радиан]
 	 * @param endAngle [радиан]
 	 * @param clockwise
 	 */
 	constructor(
-		private start_point: [coordinate, coordinate],
+		private center_point: [coordinate, coordinate],
 		private radius: string | number,
 		private startAngle: string | number,
 		private endAngle: string | number,
@@ -35,8 +35,8 @@ export class Arc {
         clockwise="${this.clockwise}"
     >
         <point>
-            <x>${this.start_point[0]}</x>
-            <y>${this.start_point[1]}</y>
+            <x>${this.center_point[0]}</x>
+            <y>${this.center_point[1]}</y>
         </point>
     </arc>
 `;

@@ -1170,6 +1170,66 @@ const figure_41: IGenerate = {
 	`,
 };
 
+const figure_42: IGenerate = {
+	name: `Окружность с проемами`,
+	primitives: [
+		new Rotate(
+			[
+				new Arc([0, 0], 'R', 'M_PI/2 + (M_PI / N)', 'M_PI/2 + ASIN(W0 / (2 * R))', true),
+				new LinePath([
+					['-(W0 / 2)', 'R * SIN( (M_PI/2 + ASIN(W0 / (2 * R))) * (180 / M_PI) )'],
+					['-(W0 / 2)', '(R - H0)'],
+				]),
+
+				new LinePath([
+					['-(W0 / 2)', '(R - H0)'],
+					['-((dW) / 2)', 'R - H0'],
+				]),
+
+				new Arc(['-((dW) / 2)', 'R - (H0 + R0)'], 'R0', 'M_PI/2', '3 * M_PI / 2', false),
+
+				new LinePath([
+					['-((dW) / 2)', 'R - (H0 + 2 * R0)'],
+					['((dW) / 2)', 'R - (H0 + 2 * R0)'],
+				]),
+
+				new Arc(['((dW) / 2)', 'R - (H0 + R0)'], 'R0', '3 * M_PI / 2', 'M_PI/2', false),
+
+				new LinePath([
+					['((dW) / 2)', 'R - (H0)'],
+					['W0 / 2', 'R - (H0)'],
+				]),
+
+				new LinePath([
+					['(W0 / 2)', '(R - H0)'],
+					['(W0 / 2)', 'R * SIN( (M_PI/2 + ASIN(W0 / (2 * R))) * (180 / M_PI) )'],
+				]),
+				new Arc([0, 0], 'R', 'M_PI/2 - ASIN(W0 / (2 * R) )', 'M_PI/2 - (M_PI / N)', true),
+			],
+			'0',
+			'(2 * M_PI / N) * (180 / M_PI)',
+			'N',
+		),
+	],
+	params: `
+	<params>
+
+		<p name="H0" desc="[мм] Глубина вреза" default="50.0"></p>
+		<p name="W0" desc="[мм] Ширина вреза" default="15.0"></p>
+		<p name="R" desc="[мм] Радиус шестерни" default="250.0"></p>
+		
+		<p name="dW" desc="[мм] Расстояние между половинами окружностей" default="50.0"></p>
+		<p name="R0" desc="[мм] Радиус врезанной окружности" default="35.0"></p>
+		
+		<p name="N" desc="[шт] Количество врезов" default="6.0"></p>
+
+		${new Condition(
+			'Расстояние между половинами окружностей должно быть больше ширины вреза',
+			'dW > W0',
+		)}
+	</params>
+	`,
+};
 const figures_xx_02 = [figure_11, figure_12, figure_13, figure_14, figure_15, figure_16];
 
 // 09.02
@@ -1185,24 +1245,36 @@ const figures_13_02 = [figure_0_1, figure_0_2, figure_24, figure_23, figure_26, 
 const figures_14_02 = [figure_29, figure_30, figure_35];
 
 // 15.02
-const figures_15_02 = [figure_36];
+const figures_17_02 = [
+	figure_36,
+	figure_36_left,
+	figure_37,
+	figure_37_left,
+	figure_38,
+	figure_39,
+	figure_40,
+	figure_41,
+];
 
-// 15.02
+// 17.02
 // generate(figure_36);
 // generate(figure_36_left);
 // generate(figure_37);
 // generate(figure_37_left);
 // generate(figure_38);
+// generate(figure_39);
+// generate(figure_40);
+// generate(figure_41);
 
-generate(figure_39);
-generate(figure_40);
-generate(figure_41);
+// 19.02
+generate(figure_42);
 
 console.log(
-	figures_xx_02.length +
+	8 +
+		figures_xx_02.length +
 		figures_09_02.length +
 		figures_10_02.length +
 		figures_13_02.length +
 		figures_14_02.length +
-		figures_15_02.length,
+		figures_17_02.length,
 );
