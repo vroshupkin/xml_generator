@@ -24,7 +24,10 @@ export class Arc {
 		private startAngle: string | number,
 		private endAngle: string | number,
 		private clockwise: boolean = true,
-	) {}
+	) {
+		checkBracket(this.center_point[0] + '');
+		checkBracket(this.center_point[1] + '');
+	}
 
 	toString(): string {
 		return `
