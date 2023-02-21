@@ -1421,6 +1421,51 @@ const figure_46: IGenerate = {
 	`,
 };
 
+const figure_47: IGenerate = {
+	name: `Кольцеобразная кромка с замочными скважинами и центральной окружностью`,
+	primitives: [
+		new Rotate(
+			[
+				new Arc([0, 0], 'R', 'M_PI/2 + (M_PI / N)', 'M_PI/2 + ASIN(W0 / (2 * R))', true),
+				new LinePath([
+					['-(W0 / 2)', 'R * SIN( (M_PI/2 + ASIN(W0 / (2 * R))) * (180 / M_PI) )'],
+					['-(W0 / 2)', '(R - H0)'],
+				]),
+
+				new Arc(
+					[0, 'R - (H0 + R0) - (R0 - SQRT(R0 * R0 - (W0 * W0 / 4) ))'],
+					'R0',
+					'M_PI / 2 + ASIN(W0 / (2 * R0))',
+					'M_PI / 2 - ASIN(W0 / (2 * R0))',
+					false,
+				),
+				new LinePath([
+					['(W0 / 2)', '(R - H0)'],
+					['(W0 / 2)', 'R * SIN( (M_PI/2 + ASIN(W0 / (2 * R))) * (180 / M_PI) )'],
+				]),
+				new Arc([0, 0], 'R', 'M_PI/2 - ASIN(W0 / (2 * R) )', 'M_PI/2 - (M_PI / N)', true),
+			],
+			'0',
+			'(2 * M_PI / N) * (180 / M_PI)',
+			'N',
+		),
+		new Circle([0, 0], 'R1'),
+	],
+	params: `
+	<params>
+
+		<p name="H0" desc="[мм] Глубина выреза" default="50.0"></p>
+		<p name="W0" desc="[мм] Ширина выреза" default="15.0"></p>
+		<p name="R" desc="[мм] Радиус всей шестерни" default="300.0"></p>
+
+		<p name="R0" desc="[мм] Радиус внутренних окружностей" default="50.0"></p>		
+		<p name="N" desc="[шт] Количество вырезов" default="6.0"></p>
+
+		<p name="R1" desc="[мм] Радиус центральной окружности" default="130.0"></p>		
+	</params>
+	`,
+};
+
 const figures_xx_02 = [figure_11, figure_12, figure_13, figure_14, figure_15, figure_16];
 
 // 09.02
@@ -1460,9 +1505,12 @@ const figures_17_02 = [
 // 19.02
 generate(figure_42);
 generate(figure_43);
+
+// 20.02
 generate(figure_44);
 generate(figure_45);
 generate(figure_46);
+generate(figure_47);
 
 console.log(
 	8 +
