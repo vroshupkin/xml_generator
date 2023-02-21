@@ -27,6 +27,10 @@ export class Arc {
 	) {
 		checkBracket(this.center_point[0] + '');
 		checkBracket(this.center_point[1] + '');
+
+		checkBracket(this.radius + '');
+		checkBracket(this.startAngle + '');
+		checkBracket(this.endAngle + '');
 	}
 
 	toString(): string {
@@ -202,26 +206,13 @@ export class Circle {
 	}
 }
 
-export function linePath(coordinates: [coordinate, coordinate][]): LineXML[] {
-	if (coordinates.length <= 1) {
-		throw `Минимальное количество координат 2. Передано: ${coordinates.length}`;
-	}
-
-	const lines: LineXML[] = [];
-
-	let i = 1;
-	while (i < coordinates.length) {
-		const coord_1 = coordinates[i - 1];
-		const coord_2 = coordinates[i];
-		lines.push(new LineXML(coord_1, coord_2));
-		i++;
-	}
-
-	return lines;
-}
-
 export class LinePath implements IFigureOperation {
-	constructor(private coordinates: [coordinate, coordinate][]) {}
+	constructor(private coordinates: [coordinate, coordinate][]) {
+		for (const coord of coordinates) {
+			checkBracket(coord[0] + '');
+			checkBracket(coord[1] + '');
+		}
+	}
 
 	toString(): string {
 		let out = ``;

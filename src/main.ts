@@ -4,7 +4,6 @@ import {
 	LineXML,
 	Arc,
 	Circle,
-	linePath,
 	LinePath,
 	Rotate,
 	Arc_3points,
@@ -316,8 +315,8 @@ const figure_19_1: IGenerate = {
 	`,
 };
 
-const figure_19_2: IGenerate = {
-	name: `_19_2 Общий треугольник по двум соторонам и углу между ними`,
+const figure_19_2__20: IGenerate = {
+	name: `Общий треугольник по двум соторонам и углу между ними`,
 	primitives: [
 		new LinePath([
 			[0, 0],
@@ -347,8 +346,8 @@ const figure_20_elments = new LinePath([
 	['l * COS(360 / n + 360 / n)', 'l * SIN(360 / n + 360 / n)'],
 ]);
 
-const figure_20: IGenerate = {
-	name: `_20 Правильный многоульник`,
+const figure_20__25: IGenerate = {
+	name: `Правильный многоульник`,
 	primitives: [new Rotate([figure_20_elments], 0, '360 / n', 'n')],
 
 	params: `
@@ -365,8 +364,8 @@ const figure_20: IGenerate = {
 	`,
 };
 
-const figure_21: IGenerate = {
-	name: `_21 U скоба`,
+const figure_21__26: IGenerate = {
+	name: `U скоба`,
 	primitives: [
 		new LinePath([
 			['-R', '0'],
@@ -406,8 +405,8 @@ const figure_21_1_elments = new LinePath([
 	['l * COS(360 / n + 360 / n)', 'l * SIN(360 / n + 360 / n)'],
 ]);
 
-const figure_21_1: IGenerate = {
-	name: `_21_1 Правильный многоульник в окружности`,
+const figure_21_1__27: IGenerate = {
+	name: `Правильный многоульник в окружности`,
 	primitives: [new Rotate([figure_21_1_elments], 0, '360 / n', 'n'), new Circle([0, 0], 'l')],
 
 	params: `
@@ -424,8 +423,8 @@ const figure_21_1: IGenerate = {
 	`,
 };
 
-const figure_21_2: IGenerate = {
-	name: `_21_2 Окружность в правильном многоугольнике`,
+const figure_21_2__28: IGenerate = {
+	name: `Окружность в правильном многоугольнике`,
 	primitives: [
 		new Rotate([figure_21_1_elments], 0, '360 / n', 'n'),
 		new Circle([0, 0], 'l * COS(180 / n)'),
@@ -441,8 +440,8 @@ const figure_21_2: IGenerate = {
 	`,
 };
 
-const figure_22: IGenerate = {
-	name: `_22 Четырехугольник`,
+const figure_22__29: IGenerate = {
+	name: `Четырехугольник`,
 	primitives: [
 		new LinePath([
 			[0, 0],
@@ -472,8 +471,8 @@ const figure_22: IGenerate = {
 	`,
 };
 
-const figure_24: IGenerate = {
-	name: `_24 Лопасть`,
+const figure_24__23: IGenerate = {
+	name: `Лопасть`,
 	primitives: [
 		new Arc([0, 0], 'R', 'M_PI - ASIN(H / (2 * R))', 'M_PI + ASIN(H / (2 * R))', true),
 
@@ -498,8 +497,8 @@ const figure_24: IGenerate = {
 	`,
 };
 
-const figure_0_1: IGenerate = {
-	name: `_0_1 Окружность в прямоугольнике`,
+const figure_0_1__21: IGenerate = {
+	name: `Окружность в прямоугольнике`,
 	primitives: [
 		new LinePath([
 			[`-(W / 2)`, `-(H / 2)`],
@@ -553,8 +552,8 @@ const f_0_2_obj: { [a: string]: [coordinate, coordinate] } = {
 	p3: [`X + (W / 2) `, `Y - (H / 2)`],
 };
 
-const figure_0_2: IGenerate = {
-	name: `_0_2 Прямоугольник в окружности`,
+const figure_0_2__22: IGenerate = {
+	name: `Прямоугольник в окружности`,
 	primitives: [
 		new Circle(['0', '0'], 'R'),
 		new LinePath([f_0_2_obj.p0, f_0_2_obj.p1, f_0_2_obj.p2, f_0_2_obj.p3, f_0_2_obj.p0]),
@@ -591,8 +590,8 @@ const figure_0_2: IGenerate = {
 	`,
 };
 
-const figure_23: IGenerate = {
-	name: `_23 Блок`,
+const figure_23__24: IGenerate = {
+	name: `Блок`,
 	primitives: [
 		new Arc([0, 0], 'R1', 'M_PI / 2', '3 * M_PI / 2', false),
 		new LineXML([0, '-(R1)'], ['L', '-(R2)']),
@@ -609,8 +608,8 @@ const figure_23: IGenerate = {
 	`,
 };
 
-const figure_26: IGenerate = {
-	name: `_26 Ушко`,
+const figure_26__30: IGenerate = {
+	name: `Ушко`,
 	primitives: [
 		new LinePath([
 			[0, 0],
@@ -689,8 +688,8 @@ const figure_14: IGenerate = {
 	`,
 };
 
-const figure_29: IGenerate = {
-	name: `_29 Трапецоид дуги`,
+const figure_29__31: IGenerate = {
+	name: `Трапецоид дуги`,
 	primitives: [
 		new Arc(
 			[0, 0],
@@ -716,8 +715,8 @@ const figure_29: IGenerate = {
 	`,
 };
 
-const figure_30: IGenerate = {
-	name: `_30 Трапецоид дуги с отверстием`,
+const figure_30__32: IGenerate = {
+	name: `Трапецоид дуги с окружностью`,
 	primitives: [
 		new Arc(
 			[0, 0],
@@ -748,8 +747,8 @@ const figure_30: IGenerate = {
 	`,
 };
 
-const figure_35: IGenerate = {
-	name: `_35 Прямоугольник с проемами`,
+const figure_35__33: IGenerate = {
+	name: `Прямоугольник с проемами`,
 	primitives: [
 		new LineXML(['(W/2) - R1', 0], ['-(W/2) - R1', 0]),
 		new Arc(['-(W/2) - R1', 'R1'], 'R1', '3 * M_PI / 2', 'M_PI', true),
@@ -839,7 +838,7 @@ checkBracker(vec_2[1]);
 // 	`${y0} + SIN(180 + ${alpha} * (180 / M_PI)) * ${z_L} `,
 // ];
 
-const figure_36: IGenerate = {
+const figure_36__34: IGenerate = {
 	name: `Верхнее угловое соединение опоры`,
 	primitives: [
 		new LineXML([0, 0], ['-(W1 - R1)', 0]),
@@ -877,7 +876,7 @@ const figure_36: IGenerate = {
 	`,
 };
 
-const figure_36_left: IGenerate = {
+const figure_36_left__35: IGenerate = {
 	name: `Угловое соединение c выгнутой стороной`,
 	primitives: [
 		new LineXML([0, 0], ['-(W1 - R1)', 0]),
@@ -915,7 +914,7 @@ const figure_36_left: IGenerate = {
 	`,
 };
 
-const figure_37: IGenerate = {
+const figure_37__36: IGenerate = {
 	name: `Нижнее угловое соединение опоры`,
 	primitives: [
 		new LineXML([0, 0], ['-(W1 - R1)', 0]),
@@ -953,7 +952,7 @@ const figure_37: IGenerate = {
 	`,
 };
 
-const figure_37_left: IGenerate = {
+const figure_37_left__37: IGenerate = {
 	name: `Нижнее угловое соединение опоры c выгнутой стороной`,
 	primitives: [
 		new LineXML([0, 0], ['-(W1 - R1)', 0]),
@@ -991,7 +990,7 @@ const figure_37_left: IGenerate = {
 	`,
 };
 
-const figure_38: IGenerate = {
+const figure_38__38: IGenerate = {
 	name: `Круглый лист отсчёта`,
 	primitives: [
 		new Arc([0, 0], 'R', '0', 'M_PI', false),
@@ -1021,7 +1020,7 @@ const figure_38: IGenerate = {
 	`,
 };
 
-const figure_39: IGenerate = {
+const figure_39__39: IGenerate = {
 	name: `Лист поддержки глушителя`,
 	primitives: [
 		new LinePath([
@@ -1580,54 +1579,178 @@ const figure_50: IGenerate = {
 	</params>
 	`,
 };
+
+const asin = Math.asin;
+
+console.log(asin(100 / (2 * 20)));
+
+const figure_51: IGenerate = {
+	name: `Прямоугольник с закругленой шириной радиусом`,
+	primitives: [
+		new Rotate(
+			[
+				new Arc_2points_and_radius(['-(W/2)', '(H/2)'], ['(W/2)', '(H/2)'], 'R', 'left'),
+				new LinePath([
+					['(W/2)', 'H/2'],
+					['(W/2)', '-(H/2)'],
+				]),
+			],
+			0,
+			'180',
+			2,
+		),
+
+		new Circle([0, 0], 'R1'),
+	],
+	params: `
+	<params>
+		<p name="W" desc="[мм] Ширина лопасти" default="200.0"></p>
+		<p name="H" desc="[мм] Длина лопасти" default="200.0"></p>
+
+		<p name="R" desc="[мм] Радиус закругления ширины" default="200.0"></p>
+		<p name="R1" desc="[мм] Центральный радиус" default="50.0"></p>
+		
+	</params>
+	`,
+};
+
+const figure_52: IGenerate = {
+	name: `Прямоугольник с закругленой шириной`,
+	primitives: [
+		new Rotate(
+			[
+				new Arc_2points_and_radius(['-(W/2)', '(H/2)'], ['(W/2)', '(H/2)'], 'R', 'left'),
+				new LinePath([
+					['(W/2)', 'H/2'],
+					['(W/2)', '-(H/2)'],
+				]),
+			],
+			0,
+			'180',
+			2,
+		),
+	],
+	params: `
+	<params>
+		<p name="W" desc="[мм] Ширина лопасти" default="200.0"></p>
+		<p name="H" desc="[мм] Длина лопасти" default="200.0"></p>
+
+		<p name="R" desc="[мм] Радиус закругления ширины" default="200.0"></p>
+		<p name="R1" desc="[мм] Центральный радиус" default="50.0"></p>
+		
+	</params>
+	`,
+};
+
+// ${new Condition('Ширина должна быть меньше половины радиуса', 'R < W / 2 ')}
+// ${new Condition('Высота должна быть меньше половины радиуса', 'R < H / 2 ')}
+
 const figures_xx_02 = [figure_11, figure_12, figure_13, figure_14, figure_15, figure_16];
 
 // 09.02
-const figures_09_02 = [figure_17, figure_18_1, figure_18_2, figure_19_1, figure_19_2];
+const figures_09_02 = [figure_17, figure_18_1, figure_18_2, figure_19_1, figure_19_2__20];
 
 // 10.02
-const figures_10_02 = [figure_20, figure_21, figure_21_1, figure_21_2, figure_22];
+const figures_10_02 = [
+	figure_20__25,
+	figure_21__26,
+	figure_21_1__27,
+	figure_21_2__28,
+	figure_22__29,
+];
 
 // 13.02
-const figures_13_02 = [figure_0_1, figure_0_2, figure_24, figure_23, figure_26, figure_14];
+const figures_13_02 = [
+	figure_0_1__21,
+	figure_0_2__22,
+	figure_24__23,
+	figure_23__24,
+	figure_26__30,
+	figure_14,
+];
 
 // 14.02
-const figures_14_02 = [figure_29, figure_30, figure_35];
+const figures_14_02 = [figure_29__31, figure_30__32, figure_35__33];
 
 // 15.02
 const figures_17_02 = [
-	figure_36,
-	figure_36_left,
-	figure_37,
-	figure_37_left,
-	figure_38,
-	figure_39,
+	figure_36__34,
+	figure_36_left__35,
+	figure_37__36,
+	figure_37_left__37,
+	figure_38__38,
+	figure_39__39,
 	figure_40,
 	figure_41,
 ];
 
-// 17.02
-// generate(figure_36);
-// generate(figure_36_left);
-// generate(figure_37);
-// generate(figure_37_left);
-// generate(figure_38);
-// generate(figure_39);
+const figures__20_29 = [
+	figure_19_2__20,
+	figure_0_1__21,
+	figure_0_2__22,
+	figure_24__23,
+	figure_23__24,
+	figure_20__25,
+	figure_21__26,
+	figure_21_1__27,
+	figure_21_2__28,
+	figure_22__29,
+];
+
+// for (const figure of figures__21_29) {
+// 	generate(figure);
+// }
+
+const figures__30_39 = [
+	figure_26__30,
+	figure_29__31,
+	figure_30__32,
+	figure_35__33,
+
+	figure_36__34,
+	figure_36_left__35,
+	figure_37__36,
+	figure_37_left__37,
+	figure_38__38,
+	figure_39__39,
+];
+
+for (const figure of figures__30_39) {
+	generate(figure);
+}
+
+// // 30 - 39;
+// generate(figure_26__30);
+// generate(figure_29__31);
+// generate(figure_30__32);
+// generate(figure_35__33);
+// // 17.02
+// generate(figure_36__34);
+// generate(figure_36_left__35);
+// generate(figure_37__36);
+// generate(figure_37_left__37);
+// generate(figure_38__38);
+// generate(figure_39__39);
+
 // generate(figure_40);
 // generate(figure_41);
 
-// 19.02
-generate(figure_42);
-generate(figure_43);
+// // 19.02
+// generate(figure_42);
+// generate(figure_43);
 
-// 20.02
-generate(figure_44);
-generate(figure_45);
-generate(figure_46);
-generate(figure_47);
-generate(figure_48);
-generate(figure_49);
-generate(figure_50);
+// // 20.02
+// generate(figure_44);
+// generate(figure_45);
+// generate(figure_46);
+// generate(figure_47);
+// generate(figure_48);
+// generate(figure_49);
+// generate(figure_50);
+
+// 21.02
+// generate(figure_51);
+// generate(figure_52);
 
 console.log(
 	8 +
