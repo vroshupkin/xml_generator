@@ -1466,6 +1466,52 @@ const figure_47: IGenerate = {
 	`,
 };
 
+const figure_48: IGenerate = {
+	name: `Ключ`,
+	primitives: [
+		new LinePath([
+			['W / 2', 'SQRT(R * R - (W * W / 4))'],
+			['W / 2', 'SQRT(R * R - (W * W / 4)) + H'],
+			['-(W / 2)', 'SQRT(R * R - (W * W / 4)) + H'],
+			['-(W / 2)', 'SQRT(R * R - (W * W / 4))'],
+		]),
+
+		new Arc(
+			[0, 0],
+			'R',
+			'M_PI/2 + ASIN(W / (2 * R))',
+			'3 * M_PI/2 - ASIN(W1 / (2 * R))',
+			false,
+		),
+
+		new LinePath([
+			['-(W1 / 2)', '(-(SQRT(R * R - (W1 * W1 / 4))))'],
+			['-(W1 / 2)', '(-(SQRT(R * R - (W1 * W1 / 4)) - H1))'],
+			['(W1 / 2)', '(-(SQRT(R * R - (W1 * W1 / 4)) - H1))'],
+			['(W1 / 2)', '(-(SQRT(R * R - (W1 * W1 / 4))))'],
+		]),
+
+		new Arc(
+			[0, 0],
+			'R',
+			'3 * M_PI/2 + ASIN(W1 / (2 * R))',
+			'M_PI/2 - ASIN(W / (2 * R))',
+			false,
+		),
+	],
+	params: `
+	<params>
+		<p name="W" desc="[мм] Ширина хвата" default="100.0"></p>
+		<p name="H" desc="[мм] Длина хвата" default="100.0"></p>
+		<p name="R" desc="[мм] Радиус окружности головы" default="100.0"></p>
+
+
+		<p name="W1" desc="[мм] Ширина проема" default="100.0"></p>
+		<p name="H1" desc="[мм] Высота проема" default="100.0"></p>
+	</params>
+	`,
+};
+
 const figures_xx_02 = [figure_11, figure_12, figure_13, figure_14, figure_15, figure_16];
 
 // 09.02
@@ -1511,6 +1557,7 @@ generate(figure_44);
 generate(figure_45);
 generate(figure_46);
 generate(figure_47);
+generate(figure_48);
 
 console.log(
 	8 +
