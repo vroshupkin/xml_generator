@@ -1347,13 +1347,53 @@ const figure_45: IGenerate = {
 				new Arc([0, 0], 'R', 'M_PI/2 + (M_PI / N)', 'M_PI/2 + ASIN(W0 / (2 * R))', true),
 				new LinePath([
 					['-(W0 / 2)', 'R * SIN( (M_PI/2 + ASIN(W0 / (2 * R))) * (180 / M_PI) )'],
-					['-(W0 / 2)', '(R - H0)'],
+					['-(W0 / 2)', 'R + ((W0/2) - H0)'],
 				]),
 
-				new Arc([0, 'R - (H0)'], 'W0 / 2', 'M_PI', '0', false),
+				new Arc([0, 'R + ((W0/2) - H0)'], 'W0 / 2', 'M_PI', '0', false),
 
 				new LinePath([
-					['(W0 / 2)', '(R - H0)'],
+					['(W0 / 2)', 'R + ((W0/2) - H0)'],
+					['(W0 / 2)', 'R * SIN( (M_PI/2 + ASIN(W0 / (2 * R))) * (180 / M_PI) )'],
+				]),
+				new Arc([0, 0], 'R', 'M_PI/2 - ASIN(W0 / (2 * R) )', 'M_PI/2 - (M_PI / N)', true),
+			],
+			'0',
+			'(2 * M_PI / N) * (180 / M_PI)',
+			'N',
+		),
+	],
+	params: `
+	<params>
+
+		<p name="H0" desc="[мм] Глубина выреза" default="110.0"></p>
+		<p name="W0" desc="[мм] Ширина выреза" default="75.0"></p>
+		<p name="R" desc="[мм] Радиус всей шестерни" default="300.0"></p>
+
+		<p name="R0" desc="[мм] Радиус внутренних окружностей" default="50.0"></p>		
+		<p name="N" desc="[шт] Количество вырезов" default="6.0"></p>
+
+		${new Condition('Глубина выреза должна быть больше ширины выреза', 'H0 > W0')}
+		
+	</params>
+	`,
+};
+
+const figure_46: IGenerate = {
+	name: `Кольцеобразная кромка с окружностями`,
+	primitives: [
+		new Rotate(
+			[
+				new Arc([0, 0], 'R', 'M_PI/2 + (M_PI / N)', 'M_PI/2 + ASIN(W0 / (2 * R))', true),
+				new LinePath([
+					['-(W0 / 2)', 'R * SIN( (M_PI/2 + ASIN(W0 / (2 * R))) * (180 / M_PI) )'],
+					['-(W0 / 2)', 'R + ((W0/2) - H0)'],
+				]),
+
+				new Arc([0, 'R + ((W0/2) - H0)'], 'W0 / 2', 'M_PI', '0', false),
+
+				new LinePath([
+					['(W0 / 2)', 'R + ((W0/2) - H0)'],
 					['(W0 / 2)', 'R * SIN( (M_PI/2 + ASIN(W0 / (2 * R))) * (180 / M_PI) )'],
 				]),
 				new Arc([0, 0], 'R', 'M_PI/2 - ASIN(W0 / (2 * R) )', 'M_PI/2 - (M_PI / N)', true),
@@ -1370,9 +1410,13 @@ const figure_45: IGenerate = {
 		<p name="H0" desc="[мм] Глубина выреза" default="110.0"></p>
 		<p name="W0" desc="[мм] Ширина выреза" default="75.0"></p>
 		<p name="R" desc="[мм] Радиус всей шестерни" default="300.0"></p>
+		<p name="R1" desc="[мм] Радиус центральной окружности" default="100.0"></p>
 
 		<p name="R0" desc="[мм] Радиус внутренних окружностей" default="50.0"></p>		
 		<p name="N" desc="[шт] Количество вырезов" default="6.0"></p>
+
+		${new Condition('Глубина выреза должна быть больше ширины выреза', 'H0 > W0')}
+		
 	</params>
 	`,
 };
@@ -1418,6 +1462,7 @@ generate(figure_42);
 generate(figure_43);
 generate(figure_44);
 generate(figure_45);
+generate(figure_46);
 
 console.log(
 	8 +
