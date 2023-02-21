@@ -1512,6 +1512,74 @@ const figure_48: IGenerate = {
 	`,
 };
 
+const figure_49: IGenerate = {
+	name: `Лопасть с несколькими табуляторами`,
+	primitives: [
+		new LinePath([
+			['W / 2', 'SQRT(R * R - (W * W / 4))'],
+			['W / 2', 'SQRT(R * R - (W * W / 4)) + H'],
+			['-(W / 2)', 'SQRT(R * R - (W * W / 4)) + H'],
+			['-(W / 2)', 'SQRT(R * R - (W * W / 4))'],
+		]),
+
+		new Arc([0, 0], 'R', 'M_PI/2 + ASIN(W / (2 * R))', '3 * M_PI/2 - ASIN(W / (2 * R))', false),
+
+		new LinePath([
+			['-(W / 2)', '( -(SQRT(R * R - (W * W / 4))) )'],
+			['-(W / 2)', '( -(SQRT(R * R - (W * W / 4))) + H)'],
+			['(W / 2)', '( -(SQRT(R * R - (W * W / 4))) + H)'],
+			['(W / 2)', '( -(SQRT(R * R - (W * W / 4))) )'],
+		]),
+
+		new Arc([0, 0], 'R', '3 * M_PI/2 + ASIN(W / (2 * R))', 'M_PI/2 - ASIN(W / (2 * R))', false),
+	],
+	params: `
+	<params>
+		<p name="W" desc="[мм] Ширина лопасти" default="100.0"></p>
+		<p name="H" desc="[мм] Длина лопасти" default="100.0"></p>
+		<p name="R" desc="[мм] Радиус" default="100.0"></p>
+
+		${new Condition('Ширина должна быть меньше диаметра', 'W < 2 * R')}
+	</params>
+	`,
+};
+
+const figure_50: IGenerate = {
+	name: `Лопасть с двумя табуляторами и окружностью`,
+	primitives: [
+		new LinePath([
+			['W / 2', 'SQRT(R * R - (W * W / 4))'],
+			['W / 2', 'SQRT(R * R - (W * W / 4)) + H'],
+			['-(W / 2)', 'SQRT(R * R - (W * W / 4)) + H'],
+			['-(W / 2)', 'SQRT(R * R - (W * W / 4))'],
+		]),
+
+		new Arc([0, 0], 'R', 'M_PI/2 + ASIN(W / (2 * R))', '3 * M_PI/2 - ASIN(W / (2 * R))', false),
+
+		new LinePath([
+			['-(W / 2)', '( -(SQRT(R * R - (W * W / 4))) )'],
+			['-(W / 2)', '( -(SQRT(R * R - (W * W / 4))) + H)'],
+			['(W / 2)', '( -(SQRT(R * R - (W * W / 4))) + H)'],
+			['(W / 2)', '( -(SQRT(R * R - (W * W / 4))) )'],
+		]),
+
+		new Arc([0, 0], 'R', '3 * M_PI/2 + ASIN(W / (2 * R))', 'M_PI/2 - ASIN(W / (2 * R))', false),
+
+		new Circle([0, 0], 'R0'),
+	],
+	params: `
+	<params>
+		<p name="W" desc="[мм] Ширина лопасти" default="100.0"></p>
+		<p name="H" desc="[мм] Длина лопасти" default="100.0"></p>
+		<p name="R" desc="[мм] Внешний радиус" default="100.0"></p>
+		<p name="R0" desc="[мм] Внутренний радиус" default="50.0"></p>
+
+
+		${new Condition('Внешний радиус должен быть больше внутреннего', 'R > R0')}
+		${new Condition('Ширина должна быть меньше диаметра', 'W < 2 * R')}
+	</params>
+	`,
+};
 const figures_xx_02 = [figure_11, figure_12, figure_13, figure_14, figure_15, figure_16];
 
 // 09.02
@@ -1558,6 +1626,8 @@ generate(figure_45);
 generate(figure_46);
 generate(figure_47);
 generate(figure_48);
+generate(figure_49);
+generate(figure_50);
 
 console.log(
 	8 +
