@@ -1728,7 +1728,7 @@ const figure_54: IGenerate = {
 };
 
 const figure_55: IGenerate = {
-	name: `Трапецивидное соединение переменной окружностью`,
+	name: `Трапецивидное соединение c переменной окружностью`,
 	primitives: [
 		new LinePath([
 			[0, 0],
@@ -1764,6 +1764,51 @@ const figure_55: IGenerate = {
 	`,
 };
 
+const figure_56: IGenerate = {
+	name: `Трапецивидное соединение c переменной окружностью 2`,
+	primitives: [
+		new LinePath([
+			['W', 'H1'],
+			['W', 0],
+			[0, 0],
+			[0, 'H2'],
+		]),
+
+		new Arc_2points_and_radius([0, 'H2'], ['(W/2) - (W1/2)', 'H'], 'R1', 'right'),
+		new LinePath([
+			['(W/2) - (W1/2)', 'H'],
+			['(W/2) + (W1/2)', 'H'],
+		]),
+		new Arc_2points_and_radius(['(W/2) + (W1/2)', 'H'], ['W', 'H1'], 'R1', 'right'),
+		new Circle(['W/2 + X', 'H/2 + Y'], 'R'),
+	],
+	params: `
+	<params>
+		
+		<p name="W" desc="[мм] Ширина детали" default="400.0"></p>
+		<p name="W1" desc="[мм] Ширина верхней части" default="200.0"></p>
+		
+		<p name="H" desc="[мм] Высота детали" default="300.0"></p>
+		<p name="H1" desc="[мм] Высота детали справа" default="200.0"></p>
+		<p name="H2" desc="[мм] Высота детали слева" default="150.0"></p>
+		
+		<p name="R" desc="[мм] Радиус центральной окружности" default="70.0"></p>
+		<p name="X" desc="[мм] Смещение окружности по X" default="0.0"></p>
+		<p name="Y" desc="[мм] Смещение окружности по Y" default="0.0"></p>
+
+		<p name="R1" desc="[мм] Радиус скругления боковых сторон должен быть больше" default="200.0"></p>
+		${new Arc_2points_and_radius([0, 'H2'], ['(W/2) - (W1/2)', 'H'], 'R1').generateParam(
+			'Радиус скругления боковых сторон',
+		)}
+
+		${new Condition('Высота детали должна быть больше правой стороны', 'H > H1')}		
+		${new Condition('Высота детали должна быть больше левой стороны', 'H > H2')}		
+		${new Condition('Центральная окружность должна помещаться', 'R < W / 2')}
+		
+		
+		</params>
+	`,
+};
 // ${new Condition('Ширина должна быть меньше половины радиуса', 'R < W / 2 ')}
 // ${new Condition('Высота должна быть меньше половины радиуса', 'R < H / 2 ')}
 
@@ -1899,3 +1944,4 @@ generate(figure_53);
 // 23.02
 generate(figure_54);
 generate(figure_55);
+generate(figure_56);
