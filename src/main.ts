@@ -1728,7 +1728,7 @@ const figure_54: IGenerate = {
 };
 
 const figure_55: IGenerate = {
-	name: `Трапецивидное соединение c переменной окружностью`,
+	name: `Трапециевидное соединение c переменной окружностью`,
 	primitives: [
 		new LinePath([
 			[0, 0],
@@ -1765,7 +1765,7 @@ const figure_55: IGenerate = {
 };
 
 const figure_56: IGenerate = {
-	name: `Трапецивидное соединение c переменной окружностью 2`,
+	name: `Трапециевидное соединение c переменной окружностью 2`,
 	primitives: [
 		new LinePath([
 			['W', 'H1'],
