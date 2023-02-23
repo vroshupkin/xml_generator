@@ -2085,6 +2085,66 @@ const figure_60: IGenerate = {
 	`,
 };
 
+const figure_61: IGenerate = {
+	name: `Соединительный блок 2`,
+	primitives: [
+		new LinePath([
+			['-W1', 'H2'],
+			['0', 'H2'],
+			[0, 0],
+			['W2', '-H3'],
+			['W2 + W3', 0],
+			['W2 + W3', 'H2'],
+			['W2', 'H1 + H2'],
+			['-W1', 'H1 + H2'],
+		]),
+
+		new LinePath([
+			['-W1', 'H1 + H2'],
+			['-W1', '(H1 + H2) - ((H1 - W4) / 2)'],
+			['L - (W1 + (W4 / 2))', '(H1 + H2) - ((H1 - W4) / 2)'],
+		]),
+
+		new Arc(
+			['(-W1) + L + (-(W4/2))', 'H2 + (H1 / 2)'],
+			'W4 / 2',
+			'M_PI / 2',
+			'3 * M_PI / 2',
+			true,
+		),
+
+		new LinePath([
+			['L - (W1 + (W4 / 2))', '(H2) + ((H1 - W4) / 2)'],
+			['-W1', '(H2) + ((H1 - W4) / 2)'],
+			['-W1', 'H2'],
+		]),
+
+		new Circle(['X + W2', 'Y + H2 / 2'], 'R'),
+	],
+	params: `
+	<params>
+		
+		<p name="W1" desc="[мм] Ширина части слева" default="100.0"></p>
+		<p name="W2" desc="[мм] Ширина центральной части" default="100.0"></p>
+		<p name="W3" desc="[мм] Ширина правой части" default="100.0"></p>
+		
+
+		<p name="H1" desc="[мм] Высота вырхней части" default="100.0"></p>
+		<p name="H2" desc="[мм] Высота середины" default="100.0"></p>
+		<p name="H3" desc="[мм] Высота нижней части" default="50.0"></p>
+		
+		<p name="L" desc="[мм] Глубина выемки" default="40.0"></p>
+		<p name="W4" desc="[мм] Ширина выемки" default="30.0"></p>
+
+		<p name="R" desc="[мм] Радиус окружности" default="40.0"></p>
+		<p name="X" desc="[мм] Смещение окружности по Х" default="0.0"></p>
+		<p name="Y" desc="[мм] Смещение окружности по Y" default="0.0"></p>
+		
+
+	</params>
+	`,
+};
+
 const figures__10_19 = [
 	figure_17,
 	figure_18_1,
@@ -2179,3 +2239,4 @@ generate(figure_58);
 generate(figure_59);
 generate(figure_53);
 generate(figure_60);
+generate(figure_61);
