@@ -1585,7 +1585,7 @@ const asin = Math.asin;
 console.log(asin(100 / (2 * 20)));
 
 const figure_51: IGenerate = {
-	name: `Прямоугольник с закругленой шириной радиусом`,
+	name: `Прямоугольник с закруглением и центральным радиусом`,
 	primitives: [
 		new Rotate(
 			[
@@ -1615,7 +1615,7 @@ const figure_51: IGenerate = {
 };
 
 const figure_52: IGenerate = {
-	name: `Прямоугольник с закругленой шириной`,
+	name: `Прямоугольник с закруглением`,
 	primitives: [
 		new Rotate(
 			[
@@ -1642,30 +1642,30 @@ const figure_52: IGenerate = {
 	`,
 };
 
-const figure_53: IGenerate = {
-	name: `Соединительный узел с прямоугольным основанием`,
-	primitives: [
-		new Arc(['R', 'H - R'], 'R', 'M_PI', 'a * M_PI / 180', true),
-		new LinePath([
-			['R * COS(a) + R', 'R * SIN(a) + H - R'],
-			['W', 0],
-			[0, 0],
-			[0, 'H - R'],
-		]),
-	],
-	params: `
-	<params>
-		<p name="a" desc="[градусы] Угол касательной справа" default="20.0"></p>
+// const figure_53: IGenerate = {
+// 	name: `Соединительный узел с прямоугольным основанием`,
+// 	primitives: [
+// 		new Arc(['R', 'H - R'], 'R', 'M_PI', 'a * M_PI / 180', true),
+// 		new LinePath([
+// 			['R * COS(a) + R', 'R * SIN(a) + H - R'],
+// 			['W', 0],
+// 			[0, 0],
+// 			[0, 'H - R'],
+// 		]),
+// 	],
+// 	params: `
+// 	<params>
+// 		<p name="a" desc="[градусы] Угол касательной справа" default="20.0"></p>
 
-		<p name="W" desc="[мм] Ширина детали" default="200.0"></p>
-		<p name="H" desc="[мм] Высота детали" default="150.0"></p>
-		
-		<p name="R" desc="[мм] Радиус верхнего закругления" default="60.0"></p>
-		
-		${new Condition('Радиус должен быть меньше половины длины', 'R < W / 2')}
-	</params>
-	`,
-};
+// 		<p name="W" desc="[мм] Ширина детали" default="200.0"></p>
+// 		<p name="H" desc="[мм] Высота детали" default="150.0"></p>
+
+// 		<p name="R" desc="[мм] Радиус верхнего закругления" default="60.0"></p>
+
+// 		${new Condition('Радиус должен быть меньше половины длины', 'R < W / 2')}
+// 	</params>
+// 	`,
+// };
 
 const figure_54_p: { [s: string]: [coordinate, coordinate] } = {
 	0: ['((W/2) - R)', 0],
@@ -1911,49 +1911,179 @@ const figure_58: IGenerate = {
 		</params>
 	`,
 };
+
 // ${new Condition('Ширина должна быть меньше половины радиуса', 'R < W / 2 ')}
 // ${new Condition('Высота должна быть меньше половины радиуса', 'R < H / 2 ')}
 
-const figures_xx_02 = [figure_11, figure_12, figure_13, figure_14, figure_15, figure_16];
+const figure_59_p: { [s: string]: [coordinate, coordinate] } = {
+	0: ['((W/2) - R)', 0],
+	1: ['-((W/2) - R)', 0],
+	2: ['-(W/2)', 'R'],
+	3: ['-(W/2)', 'H - R'],
+	4: ['R - W/2', 'H'],
+	5: ['W/2 - R', 'H'],
+	6: ['W/2', 'H-R'],
+	7: ['W/2', 'R'],
+};
 
-// 09.02
-const figures_09_02 = [figure_17, figure_18_1, figure_18_2, figure_19_1, figure_19_2__20];
+const figure_59: IGenerate = {
+	name: `Прямоугольник с выемкой`,
+	primitives: [
+		new LinePath([figure_59_p[0], ['X', 'Y'], figure_59_p[1]]),
+		new Arc(['-((W/2) - R)', 'R'], 'R', '3 * M_PI/2', '2 * M_PI /2', true),
 
-// 10.02
-const figures_10_02 = [
-	figure_20__25,
-	figure_21__26,
-	figure_21_1__27,
-	figure_21_2__28,
-	figure_22__29,
-];
+		new LinePath([figure_59_p[2], figure_59_p[3]]),
+		new Arc(['R - W/2', 'H - R'], 'R', '2 * M_PI/2', '1 * M_PI /2', true),
 
-// 13.02
-const figures_13_02 = [
-	figure_0_1__21,
-	figure_0_2__22,
-	figure_24__23,
-	figure_23__24,
-	figure_26__30,
-	figure_14,
-];
+		new LinePath([figure_59_p[4], figure_59_p[5]]),
+		new Arc(['W/2 - R', 'H - R'], 'R', '1 * M_PI/2', '0 * M_PI /2', true),
 
-// 14.02
-const figures_14_02 = [figure_29__31, figure_30__32, figure_35__33];
+		new LinePath([figure_59_p[6], figure_59_p[7]]),
+		new Arc(['((W/2) - R)', 'R'], 'R', '0 * M_PI/2', '3 * M_PI /2', true),
 
-// 15.02
-const figures_17_02 = [
-	figure_36__34,
-	figure_36_left__35,
-	figure_37__36,
-	figure_37_left__37,
-	figure_38__38,
-	figure_39__39,
-	figure_40,
-	figure_41,
-];
+		// Центральная окружность
+		// new Circle(['X', 'Y + H / 2'], 'R2'),
 
-const figures__01_09 = [figure_19_2__20];
+		new Circle(['(-W/2) + dL', 'dL'], 'R1'),
+		new Circle(['W/2 - dL', 'dL'], 'R1'),
+
+		new Circle(['W/2 - dL', 'H - dL'], 'R1'),
+		new Circle(['0', 'H - dL'], 'R1'),
+		new Circle(['(-W/2) + dL', 'H - dL'], 'R1'),
+	],
+	params: `
+	<params>
+		
+		<p name="W" desc="[мм] Ширина детали" default="400.0"></p>
+		<p name="H" desc="[мм] Высота детали" default="300.0"></p>
+		
+		<p name="R" desc="[мм] Радиус угловых закруглений" default="20.0"></p>
+		<p name="R1" desc="[мм] Радиус окружностей" default="15.0"></p>
+
+		<p name="R2" desc="[мм] Радиус центральной окружности" default="65.0"></p>
+		
+		<p name="Y" desc="[мм] Смещение точки выемки по высоте" default="100.0"></p>
+		<p name="X" desc="[мм] Смещение точки выемки по ширине" default="0.0"></p>
+
+		<p name="dL" desc="[мм] Смещение отверстий от краев" default="30.0"></p>
+		
+		${new Condition('Радиус центральной окружности должен быть меньше двойной ширины', 'R2 < W / 2')}
+		${new Condition(
+			'Радиус центральной окружности должен вмещаться по высоте',
+			'R2 < (H/2) - ((dL) + (R1))',
+		)}
+		</params>
+	`,
+};
+
+const figure_53: IGenerate = {
+	name: `Прямоугольник с выемкой и центральной окружностью`,
+	primitives: [
+		new LinePath([figure_59_p[0], ['X1', 'Y1'], figure_59_p[1]]),
+		new Arc(['-((W/2) - R)', 'R'], 'R', '3 * M_PI/2', '2 * M_PI /2', true),
+
+		new LinePath([figure_59_p[2], figure_59_p[3]]),
+		new Arc(['R - W/2', 'H - R'], 'R', '2 * M_PI/2', '1 * M_PI /2', true),
+
+		new LinePath([figure_59_p[4], figure_59_p[5]]),
+		new Arc(['W/2 - R', 'H - R'], 'R', '1 * M_PI/2', '0 * M_PI /2', true),
+
+		new LinePath([figure_59_p[6], figure_59_p[7]]),
+		new Arc(['((W/2) - R)', 'R'], 'R', '0 * M_PI/2', '3 * M_PI /2', true),
+
+		// Центральная окружность
+		new Circle(['X', 'Y + H / 2'], 'R2'),
+
+		new Circle(['(-W/2) + dL', 'dL'], 'R1'),
+		new Circle(['W/2 - dL', 'dL'], 'R1'),
+
+		new Circle(['W/2 - dL', 'H - dL'], 'R1'),
+		new Circle(['0', 'H - dL'], 'R1'),
+		new Circle(['(-W/2) + dL', 'H - dL'], 'R1'),
+	],
+	params: `
+	<params>
+		
+		<p name="W" desc="[мм] Ширина детали" default="400.0"></p>
+		<p name="H" desc="[мм] Высота детали" default="300.0"></p>
+		
+		<p name="R" desc="[мм] Радиус угловых закруглений" default="20.0"></p>
+		<p name="R1" desc="[мм] Радиус окружностей" default="15.0"></p>
+
+		<p name="R2" desc="[мм] Радиус центральной окружности" default="60.0"></p>
+		
+		<p name="X" desc="[мм] Смещение центра окружности по ширине" default="0.0"></p>
+		<p name="Y" desc="[мм] Смещение центра окружности по высоте" default="0.0"></p>
+		
+
+		<p name="X1" desc="[мм] Смещение точки выемки по ширине" default="0.0"></p>
+		<p name="Y1" desc="[мм] Смещение точки выемки по высоте" default="70.0"></p>
+		
+
+		<p name="dL" desc="[мм] Смещение отверстий от краев" default="30.0"></p>
+		
+		${new Condition('Радиус центральной окружности должен быть меньше двойной ширины', 'R2 < W / 2')}
+		${new Condition(
+			'Радиус центральной окружности должен вмещаться по высоте',
+			'R2 < (H/2) - ((dL) + (R1))',
+		)}
+		</params>
+	`,
+};
+
+const figure_60: IGenerate = {
+	name: `Соединительный блок 1`,
+	primitives: [
+		new LinePath([
+			['-W1', 'H2'],
+			['0', 'H2'],
+			[0, 0],
+			['W2', '-H3'],
+			['W2 + W3', 0],
+			['W2 + W3', 'H2'],
+			['W2', 'H1 + H2'],
+			['-W1', 'H1 + H2'],
+		]),
+
+		new LinePath([
+			['-W1', 'H1 + H2'],
+			['-W1', '(H1 + H2) - ((H1 - W4) / 2)'],
+			['L - (W1 + (W4 / 2))', '(H1 + H2) - ((H1 - W4) / 2)'],
+		]),
+
+		new Arc(
+			['(-W1) + L + (-(W4/2))', 'H2 + (H1 / 2)'],
+			'W4 / 2',
+			'M_PI / 2',
+			'3 * M_PI / 2',
+			true,
+		),
+
+		new LinePath([
+			['L - (W1 + (W4 / 2))', '(H2) + ((H1 - W4) / 2)'],
+			['-W1', '(H2) + ((H1 - W4) / 2)'],
+			['-W1', 'H2'],
+		]),
+	],
+	params: `
+	<params>
+		
+		<p name="W1" desc="[мм] Ширина части слева" default="100.0"></p>
+		<p name="W2" desc="[мм] Ширина центральной части" default="100.0"></p>
+		<p name="W3" desc="[мм] Ширина правой части" default="100.0"></p>
+		<p name="W4" desc="[мм] Ширина выемки" default="30.0"></p>
+
+
+		<p name="H1" desc="[мм] Высота вырхней части" default="100.0"></p>
+		<p name="H2" desc="[мм] Высота середины" default="100.0"></p>
+		<p name="H3" desc="[мм] Высота нижней части" default="50.0"></p>
+		
+		<p name="L" desc="[мм] Глубина выемки" default="40.0"></p>
+		
+
+	</params>
+	`,
+};
 
 const figures__10_19 = [
 	figure_17,
@@ -2040,12 +2170,12 @@ const figures__30_39 = [
 // generate(figure_51);
 // generate(figure_52);
 
-// 22.02
-generate(figure_53);
-
 // 23.02
-generate(figure_54);
-generate(figure_55);
-generate(figure_56);
-generate(figure_57);
+// generate(figure_54);
+// generate(figure_55);
+// generate(figure_56);
+// generate(figure_57);
 generate(figure_58);
+generate(figure_59);
+generate(figure_53);
+generate(figure_60);
