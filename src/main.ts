@@ -1842,13 +1842,13 @@ const figure_57: IGenerate = {
 		<p name="H1" desc="[мм] Высота детали справа" default="200.0"></p>
 		<p name="H2" desc="[мм] Высота детали слева" default="150.0"></p>
 		
-		<p name="R1" desc="[мм] Радиус скругления боковых сторон должен быть больше" default="200.0"></p>
+		<p name="R1" desc="[мм] Радиус скругления боковых сторон" default="200.0"></p>
 
 		<p name="dL" desc="[мм] Отступ от края для центра креплений" default="30.0"></p>
 		<p name="R2" desc="[мм] Радиус креплений" default="20.0"></p>
 
 		${new Arc_2points_and_radius([0, 'H2'], ['(W/2) - (W1/2)', 'H'], 'R1').generateParam(
-			'Радиус скругления боковых сторон',
+			'Радиус скругления боковых сторон должен быть больше',
 		)}
 
 		${new Condition('Высота детали должна быть больше правой стороны', 'H > H1')}		
@@ -1861,6 +1861,56 @@ const figure_57: IGenerate = {
 	`,
 };
 
+const figure_58: IGenerate = {
+	name: `Трапециевидное соединение c креплениями`,
+	primitives: [
+		new LinePath([
+			['W', 'H1'],
+			['W', 0],
+			[0, 0],
+			[0, 'H2'],
+		]),
+
+		new LinePath([
+			[0, 'H2'],
+			['(W/2) - (W1/2)', 'H'],
+		]),
+		new LinePath([
+			['(W/2) - (W1/2)', 'H'],
+			['(W/2) + (W1/2)', 'H'],
+		]),
+		new LinePath([
+			['(W/2) + (W1/2)', 'H'],
+			['W', 'H1'],
+		]),
+
+		new Circle(['dL', 'dL'], 'R2'),
+		new Circle(['(W/2)  + (dL) - (W1/2)', 'H - dL'], 'R2'),
+		new Circle(['(W/2) + (W1/2) - dL', 'H - dL'], 'R2'),
+		new Circle(['W - dL', 'dL'], 'R2'),
+	],
+	params: `
+	<params>
+		
+		<p name="W" desc="[мм] Ширина детали" default="400.0"></p>
+		<p name="W1" desc="[мм] Ширина верхней части" default="200.0"></p>
+		
+		<p name="H" desc="[мм] Высота детали" default="300.0"></p>
+		<p name="H1" desc="[мм] Высота детали справа" default="200.0"></p>
+		<p name="H2" desc="[мм] Высота детали слева" default="150.0"></p>
+		
+		<p name="dL" desc="[мм] Отступ от края для центра креплений" default="30.0"></p>
+		<p name="R2" desc="[мм] Радиус креплений" default="20.0"></p>
+
+		${new Condition('Высота детали должна быть больше правой стороны', 'H > H1')}		
+		${new Condition('Высота детали должна быть больше левой стороны', 'H > H2')}		
+		
+		${new Condition('Отступ креплений должен быть больше радиусов креплений ', 'dL > R2')}		
+	
+		
+		</params>
+	`,
+};
 // ${new Condition('Ширина должна быть меньше половины радиуса', 'R < W / 2 ')}
 // ${new Condition('Высота должна быть меньше половины радиуса', 'R < H / 2 ')}
 
@@ -1998,3 +2048,4 @@ generate(figure_54);
 generate(figure_55);
 generate(figure_56);
 generate(figure_57);
+generate(figure_58);
