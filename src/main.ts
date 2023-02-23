@@ -36,7 +36,7 @@ interface IParam_condition {
 }
 
 const figure_11: IGenerate = {
-	name: `_11 Прямоугольник отверстия болта`,
+	name: `Прямоугольник отверстия болта`,
 	primitives: [
 		new LineXML([0, 0], [0, 'H']),
 		new LineXML([0, 'H'], ['W', 'H']),
@@ -66,7 +66,7 @@ const figure_11: IGenerate = {
 };
 
 const figure_12: IGenerate = {
-	name: `_12 Прямоугольная округлая кромка`,
+	name: `Прямоугольная округлая кромка`,
 	primitives: [
 		new LinePath([
 			[0, 0],
@@ -117,7 +117,7 @@ const figure_12: IGenerate = {
 };
 
 const figure_13: IGenerate = {
-	name: `_13 Прямоугольная прямоугольная кромка`,
+	name: `Прямоугольная прямоугольная кромка`,
 	primitives: [
 		new LinePath([
 			[0, 0],
@@ -168,7 +168,7 @@ const figure_13: IGenerate = {
 };
 
 const figure_15: IGenerate = {
-	name: `_15 Угловое соединение`,
+	name: `Угловое соединение`,
 	primitives: [
 		new LineXML([0, 'R'], [0, 'H']),
 		new LineXML([0, 'H'], ['W', 0]),
@@ -192,7 +192,7 @@ const figure_15: IGenerate = {
 };
 
 const figure_16: IGenerate = {
-	name: `_16 Усеченые прямоугольник`,
+	name: `Усеченые прямоугольник`,
 	primitives: [
 		new LineXML([0, 'R'], [0, 'H']),
 		new LineXML([0, 'H'], ['W', 0]),
@@ -215,7 +215,7 @@ const figure_16: IGenerate = {
 };
 
 const figure_17: IGenerate = {
-	name: `_17 Вогнутый правильный треугольник`,
+	name: `Вогнутый правильный треугольник`,
 	primitives: [
 		new LinePath([
 			['W', 'L'],
@@ -241,7 +241,7 @@ const figure_17: IGenerate = {
 };
 
 const figure_18_1: IGenerate = {
-	name: `_18_1 Прямоугольный треугольник по двум сторонам`,
+	name: `Прямоугольный треугольник по двум сторонам`,
 	primitives: [
 		new LinePath([
 			[0, 0],
@@ -264,7 +264,7 @@ const figure_18_1: IGenerate = {
 };
 
 const figure_18_2: IGenerate = {
-	name: `_18_2 Прямоугольный треугольник по высоте и углу прилегающему к ширине`,
+	name: `Прямоугольный треугольник по высоте и углу прилегающему к ширине`,
 	primitives: [
 		new LinePath([
 			[0, 0],
@@ -291,7 +291,7 @@ const figure_19_1__x = `b * ${figure_19_1__cos}`;
 const figure_19_1__y = `b * SQRT(1 - (${figure_19_1__cos} * ${figure_19_1__cos}))`;
 
 const figure_19_1: IGenerate = {
-	name: `_19_1 Общий треугольник по трем сторонам`,
+	name: `Общий треугольник по трем сторонам`,
 	primitives: [
 		new LinePath([
 			[0, 0],
@@ -648,7 +648,7 @@ const figure_26__30: IGenerate = {
 };
 
 const figure_14: IGenerate = {
-	name: `_14 Раздел дуги`,
+	name: `Раздел дуги`,
 	primitives: [
 		new Arc(
 			[0, 0],
@@ -1642,6 +1642,91 @@ const figure_52: IGenerate = {
 	`,
 };
 
+const figure_53: IGenerate = {
+	name: `Соединительный узел с прямоугольным основанием`,
+	primitives: [
+		new Arc(['R', 'H - R'], 'R', 'M_PI', 'a * M_PI / 180', true),
+		new LinePath([
+			['R * COS(a) + R', 'R * SIN(a) + H - R'],
+			['W', 0],
+			[0, 0],
+			[0, 'H - R'],
+		]),
+	],
+	params: `
+	<params>
+		<p name="a" desc="[градусы] Угол касательной справа" default="20.0"></p>
+
+		<p name="W" desc="[мм] Ширина детали" default="200.0"></p>
+		<p name="H" desc="[мм] Высота детали" default="150.0"></p>
+		
+		<p name="R" desc="[мм] Радиус верхнего закругления" default="60.0"></p>
+		
+		${new Condition('Радиус должен быть меньше половины длины', 'R < W / 2')}
+	</params>
+	`,
+};
+
+const figure_54_p: { [s: string]: [coordinate, coordinate] } = {
+	0: ['((W/2) - R)', 0],
+	1: ['-((W/2) - R)', 0],
+	2: ['-(W/2)', 'R'],
+	3: ['-(W/2)', 'H - R'],
+	4: ['R - W/2', 'H'],
+	5: ['W/2 - R', 'H'],
+	6: ['W/2', 'H-R'],
+	7: ['W/2', 'R'],
+};
+
+const figure_54: IGenerate = {
+	name: `Прямоугольный фланец с центральной окружностью`,
+	primitives: [
+		new LinePath([figure_54_p[0], figure_54_p[1]]),
+		new Arc(['-((W/2) - R)', 'R'], 'R', '3 * M_PI/2', '2 * M_PI /2', true),
+
+		new LinePath([figure_54_p[2], figure_54_p[3]]),
+		new Arc(['R - W/2', 'H - R'], 'R', '2 * M_PI/2', '1 * M_PI /2', true),
+
+		new LinePath([figure_54_p[4], figure_54_p[5]]),
+		new Arc(['W/2 - R', 'H - R'], 'R', '1 * M_PI/2', '0 * M_PI /2', true),
+
+		new LinePath([figure_54_p[6], figure_54_p[7]]),
+		new Arc(['((W/2) - R)', 'R'], 'R', '0 * M_PI/2', '3 * M_PI /2', true),
+
+		new Circle(['X', 'Y + H / 2'], 'R2'),
+
+		new Circle(['(-W/2) + dL', 'dL'], 'R1'),
+		new Circle(['0', 'dL'], 'R1'),
+		new Circle(['W/2 - dL', 'dL'], 'R1'),
+
+		new Circle(['W/2 - dL', 'H - dL'], 'R1'),
+		new Circle(['0', 'H - dL'], 'R1'),
+		new Circle(['(-W/2) + dL', 'H - dL'], 'R1'),
+	],
+	params: `
+	<params>
+		
+		<p name="W" desc="[мм] Ширина детали" default="400.0"></p>
+		<p name="H" desc="[мм] Высота детали" default="300.0"></p>
+		
+		<p name="R" desc="[мм] Радиус угловых закруглений" default="20.0"></p>
+		<p name="R1" desc="[мм] Радиус окружностей" default="20.0"></p>
+		<p name="R2" desc="[мм] Радиус центральной окружности" default="65.0"></p>
+		
+		<p name="X" desc="[мм] Смещение центральной окружности по X" default="0.0"></p>
+		<p name="Y" desc="[мм] Смещение центральной окружности по Y" default="0.0"></p>
+
+		<p name="dL" desc="[мм] Смещение отверстий от краев" default="30.0"></p>
+		
+		${new Condition('Радиус центральной окружности должен быть меньше двойной ширины', 'R2 < W / 2')}
+		${new Condition(
+			'Радиус центральной окружности должен вмещаться по высоте',
+			'R2 < (H/2) - ((dL) + (R1))',
+		)}
+		</params>
+	`,
+};
+
 // ${new Condition('Ширина должна быть меньше половины радиуса', 'R < W / 2 ')}
 // ${new Condition('Высота должна быть меньше половины радиуса', 'R < H / 2 ')}
 
@@ -1684,6 +1769,21 @@ const figures_17_02 = [
 	figure_41,
 ];
 
+const figures__01_09 = [figure_19_2__20];
+
+const figures__10_19 = [
+	figure_17,
+	figure_18_1,
+	figure_18_2,
+	figure_19_1,
+	figure_11,
+	figure_12,
+	figure_13,
+	figure_14,
+	figure_15,
+	figure_16,
+];
+
 const figures__20_29 = [
 	figure_19_2__20,
 	figure_0_1__21,
@@ -1696,10 +1796,6 @@ const figures__20_29 = [
 	figure_21_2__28,
 	figure_22__29,
 ];
-
-// for (const figure of figures__21_29) {
-// 	generate(figure);
-// }
 
 const figures__30_39 = [
 	figure_26__30,
@@ -1715,9 +1811,17 @@ const figures__30_39 = [
 	figure_39__39,
 ];
 
-for (const figure of figures__30_39) {
-	generate(figure);
-}
+// for (const figure of figures__10_19) {
+// 	generate(figure);
+// }
+
+// for (const figure of figures__20_29) {
+// 	generate(figure);
+// }
+
+// for (const figure of figures__30_39) {
+// 	generate(figure);
+// }
 
 // // 30 - 39;
 // generate(figure_26__30);
@@ -1752,12 +1856,8 @@ for (const figure of figures__30_39) {
 // generate(figure_51);
 // generate(figure_52);
 
-console.log(
-	8 +
-		figures_xx_02.length +
-		figures_09_02.length +
-		figures_10_02.length +
-		figures_13_02.length +
-		figures_14_02.length +
-		figures_17_02.length,
-);
+// 22.02
+generate(figure_53);
+
+// 23.02
+generate(figure_54);
