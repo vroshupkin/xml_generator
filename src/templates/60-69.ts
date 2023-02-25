@@ -471,16 +471,17 @@ const figure_69: IGenerate = {
 	</params>
 	`,
 };
-clearDirTemplate(() => {
-	// generate(figure_60);
-	// generate(figure_61);
-	// generate(figure_62);
-	// generate(figure_63);
-	generate(figure_64);
-	generate(figure_65);
-	generate(figure_66);
-	generate(figure_67);
 
-	generate(figure_68);
-	generate(figure_69);
-});
+// clearDirTemplate(() => {
+// 	// generate(figure_60);
+// 	// generate(figure_61);
+// 	// generate(figure_62);
+// 	// generate(figure_63);
+// 	generate(figure_64);
+// 	generate(figure_65);
+// 	generate(figure_66);
+// 	generate(figure_67);
+
+// 	generate(figure_68);
+// 	generate(figure_69);
+// });
