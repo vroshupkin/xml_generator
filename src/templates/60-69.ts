@@ -472,7 +472,11 @@ const figure_69: IGenerate = {
 	`,
 };
 
-clearDirTemplate(() => {
+// clearDirTemplate(() => {
+
+// });
+
+export const generate_60_69 = (): void => {
 	generate(figure_60);
 	generate(figure_61);
 	generate(figure_62);
@@ -484,4 +488,4 @@ clearDirTemplate(() => {
 
 	generate(figure_68);
 	generate(figure_69);
-});
+};

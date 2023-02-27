@@ -394,15 +394,25 @@ const figure_79: IGenerate = {
 };
 
 // clearDirTemplate(() => {
-// 	generate(figure_70);
-// 	generate(figure_71);
-// 	generate(figure_72);
-// 	generate(figure_73);
 
-// 	generate(figure_74);
-// 	generate(figure_75);
-// 	generate(figure_76);
-// 	generate(figure_77);
-// 	generate(figure_78);
-// 	generate(figure_79);
 // });
+
+export const generate_70_79 = (): void => {
+	generate(figure_70);
+	generate(figure_71);
+	generate(figure_72);
+	generate(figure_73);
+
+	generate(figure_74);
+	generate(figure_75);
+	generate(figure_76);
+	generate(figure_77);
+	generate(figure_78);
+	generate(figure_79);
+};
+
+// clearDirTemplate(() => {
+// 	generate10();
+// });
+
+// generate10();

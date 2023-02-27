@@ -1,9 +1,4 @@
-// import '../src/templates/10-19';
-
-// import '../src/templates/60-69';
-// import '../src/templates/70-79';
-// import '../src/templates/80-89';
-import '../src/templates/90-100';
+import { generate_80_89 } from '../src/templates/80-89';
 
 import { generate, IGenerate } from '../generator';
 import { IDetail } from './generator.interface';
@@ -19,6 +14,20 @@ import {
 import { coordinate } from './figure.interface';
 import { checkBracker } from './common/parser';
 import { Condition, GenerateVariable } from './condition';
+import { clearDirTemplate } from './common/terminal';
+import { generate_10_19 } from './templates/10-19';
+import { generate_60_69 } from './templates/60-69';
+import { generate_70_79 } from './templates/70-79';
+import { generate_90_100 } from './templates/90-100';
+
+clearDirTemplate(() => {
+	generate_10_19();
+
+	// generate_60_69();
+	// generate_70_79();
+	// generate_80_89();
+	// generate_90_100;
+});
 
 interface IParams {
 	tag: 'p' | 'condition';

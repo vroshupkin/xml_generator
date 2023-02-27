@@ -501,18 +501,24 @@ const figure_100: IGenerate = {
 	`,
 };
 
-clearDirTemplate(() => {
-	// generate(figure_90);
-	// generate(figure_91);
-	// generate(figure_92);
+export const generate_90_100 = (): void => {
+	generate(figure_90);
+	generate(figure_91);
+	generate(figure_92);
 
-	// generate(figure_93);
-	// generate(figure_94);
-	// generate(figure_95);
-	// generate(figure_96);
-	// generate(figure_97);
-	// generate(figure_98);
+	generate(figure_93);
+	generate(figure_94);
+	generate(figure_95);
+	generate(figure_96);
+	generate(figure_97);
+	generate(figure_98);
 	generate(figure_99);
 
 	generate(figure_100);
-});
+};
+
+// clearDirTemplate(() => {
+// 	generate10();
+// });
+
+// generate_90_100();
