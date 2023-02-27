@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<template name="Окружность с отверстиями для болтов">
+	<params>
+		<p name="OR" desc="Наружный радиус" default="254.0"></p>
+		<p name="PR" desc="Радиус окружности болта" default="190.5"></p>
+		<p name="HR" desc="Радиус отверстия болта" default="31.75"></p>
+		<p name="CNT" desc="Количество отверстий" default="4"></p>
+
+		<condition text="Радиус окружности болта должен быть больше нуля"><![CDATA[PR > 0.0]]></condition>
+		<condition text="Радиус отверстия болта должен быть больше нуля"><![CDATA[HR > 0.0]]></condition>
+		<condition text="Количество отверстий должно быть больше нуля"><![CDATA[CNT > 0.0]]></condition>
+		<condition text="Наружный радиус не может быть меньше суммы радиуса окружности болта и радиуса отверстия болта"><![CDATA[OR > PR + HR]]></condition>
+	</params>
+	<geom>
+		<circle R="OR">
+			<point>
+				<x>0.0</x>
+				<y>0.0</y>
+			</point>
+		</circle>
+
+		<rotate count="CNT" start="0" step="360 / CNT">
+			<circle R="HR">
+				<point>
+					<x>PR</x>
+					<y>0.0</y>
+				</point>
+			</circle>
+		</rotate>
+	</geom>
+</template>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<template name="Кольцо">
+	<params>
+		<p name="aOuterR" desc="Внешний радиус" default="150.0"></p>
+		<p name="bInnerR" desc="Внутренний радиус" default="105.0"></p>
+		<condition text="Радиус должен быть больше нуля"><![CDATA[bInnerR > 0.0]]></condition>
+		<condition text="Наружний радиус должен быть больше внутреннего"><![CDATA[aOuterR > bInnerR]]></condition>
+	</params>
+	<geom>
+		<circle R="aOuterR">
+			<point>
+				<x>aOuterR</x>
+				<y>aOuterR</y>
+			</point>
+		</circle>
+		<circle R="bInnerR">
+			<point>
+				<x>aOuterR</x>
+				<y>aOuterR</y>
+			</point>
+		</circle>
+	</geom>
+</template>

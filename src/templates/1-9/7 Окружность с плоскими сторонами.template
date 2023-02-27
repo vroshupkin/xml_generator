@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<template name="Окружность с плоскими сторонами">
+	<params>
+		<p name="R" desc="Радиус" default="127.0"></p>
+		<p name="L" desc="Длина хорды" default="200.0"></p>
+		<condition text="Радиус не может быть отрицательным числом"><![CDATA[R > 0.0]]></condition>
+		<condition text="Длина хорды не может быть отрицательным числом"><![CDATA[L > 0.0]]></condition>
+		<condition text="Длина хорды не может быть больше диаметра окружности"><![CDATA[L < 2.0 * R]]></condition>
+	</params>
+	<geom>
+		<seg>
+			<point>
+				<x>0.5 * L</x>
+				<y>-SQRT(R * R - 0.25 * L * L)</y>
+			</point>
+			<point>
+				<x>-0.5 * L</x>
+				<y>-SQRT(R * R - 0.25 * L * L)</y>
+			</point>
+		</seg>
+		<arc>
+			<point>
+				<x>0.5 * L</x>
+				<y>-SQRT(R * R - 0.25 * L * L)</y>
+			</point>
+			<point>
+				<x>0.0</x>
+				<y>R</y>
+			</point>
+			<point>
+				<x>-0.5 * L</x>
+				<y>-SQRT(R * R - 0.25 * L * L)</y>
+			</point>
+		</arc>
+	</geom>
+</template>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<template name="Прямоугольник со скошенными углами">
+	<params>
+		<p name="aW" desc="Ширина" default="500.0"></p>
+		<p name="bH" desc="Высота" default="300.0"></p>
+		<p name="cLBBevel" desc="Скос слева внизу" default="50.0"></p>
+		<p name="dRBBevel" desc="Скос справа внизу" default="50.0"></p>
+		<p name="eRTBevel" desc="Скос справа вверху" default="50.0"></p>
+		<p name="fLTBevel" desc="Скос слева вверху" default="50.0"></p>
+		<!-- ширина -->
+		<condition text="Некорректное значение параметра"><![CDATA[aW > cLBBevel + dRBBevel]]></condition>
+		<condition text="Некорректное значение параметра"><![CDATA[aW > cLBBevel + eRTBevel]]></condition>
+		<condition text="Некорректное значение параметра"><![CDATA[aW > fLTBevel + dRBBevel]]></condition>
+		<condition text="Некорректное значение параметра"><![CDATA[aW > fLTBevel + eRTBevel]]></condition>
+		<!-- высота -->
+		<condition text="Некорректное значение параметра"><![CDATA[bH > cLBBevel + fLTBevel]]></condition>
+		<condition text="Некорректное значение параметра"><![CDATA[bH > cLBBevel + eRTBevel]]></condition>
+		<condition text="Некорректное значение параметра"><![CDATA[bH > dRBBevel + eRTBevel]]></condition>
+		<condition text="Некорректное значение параметра"><![CDATA[bH > dRBBevel + fLTBevel]]></condition>
+	</params>
+	<geom>
+		<!-- левый нижний скос -->
+		<seg>
+			<point>
+				<x>0.0</x>
+				<y>cLBBevel</y>
+			</point>
+			<point>
+				<x>cLBBevel</x>
+				<y>0.0</y>
+			</point>
+		</seg>
+		<!-- низ -->
+		<seg>
+			<point>
+				<x>cLBBevel</x>
+				<y>0.0</y>
+			</point>
+			<point>
+				<x>aW - dRBBevel</x>
+				<y>0.0</y>
+			</point>
+		</seg>
+		<!-- правый нижний скос -->
+		<seg>
+			<point>
+				<x>aW - dRBBevel</x>
+				<y>0.0</y>
+			</point>
+			<point>
+				<x>aW</x>
+				<y>dRBBevel</y>
+			</point>
+		</seg>
+		<!-- правая сторона -->
+		<seg>
+			<point>
+				<x>aW</x>
+				<y>dRBBevel</y>
+			</point>
+			<point>
+				<x>aW</x>
+				<y>bH - eRTBevel</y>
+			</point>
+		</seg>
+		<!-- правый верхний скос -->
+		<seg>
+			<point>
+				<x>aW</x>
+				<y>bH - eRTBevel</y>
+			</point>
+			<point>
+				<x>aW - eRTBevel</x>
+				<y>bH</y>
+			</point>
+		</seg>
+		<!-- верх -->
+		<seg>
+			<point>
+				<x>aW - eRTBevel</x>
+				<y>bH</y>
+			</point>
+			<point>
+				<x>fLTBevel</x>
+				<y>bH</y>
+			</point>
+		</seg>
+		<!-- левый верхний скос -->
+		<seg>
+			<point>
+				<x>fLTBevel</x>
+				<y>bH</y>
+			</point>
+			<point>
+				<x>0.0</x>
+				<y>bH - fLTBevel</y>
+			</point>
+		</seg>
+		<!-- левая сторона -->
+		<seg>
+			<point>
+				<x>0.0</x>
+				<y>bH - fLTBevel</y>
+			</point>
+			<point>
+				<x>0.0</x>
+				<y>cLBBevel</y>
+			</point>
+		</seg>
+	</geom>
+</template>

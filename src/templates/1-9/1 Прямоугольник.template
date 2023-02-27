@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<template name="Прямоугольник">
+	<params>
+		<p name="aW" desc="Ширина" default="500.0"></p>
+		<p name="bH" desc="Высота" default="300.0"></p>
+		<condition text="Ширина должна быть больше нуля"><![CDATA[aW > 0.0]]></condition>
+		<condition text="Высота должна быть больше нуля"><![CDATA[bH > 0.0]]></condition>
+	</params>
+	<geom>
+		<!-- низ -->
+		<seg>
+			<point>
+				<x>0.0</x>
+				<y>0.0</y>
+			</point>
+			<point>
+				<x>aW</x>
+				<y>0.0</y>
+			</point>
+		</seg>
+		<!-- правая сторона -->
+		<seg>
+			<point>
+				<x>aW</x>
+				<y>0.0</y>
+			</point>
+			<point>
+				<x>aW</x>
+				<y>bH</y>
+			</point>
+		</seg>
+		<!-- верх -->
+		<seg>
+			<point>
+				<x>aW</x>
+				<y>bH</y>
+			</point>
+			<point>
+				<x>0.0</x>
+				<y>bH</y>
+			</point>
+		</seg>
+		<!-- левая сторона -->
+		<seg>
+			<point>
+				<x>0.0</x>
+				<y>bH</y>
+			</point>
+			<point>
+				<x>0.0</x>
+				<y>0.0</y>
+			</point>
+		</seg>
+	</geom>
+</template>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<template name="Закругленная L-скоба">
+	<params>
+		<p name="H" desc="Высота" default="254.0"></p>
+		<p name="W" desc="Ширина" default="152.4"></p>
+		<p name="WP" desc="Ширина вершины" default="50.8"></p>
+		<p name="HR" desc="Высота справа" default="50.8"></p>
+		<p name="R" desc="Радиус" default="12.7"></p>
+		<condition text="Высота должна быть больше нуля"><![CDATA[H > 0.0]]></condition>
+		<condition text="Ширина должна быть больше нуля"><![CDATA[W > 0.0]]></condition>
+		<condition text="Ширина вершины должна быть больше нуля"><![CDATA[WP > 0.0]]></condition>
+		<condition text="Высота справа не может быть меньше нуля"><![CDATA[HR >= 0.0]]></condition>
+		<condition text="Радиус должен быть больше нуля"><![CDATA[R > 0.0]]></condition>
+		<condition text="Ширина вершины не может быть меньше двух радиусов"><![CDATA[WP >= 2.0 * R]]></condition>
+		<condition text="Высота справа не может быть меньше двух радиусов"><![CDATA[HR >= 2.0 * R]]></condition>
+		<condition text="Ширина вершины не может быть больше общей ширины минус радиус"><![CDATA[WP <= W - R]]></condition>
+		<condition text="Высота справа не может быть больше общей высоты минус радиус"><![CDATA[HR <= H - R]]></condition>
+	</params>
+	<geom>
+		<seg>
+			<point>
+				<x>R</x>
+				<y>0.0</y>
+			</point>
+			<point>
+				<x>W - R</x>
+				<y>0.0</y>
+			</point>
+		</seg>
+		<arc R="R" start="1.5 * M_PI" end="0.0" clockwise="false">
+			<point>
+				<x>W - R</x>
+				<y>R</y>
+			</point>
+		</arc>
+		<seg>
+			<point>
+				<x>W</x>
+				<y>R</y>
+			</point>
+			<point>
+				<x>W</x>
+				<y>HR - R</y>
+			</point>
+		</seg>
+		<arc R="R" start="0.0" end="0.5 * M_PI" clockwise="false">
+			<point>
+				<x>W - R</x>
+				<y>HR - R</y>
+			</point>
+		</arc>
+		<seg>
+			<point>
+				<x>W - R</x>
+				<y>HR</y>
+			</point>
+			<point>
+				<x>WP + R</x>
+				<y>HR</y>
+			</point>
+		</seg>
+		<arc R="R" start="M_PI" end="1.5 * M_PI" clockwise="false">
+			<point>
+				<x>WP + R</x>
+				<y>HR + R</y>
+			</point>
+		</arc>
+		<seg>
+			<point>
+				<x>WP</x>
+				<y>HR + R</y>
+			</point>
+			<point>
+				<x>WP</x>
+				<y>H - R</y>
+			</point>
+		</seg>
+		<arc R="R" start="0.0" end="0.5 * M_PI" clockwise="false">
+			<point>
+				<x>WP - R</x>
+				<y>H - R</y>
+			</point>
+		</arc>
+		<seg>
+			<point>
+				<x>WP - R</x>
+				<y>H</y>
+			</point>
+			<point>
+				<x>R</x>
+				<y>H</y>
+			</point>
+		</seg>
+		<arc R="R" start="0.5 * M_PI" end="M_PI" clockwise="false">
+			<point>
+				<x>R</x>
+				<y>H - R</y>
+			</point>
+		</arc>
+		<seg>
+			<point>
+				<x>0.0</x>
+				<y>H - R</y>
+			</point>
+			<point>
+				<x>0.0</x>
+				<y>R</y>
+			</point>
+		</seg>
+		<arc R="R" start="M_PI" end="1.5 * M_PI" clockwise="false">
+			<point>
+				<x>R</x>
+				<y>R</y>
+			</point>
+		</arc>
+	</geom>
+</template>

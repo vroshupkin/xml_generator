@@ -23,3 +23,7 @@ export function clearDirTemplate(callback: any): boolean {
 
 	return true;
 }
+
+export function cpToTemplate_1_9(): void {
+	exec('cp ../templates/1-9/* ../templates/');
+}

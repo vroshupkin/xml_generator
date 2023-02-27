@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<template name="Прямоугольник с закруглёнными углами">
+	<params>
+		<p name="aW" desc="Ширина" default="500.0"></p>
+		<p name="bH" desc="Высота" default="300.0"></p>
+		<p name="cLBRound" desc="Радиус слева внизу" default="50.0"></p>
+		<p name="dRBRound" desc="Радиус справа внизу" default="50.0"></p>
+		<p name="eRTRound" desc="Радиус справа вверху" default="50.0"></p>
+		<p name="fLTRound" desc="Радиус слева вверху" default="50.0"></p>
+		<!-- ширина -->
+		<condition text="Некорректное значение параметра"><![CDATA[aW > cLBRound + dRBRound]]></condition>
+		<condition text="Некорректное значение параметра"><![CDATA[aW > cLBRound + eRTRound]]></condition>
+		<condition text="Некорректное значение параметра"><![CDATA[aW > fLTRound + dRBRound]]></condition>
+		<condition text="Некорректное значение параметра"><![CDATA[aW > fLTRound + eRTRound]]></condition>
+		<!-- высота -->
+		<condition text="Некорректное значение параметра"><![CDATA[bH > cLBRound + fLTRound]]></condition>
+		<condition text="Некорректное значение параметра"><![CDATA[bH > cLBRound + eRTRound]]></condition>
+		<condition text="Некорректное значение параметра"><![CDATA[bH > dRBRound + eRTRound]]></condition>
+		<condition text="Некорректное значение параметра"><![CDATA[bH > dRBRound + fLTRound]]></condition>
+	</params>
+	<geom>
+		<!-- левое нижнее закругление -->
+		<arc R="cLBRound" start="M_PI" end="1.5 * M_PI" clockwise="false">
+			<point>
+				<x>cLBRound</x>
+				<y>cLBRound</y>
+			</point>
+		</arc>
+		<!-- низ -->
+		<seg>
+			<point>
+				<x>cLBRound</x>
+				<y>0.0</y>
+			</point>
+			<point>
+				<x>aW - dRBRound</x>
+				<y>0.0</y>
+			</point>
+		</seg>
+		<!-- правое нижнее закругление -->
+		<arc R="dRBRound" start="1.5 * M_PI" end="0.0" clockwise="false">
+			<point>
+				<x>aW - dRBRound</x>
+				<y>dRBRound</y>
+			</point>
+		</arc>
+		<!-- правая сторона -->
+		<seg>
+			<point>
+				<x>aW</x>
+				<y>dRBRound</y>
+			</point>
+			<point>
+				<x>aW</x>
+				<y>bH - eRTRound</y>
+			</point>
+		</seg>
+		<!-- правое верхнее закругление -->
+		<arc R="eRTRound" start="0.0" end="M_PI / 2" clockwise="false">
+			<point>
+				<x>aW - eRTRound</x>
+				<y>bH - eRTRound</y>
+			</point>
+		</arc>
+		<!-- верх -->
+		<seg>
+			<point>
+				<x>aW - eRTRound</x>
+				<y>bH</y>
+			</point>
+			<point>
+				<x>fLTRound</x>
+				<y>bH</y>
+			</point>
+		</seg>
+		<!-- левое верхнее закругление -->
+		<arc R="fLTRound" start="M_PI / 2" end="M_PI" clockwise="false">
+			<point>
+				<x>fLTRound</x>
+				<y>bH - fLTRound</y>
+			</point>
+		</arc>
+		<!-- левая сторона -->
+		<seg>
+			<point>
+				<x>0.0</x>
+				<y>bH - fLTRound</y>
+			</point>
+			<point>
+				<x>0.0</x>
+				<y>cLBRound</y>
+			</point>
+		</seg>
+	</geom>
+</template>
+

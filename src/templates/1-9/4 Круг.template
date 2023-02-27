@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<template name="Круг">
+	<params>
+		<p name="R" desc="Радиус" default="150.0"></p>
+		<condition text="Радиус должен быть больше нуля"><![CDATA[R > 0.0]]></condition>
+	</params>
+	<geom>
+		<circle R="R">
+			<point>
+				<x>150.0</x>
+				<y>150.0</y>
+			</point>
+		</circle>
+	</geom>
+</template>

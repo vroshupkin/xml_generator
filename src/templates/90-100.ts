@@ -501,6 +501,50 @@ const figure_100: IGenerate = {
 	`,
 };
 
+const figure_101: IGenerate = {
+	name: `Держатель рельсы со скошенным основанием`,
+	primitives: [
+		new LinePath([
+			['W/2 + dW/2', 'H1 + H2 + (-h)'],
+			['W/2 + dW/2', 'H1 + H2'],
+			['W/2 + W1/2', 'H1 + H2'],
+			['W/2 + W1/2', 'H1'],
+
+			['W', '0'],
+			[0, 0],
+
+			['(W - W1) / 2', 'H1'],
+			['(W - W1) / 2', 'H1 + H2'],
+			['W/2 - dW/2', 'H1 + H2'],
+			['W/2 - dW/2', 'H1 + H2 + (-h)'],
+		]),
+
+		new Arc(
+			['W / 2', '(H1 + H2 ) - (h + ((SQRT(R * R - (dW * dW / 4)))))'],
+			'R',
+			'M_PI/2 + ASIN(dW / ( 2 * R))',
+			'M_PI/2 - ASIN(dW / ( 2 * R))',
+			false,
+		),
+	],
+	params: `   
+	<params>
+		<p name="H1" desc="[мм] Высота нижней грани" default="50.0"></p>
+		<p name="H2" desc="[мм] Высота верхней грани" default="50.0"></p>
+
+		<p name="W" desc="[мм] Ширина основания" default="200.0"></p>
+		<p name="W1" desc="[мм] Ширина центральной части" default="100.0"></p>
+
+		<p name="dW" desc="[мм] Ширина прорези" default="15.0"></p>
+
+		<p name="h" desc="[мм] Глубина прорези" default="10.0"></p>
+
+		<p name="R" desc="[мм] Радиус окружности" default="25.0"></p>
+
+	</params>
+	`,
+};
+
 export const generate_90_100 = (): void => {
 	generate(figure_90);
 	generate(figure_91);
@@ -515,6 +559,7 @@ export const generate_90_100 = (): void => {
 	generate(figure_99);
 
 	generate(figure_100);
+	generate(figure_101);
 };
 
 // clearDirTemplate(() => {

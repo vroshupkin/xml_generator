@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<template name="Прямоугольник с желобком">
+	<params>
+		<p name="H" desc="Высота" default="127.0"></p>
+		<p name="W" desc="Ширина" default="254.0"></p>
+		<p name="R1" desc="Радиус 1" default="31.75"></p>
+		<p name="R2" desc="Радиус 2" default="31.75"></p>
+		<p name="R3" desc="Радиус 3" default="31.75"></p>
+		<p name="R4" desc="Радиус 4" default="31.75"></p>
+
+		<condition text="Высота должна быть больше нуля"><![CDATA[H > 0.0]]></condition>
+		<condition text="Ширина должна быть больше нуля"><![CDATA[W > 0.0]]></condition>
+		<condition text="Первый радиус должен быть больше нуля"><![CDATA[R1 > 0.0]]></condition>
+		<condition text="Второй радиус должен быть больше нуля"><![CDATA[R2 > 0.0]]></condition>
+		<condition text="Третий радиус должен быть больше нуля"><![CDATA[R3 > 0.0]]></condition>
+		<condition text="Четвертый радиус должен быть больше нуля"><![CDATA[R4 > 0.0]]></condition>
+		<condition text="Первый радиус не может быть больше высоты"><![CDATA[R1 <= H]]></condition>
+		<condition text="Первый радиус не может быть больше половины ширины"><![CDATA[2.0 * R1 <= W]]></condition>
+		<condition text="Второй радиус не может быть больше ширины"><![CDATA[R2 <= W]]></condition>
+		<condition text="Второй радиус не может быть больше половины высоты"><![CDATA[2.0 * R2 <= H]]></condition>
+		<condition text="Третий радиус не может быть больше высоты"><![CDATA[R3 <= H]]></condition>
+		<condition text="Третий радиус не может быть больше половины ширины"><![CDATA[2.0 * R3 <= W]]></condition>
+		<condition text="Четвертый радиус не может быть больше ширины"><![CDATA[R4 <= W]]></condition>
+		<condition text="Четвертый радиус не может быть больше половины высоты"><![CDATA[2.0 * R4 <= H]]></condition>
+	</params>
+	<geom>
+		<seg>
+			<point>
+				<x>0.0</x>
+				<y>0.0</y>
+			</point>
+			<point>
+				<x>0.5 * W - R1</x>
+				<y>0.0</y>
+			</point>
+		</seg>
+		<arc>
+			<point>
+				<x>0.5 * W + R1</x>
+				<y>0.0</y>
+			</point>
+			<point>
+				<x>0.5 * W</x>
+				<y>R1</y>
+			</point>
+			<point>
+				<x>0.5 * W - R1</x>
+				<y>0.0</y>
+			</point>
+		</arc>
+		<seg>
+			<point>
+				<x>0.5 * W + R1</x>
+				<y>0.0</y>
+			</point>
+			<point>
+				<x>W</x>
+				<y>0.0</y>
+			</point>
+		</seg>
+		<seg>
+			<point>
+				<x>W</x>
+				<y>0.0</y>
+			</point>
+			<point>
+				<x>W</x>
+				<y>0.5 * H - R2</y>
+			</point>
+		</seg>
+		<arc>
+			<point>
+				<x>W</x>
+				<y>0.5 * H + R2</y>
+			</point>
+			<point>
+				<x>W - R2</x>
+				<y>0.5 * H</y>
+			</point>
+			<point>
+				<x>W</x>
+				<y>0.5 * H - R2</y>
+			</point>
+		</arc>
+		<seg>
+			<point>
+				<x>W</x>
+				<y>0.5 * H + R2</y>
+			</point>
+			<point>
+				<x>W</x>
+				<y>H</y>
+			</point>
+		</seg>
+		<seg>
+			<point>
+				<x>W</x>
+				<y>H</y>
+			</point>
+			<point>
+				<x>0.5 * W + R3</x>
+				<y>H</y>
+			</point>
+		</seg>
+		<arc>
+			<point>
+				<x>0.5 * W - R3</x>
+				<y>H</y>
+			</point>
+			<point>
+				<x>0.5 * W</x>
+				<y>H - R3</y>
+			</point>
+			<point>
+				<x>0.5 * W + R3</x>
+				<y>H</y>
+			</point>
+		</arc>
+		<seg>
+			<point>
+				<x>0.5 * W - R3</x>
+				<y>H</y>
+			</point>
+			<point>
+				<x>0.0</x>
+				<y>H</y>
+			</point>
+		</seg>
+		<seg>
+			<point>
+				<x>0.0</x>
+				<y>H</y>
+			</point>
+			<point>
+				<x>0.0</x>
+				<y>0.5 * H + R4</y>
+			</point>
+		</seg>
+		<arc>
+			<point>
+				<x>0.0</x>
+				<y>0.5 * H - R4</y>
+			</point>
+			<point>
+				<x>R4</x>
+				<y>0.5 * H</y>
+			</point>
+			<point>
+				<x>0.0</x>
+				<y>0.5 * H + R4</y>
+			</point>
+		</arc>
+		<seg>
+			<point>
+				<x>0.0</x>
+				<y>0.5 * H - R4</y>
+			</point>
+			<point>
+				<x>0.0</x>
+				<y>0.0</y>
+			</point>
+		</seg>
+	</geom>
+</template>
