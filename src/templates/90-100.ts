@@ -457,16 +457,62 @@ const figure_99: IGenerate = {
 	`,
 };
 
-clearDirTemplate(() => {
-	generate(figure_90);
-	generate(figure_91);
-	generate(figure_92);
+const figure_100: IGenerate = {
+	name: `Держатель рельсы`,
+	primitives: [
+		new LinePath([
+			['W/2 + dW/2', 'H1 + H2 + (-h)'],
+			['W/2 + dW/2', 'H1 + H2'],
+			['W/2 + W1/2', 'H1 + H2'],
+			['W/2 + W1/2', 'H1'],
+			['W', 'H1'],
+			['W', '0'],
+			[0, 0],
+			[0, 'H1'],
+			['(W - W1) / 2', 'H1'],
+			['(W - W1) / 2', 'H1 + H2'],
+			['W/2 - dW/2', 'H1 + H2'],
+			['W/2 - dW/2', 'H1 + H2 + (-h)'],
+		]),
 
-	generate(figure_93);
-	generate(figure_94);
-	generate(figure_95);
-	generate(figure_96);
-	generate(figure_97);
-	generate(figure_98);
+		new Arc(
+			['W / 2', '(H1 + H2 ) - (h + ((SQRT(R * R - (dW * dW / 4)))))'],
+			'R',
+			'M_PI/2 + ASIN(dW / ( 2 * R))',
+			'M_PI/2 - ASIN(dW / ( 2 * R))',
+			false,
+		),
+	],
+	params: `   
+	<params>
+		<p name="H1" desc="[мм] Высота нижней грани" default="50.0"></p>
+		<p name="H2" desc="[мм] Высота верхней грани" default="50.0"></p>
+
+		<p name="W" desc="[мм] Ширина основания" default="200.0"></p>
+		<p name="W1" desc="[мм] Ширина центральной части" default="100.0"></p>
+
+		<p name="dW" desc="[мм] Ширина прорези" default="15.0"></p>
+
+		<p name="h" desc="[мм] Глубина прорези" default="10.0"></p>
+
+		<p name="R" desc="[мм] Радиус окружности" default="25.0"></p>
+
+	</params>
+	`,
+};
+
+clearDirTemplate(() => {
+	// generate(figure_90);
+	// generate(figure_91);
+	// generate(figure_92);
+
+	// generate(figure_93);
+	// generate(figure_94);
+	// generate(figure_95);
+	// generate(figure_96);
+	// generate(figure_97);
+	// generate(figure_98);
 	generate(figure_99);
+
+	generate(figure_100);
 });
