@@ -1,6 +1,6 @@
 import { generate_80_89 } from '../src/templates/80-89';
 
-import { generate, IGenerate } from '../generator';
+import { generate, IGenerate } from './generator';
 import { IDetail } from './generator.interface';
 import {
 	LineXML,

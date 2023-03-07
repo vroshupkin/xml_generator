@@ -1,6 +1,6 @@
 // 24.02
 
-import { generate, IGenerate } from '../../generator';
+import { generate, IGenerate } from '../generator';
 import { Arc, Circle, LinePath } from '../figures';
 import { clearDirTemplate } from '../common/terminal';
 import { Condition } from '../condition';
